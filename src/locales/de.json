@@ -1,0 +1,9 @@
+{
+    "home": "Startseite",
+    "about": "Abfout <highlight>Us</highlight>",
+    "contact": "Kontakt",
+    "services": "Dienstleistungen",
+    "success_message": "Nachricht erfolgreich gesendet!",
+    "error_message": "Fehler beim Senden der Nachricht",
+    "fill_all_fields": "Bitte füllen Sie alle Felder aus."
+  }

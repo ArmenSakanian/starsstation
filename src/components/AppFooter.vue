@@ -1,0 +1,190 @@
+<template>
+  <footer>
+    <div class="footer__container">
+      <div class="footer__logo footer__item">
+        <img src="@/assets/logo/Logomark White.svg" alt="Logo">
+      </div>
+      <div class="footer__links footer__item">
+        <h1>Links</h1>
+        <div class="links ">
+          <li><a href="#home">{{ $t('home') }}</a></li>
+          <li><a href="#about">{{ $t('about') }}</a></li>
+          <li><a href="#contact">{{ $t('contact') }}</a></li>
+          <li><a href="#" @click="scrollToElement($event, 'montage-video')">{{ $t('montage') }} {{ $t('video') }}</a></li>  
+          <li><a href="#contact">{{ $t('Reseau Social') }}</a></li>
+          <li><a href="#contact">{{ $t('Video Publicitaire') }}</a></li>
+        </div>
+      </div>
+      <div class="footer__social footer__item">
+        <h1>Social</h1>
+        <div class="social">
+          <li><a href="#"><i class="fa-brands fa-instagram"></i></a> </li>
+          <li><a href="#"><i class="fa-brands fa-facebook"></i></a> </li>
+          <li><a href="#"><i class="fa-brands fa-youtube"></i></a> </li>
+          <li><a href="#"><i class="fa-brands fa-whatsapp"></i></a> </li>
+        </div>
+      </div>
+  <div class="footer__video footer__item" @click="toggleVideo">
+    <div class="video_text"><h1>INTRO</h1></div>
+    <iframe width="100%" height="auto" src="https://www.youtube.com/embed/DzXGOEEFdG4?control=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </div>
+    </div>
+    <!-- <div class="copyright">
+      ©2024 Stars Station Studio | All Rights Reserved
+    </div> -->
+  </footer>
+</template>
+
+<script>
+export default {
+  name: 'AppFooter',
+  methods: {
+    scrollToElement(event, id) {
+      event.preventDefault();
+      const element = document.getElementById(id);
+      if (element) {
+        const yOffset = -50;
+        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({top: y, behavior: 'smooth'});
+      }
+    }
+  }
+}
+</script>
+
+<style scoped>
+
+
+
+
+
+
+
+.footer__video {
+  position: relative;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+.video_text {
+  font-size: 50px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 2;
+  color: white;
+}
+
+video {
+  width: 100%;
+  height: auto;
+}
+
+
+.footer__video:hover video:not(:fullscreen) {
+  filter: brightness(50%);
+}
+
+.footer__video:hover .video_text {
+  opacity: 1; /* Сделать текст видимым при наведении */
+}
+
+
+
+
+.footer__item {
+  width: 100%;
+}
+
+.footer__container {
+  background-color: #222222;
+  color: #fff;
+  padding: 20px 50px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  align-items:flex-start
+}
+
+.footer__container a {
+  color: white;
+  text-decoration: none;
+}
+
+.footer__logo {
+  display: flex;
+  justify-content: center;
+}
+
+.footer__logo img {
+  width: 250px;
+}
+
+.footer__links,
+.footer__social {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer__links h1,
+.footer__social h1 {
+  font-size: 32px;
+}
+
+.links,
+.social {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+
+
+.copyright {
+  margin-top: 10px;
+  text-align: center;
+  color: #aaa;
+}
+
+@media screen and (max-width: 1024px) { 
+  .footer__container a {
+    text-decoration: underline;
+  }
+
+  .footer__container {
+    flex-wrap: wrap;
+  }
+
+  .video_text {
+    display: none;
+  }
+
+  .footer__video:hover video {
+    filter: none; /* убрать затемнение видео при наведении */
+  }
+
+  .footer__item .links,
+  .footer__item .social{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+        flex-direction: row;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer__item .links li,
+  .footer__item .social li{
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+}
+
+
+</style>
