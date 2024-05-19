@@ -2,9 +2,9 @@
 <template>
     <div  class="service__container-about all">
         <div class="services-about">
-            <h1>{{ $t('montage video') }}</h1>
+            <h1>{{ $t('social network') }}</h1>
             <div class="about__text">
-    <span v-for="(part, index) in splitText('montage-about')" :key="index" :class="part.class">{{ part.text }}</span>
+    <span v-for="(part, index) in splitText('network-about')" :key="index" :class="part.class">{{ part.text }}</span>
   </div>
         </div>
     </div>
@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: 'MontagePage',
+  name: 'NetworkPage',
   methods: {
     splitText(key) {
       const text = this.$t(key);

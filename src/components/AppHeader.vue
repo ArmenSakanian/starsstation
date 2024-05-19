@@ -7,7 +7,7 @@
         <div class="header__bottom"></div>
         <ul class="menu-ul">
           <li><router-link to="/" @click="closeMenu">{{ $t('home') }}</router-link></li>
-          <li><router-link to="/" @click="closeMenu">{{ $t('about') }}</router-link></li>
+          <li><router-link to="/about" @click="closeMenu">{{ $t('about') }}</router-link></li>
           <li><router-link to="/contact" @click="closeMenu">{{ $t('contact') }}</router-link></li>
           <li class="dropdown" 
               @mouseover="handleMouseOver" 
@@ -198,8 +198,16 @@ nav li a {
   color: white;
   text-decoration: none;
   font-size: 20px;
+  transition: 1s;
 }
 
+nav ul li a:hover {
+  color: blue;
+}
+
+nav ul li .router-link-active {
+    color: blue;
+  }
 .dropdown-content {
   display: block;
   position: absolute;

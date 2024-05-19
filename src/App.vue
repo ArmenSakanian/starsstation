@@ -21,7 +21,7 @@ export default {
     AppHeader,
     AppFooter
   },
-
+  
 }
 </script>
 
@@ -134,6 +134,35 @@ button:hover {
 }
 
 
+.service__container-about {
+    background-color: #222222;
+    border-top: 1px solid #757575;
+    border-bottom: 1px solid #757575;
+    margin-top: 76px;
+}
+
+.services-about {
+    padding: 150px 0 150px 0;
+    text-align: center;
+    color: white;
+    width: 100%;
+}
+
+.about__text {
+    color: #dddddd;
+    padding-top: 20px;
+    font-size: 28px;
+    line-height: 2;
+    width: 90%;
+    margin: 0 auto;
+    
+}
+
+.color-bold {
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+  text-shadow: 0px 0 20px #1cff00;
+}
 
 .arrow {
   position: absolute;
@@ -203,6 +232,10 @@ button:hover {
     margin: 0 auto;
   }
 
+  .about__text {
+        font-size: 16px;
+    }
+
 
 }
 
@@ -226,7 +259,6 @@ button:hover {
   .all {
     background-attachment: scroll;
   }
-
 
 }
 </style>

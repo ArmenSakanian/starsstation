@@ -2,7 +2,7 @@
     <div id="reseau-social" class="Services_container  all">
       <div class="service_item">
         <h1>{{ $t('social network') }}</h1>
-        <button class="learn-more">{{ $t('learn more') }}</button>
+        <router-link to="/network"><button class="learn-more">{{ $t('learn more') }}</button></router-link>
       </div>
     </div>
   </template>
