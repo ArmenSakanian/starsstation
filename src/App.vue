@@ -219,11 +219,14 @@ button:hover {
 }
 
 .links li,
+.service li,
 .social li {
   list-style: none;
   margin-bottom: 30px;
   font-size: 20px;
 }
+
+
 
 @media screen and (max-width: 1024px) {
 

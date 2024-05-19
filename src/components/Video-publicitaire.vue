@@ -1,8 +1,8 @@
 <template>
     <div id="video-publicitaire" class="Services_container all">
       <div class="service_item">
-        <h1>{{ $t('express your') }}<br>{{ $t('art in video') }}</h1>
-        <button class="learn-more">{{ $t('learn more') }}</button>
+        <h1 data-aos="zoom-out">{{ $t('express your') }}<br>{{ $t('art in video') }}</h1>
+        <router-link to="/network"><button data-aos="fade-up" class="learn-more">{{ $t('learn more') }}</button></router-link>
       </div>
       
     </div>

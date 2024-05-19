@@ -19,6 +19,7 @@
               <li><a href="#" @click="scrollToElement($event, 'video-publicitaire'); closeMenu()">{{ $t('advertising video') }}</a></li>
               <li><a href="#" @click="scrollToElement($event, 'reseau-social'); closeMenu()">{{ $t('social network') }}</a></li>
               <li><a href="#" @click="scrollToElement($event, 'montage-video'); closeMenu()">{{ $t('montage') }} {{ $t('video') }}</a></li>
+              <li><a href="#" @click="scrollToElement($event, 'rap-clip'); closeMenu()">{{ $t('rap clip') }}</a></li>
             </ul>
           </li>
         </ul>
@@ -256,7 +257,7 @@ nav ul li .router-link-active {
 
 .language-active {
   text-decoration: underline;
-  color: yellow;
+  color: blue;
 }
 
 .icon {

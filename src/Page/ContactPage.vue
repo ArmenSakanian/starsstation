@@ -218,7 +218,7 @@ background-color: #222222;
 }
 
 .contact-info {
-  padding-top: 20px;
+  padding-top: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -392,7 +392,7 @@ select:-moz-autofill {
 }
 
 
-@media screen and (max-width: 1440px) {
+@media screen and (max-width: 1024px) {
   .contact__container {
     flex-direction: column;
   }
