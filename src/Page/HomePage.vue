@@ -1,8 +1,8 @@
 <template>
     <div>
-      <ImaginezVous/>
-      <VideoPublicitaire/>
-      <ReseauSocial/>
+      <ImagineYourself/>
+      <AdvertisingVideo/>
+      <SocialNetwork/>
       <MontageVideo/>
       <RapClip/>
     </div>
@@ -10,18 +10,18 @@
   
   <script>
 import MontageVideo from '../components/Montage-video.vue';
-import ReseauSocial from '../components/Reseau-social.vue';
-import VideoPublicitaire from '../components/Video-publicitaire.vue';
-import ImaginezVous from '../components/Imaginez-vous.vue';
+import SocialNetwork from '../components/Social-network.vue';
+import AdvertisingVideo from '../components/Advertising-video.vue';
+import ImagineYourself from '../components/imagine-yourself.vue';
 import RapClip from '../components/Rap-clip.vue'
 
 
   export default {
   name: "HomePage",
   components: {
-    ImaginezVous,
-    VideoPublicitaire,
-    ReseauSocial,
+    ImagineYourself,
+    AdvertisingVideo,
+    SocialNetwork,
     MontageVideo,
     RapClip
     },

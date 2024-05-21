@@ -9,15 +9,15 @@
           <li><router-link to="/" @click="closeMenu">{{ $t('home') }}</router-link></li>
           <li><router-link to="/about" @click="closeMenu">{{ $t('about') }}</router-link></li>
           <li><router-link to="/contact" @click="closeMenu">{{ $t('contact') }}</router-link></li>
-          <li class="dropdown" 
+          <li class="dropdown" menu ul li
               @mouseover="handleMouseOver" 
               @mouseleave="handleMouseLeave" 
               @click="handleMobileClick">
             <a href="#services">{{ $t('services') }}</a>
             <ul class="dropdown-content dropdown-content-service" :class="{ show: isMenuVisible }">
               <li><a href="#" @click="scrollToElement($event, 'imagine-yourself'); closeMenu()">{{ $t('imagine yourself') }}</a></li>
-              <li><a href="#" @click="scrollToElement($event, 'video-publicitaire'); closeMenu()">{{ $t('advertising video') }}</a></li>
-              <li><a href="#" @click="scrollToElement($event, 'reseau-social'); closeMenu()">{{ $t('social network') }}</a></li>
+              <li><a href="#" @click="scrollToElement($event, 'advertising-video'); closeMenu()">{{ $t('advertising video') }}</a></li>
+              <li><a href="#" @click="scrollToElement($event, 'Social-network'); closeMenu()">{{ $t('social network') }}</a></li>
               <li><a href="#" @click="scrollToElement($event, 'montage-video'); closeMenu()">{{ $t('montage') }} {{ $t('video') }}</a></li>
               <li><a href="#" @click="scrollToElement($event, 'rap-clip'); closeMenu()">{{ $t('rap clip') }}</a></li>
             </ul>
@@ -172,7 +172,7 @@ export default {
   width: 100%;
   display: flex;
   align-items: center;
-  background-color: black;
+  background-color: #171717;
   color: white;
   padding: 10px 20px;
 }
@@ -189,9 +189,9 @@ nav ul {
   display: flex;
 }
 
-.menu ul li {
+
+.menu-ul > li {
   margin-right: 20px;
-  position: relative;
 }
 
 nav ul li a,
@@ -213,7 +213,7 @@ nav ul li .router-link-active {
   display: block;
   position: absolute;
   min-width: 260px;
-  background-color: black;
+  background-color: #171717;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
   opacity: 0;
@@ -236,8 +236,8 @@ nav ul li .router-link-active {
 }
 
 .dropdown-content a:hover {
-  background-color: #fff;
-  color: black;
+  background-color: white;
+  color: blue;
   transition: background-color 0.8s, color 0.8s;
 }
 
@@ -341,7 +341,7 @@ svg.active #bottom {
     position: absolute;
     height: 100vh;
     width: 100%;
-    background-color: black;
+    background-color: #171717;
     top: 76px;
     transition: left 0.5s ease-in-out;
     overflow-y: scroll;
@@ -354,8 +354,12 @@ svg.active #bottom {
     padding: 0 40px 0 40px;
   }
 
+
+
   .menu ul li {
     padding: 20px;
+    margin-right: 20px;
+    position: relative;
     border-bottom: 1px solid rgba(255, 255, 255, 0.6);
   }
 
@@ -370,6 +374,7 @@ svg.active #bottom {
   }
 
 
+  
   .menu ul li {
     width: 100%;
   }

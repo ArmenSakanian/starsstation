@@ -1,37 +1,37 @@
 <template>
   <footer>
     <div class="footer__container">
-      <div data-aos="zoom-in" class="footer__logo footer__item">
+      <div class="footer__logo footer__item">
         <img src="@/assets/logo/Logomark White.svg" alt="Logo">
       </div>
       <div class="footer__links footer__item">
-        <h1 data-aos="fade-up">Links</h1>
-        <div data-aos="zoom-in" class="links ">
+        <h1>Links</h1>
+        <div class="links ">
           <li><router-link to="/">{{ $t('home') }}</router-link></li>
-          <li><router-link to="/about">{{ $t('about') }}</router-link></li>
-          <li><router-link to="/contact">{{ $t('contact') }}</router-link></li>
+          <li><router-link to="/About">{{ $t('about') }}</router-link></li>
+          <li><router-link to="/Contact">{{ $t('contact') }}</router-link></li>
         </div>
       </div>
       <div class="footer__service footer__item">
-        <h1 data-aos="fade-up">Service</h1>
-        <div data-aos="zoom-in" class="service">
-          <router-link to="/network"><li><a href="#">{{ $t('imagine yourself') }}</a></li></router-link>
-          <router-link to="/network"><li><a href="#">{{ $t('advertising video') }}</a></li></router-link>
-          <router-link to="/network"><li><a href="#">{{ $t('social network') }}</a></li></router-link>
-          <router-link to="/montage"><li><a href="#">{{ $t('montage') }} {{ $t('video') }}</a></li></router-link>
-          <router-link to="/network"><li><a href="#">{{ $t('rap clip') }}</a></li></router-link>
+        <h1>Service</h1>
+        <div class="service">
+          <router-link to="/Yourself"><li><a href="#">{{ $t('imagine yourself') }}</a></li></router-link>
+          <router-link to="/Advertising"><li><a href="#">{{ $t('advertising video') }}</a></li></router-link>
+          <router-link to="/Network"><li><a href="#">{{ $t('social network') }}</a></li></router-link>
+          <router-link to="/Montage"><li><a href="#">{{ $t('montage') }} {{ $t('video') }}</a></li></router-link>
+          <router-link to="/Rap"><li><a href="#">{{ $t('rap clip') }}</a></li></router-link>
     </div>
       </div>
       <div class="footer__social footer__item">
-        <h1 data-aos="fade-up">Social</h1>
-        <div data-aos="zoom-in" class="social">
+        <h1>Social</h1>
+        <div class="social">
           <li><a href="#"><i class="fa-brands fa-instagram"></i></a> </li>
           <li><a href="#"><i class="fa-brands fa-facebook"></i></a> </li>
           <li><a href="#"><i class="fa-brands fa-youtube"></i></a> </li>
           <li><a href="#"><i class="fa-brands fa-whatsapp"></i></a> </li>
         </div>
       </div>
-  <div data-aos="zoom-in" class="footer__video footer__item" @click="toggleVideo">
+  <div class="footer__video footer__item" @click="toggleVideo">
     <div class="video_text"><h1>INTRO</h1></div>
     <iframe width="100%" height="auto" src="https://www.youtube.com/embed/DzXGOEEFdG4?control=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
   </div>
@@ -108,7 +108,7 @@ video {
 }
 
 .footer__container {
-  background-color: #222222;
+  background-color: #171717;
   color: #fff;
   padding: 20px 50px 100px 50px;
   display: flex;

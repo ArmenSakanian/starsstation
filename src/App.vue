@@ -26,6 +26,9 @@ export default {
 </script>
 
 <style>
+
+  
+
 @font-face {
   font-family: Cinzel;
   src: url(/src/assets/fonts/Cinzel-VariableFont_wght.ttf),
@@ -34,7 +37,7 @@ export default {
 }
 
 
-#imaginez-vous {
+#imagine-yourself {
   background-image: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0.5)), url('@/assets/img/Imaginez-vous.webp');
 }
 
@@ -42,12 +45,16 @@ export default {
   background-image: linear-gradient(rgba(0, 0, 0, .6), rgba(0, 0, 0, 0.9)), url('@/assets/img/Montage-video.webp');
 }
 
-#reseau-social {
-  background-image: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0.5)), url('@/assets/img/Reseau-social.webp');
+#Social-network {
+  background-image: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0.5)), url('@/assets/img/Social-network.webp');
 }
 
-#video-publicitaire {
-  background-image: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0.5)), url('@/assets/img/Video-publicitaire.webp');
+#advertising-video {
+  background-image: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0.5)), url('@/assets/img/Advertising-video.webp');
+}
+
+#rap-clip {
+  background-image: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0.5)), url('@/assets/img/Rap-clip.png');
 }
 
 
@@ -72,10 +79,14 @@ h1 {
   font-weight: bold;
 }
 
-button {
+.learn-more {
+  border-radius: 100px 0 100px 10px;
+}
+
+.learn-more, .send {
   border: 2px solid white;
   background: linear-gradient(to top, rgb(255, 255, 255) 50%, transparent 50%);
-  border-radius: 100px 0 100px 10px;
+
   background-size: 100% 200%;
   color: white;
   font-size: 20px;
@@ -83,7 +94,7 @@ button {
   transition: .4s ease;
 }
 
-button:hover {
+.learn-more, .send:hover {
   border-radius: 0;
   background-position: 0 100%;
   color: black;
@@ -93,10 +104,11 @@ button:hover {
 
 .Services_container {
   display: flex;
-  background-size: cover;
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
+  background-size: cover;
+  background-position: center;
   height: 100vh;
   width: 100%;
   color: white;
@@ -242,26 +254,11 @@ button:hover {
 
 }
 
-@media screen and (max-width: 769px) {
-  #imaginez-vous {
-    background-image: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0.5)), url('@/assets/img-mobile/Imaginez-vous-mobile.png');
-  }
 
-  #montage-video {
-    background-image: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0.5)), url('@/assets/img-mobile/Montage-video-mobile.png');
-  }
-
-  #reseau-social {
-    background-image: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0.5)), url('@/assets/img-mobile/Reseau-social-mobile.png');
-  }
-
-  #video-publicitaire {
-    background-image: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0.5)), url('@/assets/img-mobile/Video-publicitaire-mobile.png');
-  }
 
   .all {
     background-attachment: scroll;
   }
 
-}
+
 </style>
