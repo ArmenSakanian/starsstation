@@ -61,15 +61,22 @@
               <textarea @focus="handleFocus('message')" @blur="handleBlur('message')" name="message" id="message"
                 rows="4" v-model="inputs.message" ref="message"></textarea>
             </div>
-            <div class="form-group file">
-              <input type="file" name="files[]" id="attachment" accept=".png, .jpeg, .jpg, .svg, .pdf, .docx" multiple
-                @change="updateFileList">
-              <label for="attachment" class="btn-upload">{{ $t('attach') }}</label>
-              <span v-if="fileList.length > 0">{{ $t('selected') }} {{ fileList.join(', ') }}</span>
-            </div>
-            <input type="hidden" v-model="csrfToken" name="csrf_token">
-            <div class="form-group form-button">
-              <button class="send" type="submit">{{ $t('send') }}</button>
+            <div class="form-controls">
+              <div class="form-group file inline">
+                <input type="file" name="files[]" id="attachment" accept=".png, .jpeg, .jpg, .svg, .pdf, .docx" multiple
+                  @change="updateFileList">
+                <label for="attachment" class="btn-upload">{{ $t('attach') }}</label>
+                <span v-if="fileList.length > 0">
+                  {{ displayedFileList }}
+                  <a href="#" @click.prevent="toggleFileList" v-if="fileList.length > 3">
+                    {{ showFullFileList ? $t('hide') : `${$t('and')} ${fileList.length - 3} ${$t('more')}` }}
+                  </a>
+                </span>
+              </div>
+              <input type="hidden" v-model="csrfToken" name="csrf_token">
+              <div class="form-group form-button inline">
+                <button class="send" type="submit">{{ $t('send') }}</button>
+              </div>
             </div>
           </div>
         </form>
@@ -102,8 +109,20 @@ export default {
         message: false
       },
       fileList: [],
+      showFullFileList: false,
       csrfToken: ''
     };
+  },
+  computed: {
+    displayedFileList() {
+      if (this.showFullFileList) {
+        return this.fileList.join(', ');
+      }
+      if (this.fileList.length > 3) {
+        return `${this.fileList.slice(0, 3).join(', ')}`;
+      }
+      return this.fileList.join(', ');
+    }
   },
   created() {
     this.getCsrfToken();
@@ -118,7 +137,11 @@ export default {
       }
     },
     updateFileList(event) {
-      this.fileList = Array.from(event.target.files);
+      this.fileList = Array.from(event.target.files).map(file => file.name);
+      this.showFullFileList = false;  // Скрыть полный список при выборе новых файлов
+    },
+    toggleFileList() {
+      this.showFullFileList = !this.showFullFileList;
     },
     getCsrfToken() {
       axios.get('get_csrf_token.php')
@@ -319,7 +342,7 @@ form {
   justify-content: space-between;
 }
 
-.form-group {
+.form-group, .file label {
   position: relative;
   margin-bottom: 50px;
 }
@@ -404,19 +427,33 @@ input[type="file"] {
   background-color: #0056b3;
 }
 
-.file {
-  margin-bottom: 100px;
+
+.form-controls {
+  display: flex;
+  justify-content: space-between;
 }
+
+
 
 .file span {
   color: white;
+  color: white;
+    position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
+.file span a {
+  color: white;
+  font-style: italic;
+  font-weight: bold;
+}
 
 
 .form-button button {
   padding: 10px 20px;
-  margin-top: 50px;
+  position: relative;
+  top: 20px;
 }
 
 input:-webkit-autofill,
