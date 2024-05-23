@@ -213,24 +213,16 @@ export default {
 
 
 <style scoped>
-.message-success {
-  color: green;
-}
 
-.message-error {
-  color: red;
-  display: flex;
-  justify-content: center;
-}
 
 h1 {
-  color: white;
+  color: var(--text-color);
   font-size: 48px;
 }
 
 .contact {
   color: white;
-  background-color: #222222;
+  background-color: var(--bg-main-color);
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
@@ -274,7 +266,7 @@ h1 {
 
 .contact-group a {
   text-decoration: underline;
-  color: white;
+  color: var(--text-color);
   margin-left: 10px;
   font-size: 20px;
 }
@@ -283,7 +275,7 @@ h1 {
   align-items: center;
   padding: 20px 30px;
   color: #fff;
-  background: radial-gradient(circle, #171717, #222222);
+  background: radial-gradient(circle, var(--bg-secondary-color), var(--bg-main-color));
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -299,7 +291,7 @@ h1 {
   right: 0;
   bottom: 0;
   left: 0;
-  background: radial-gradient(circle, #222222, #171717);
+  background: radial-gradient(circle, var(--bg-secondary-color), var(--bg-secondary-color));
   z-index: -1;
   opacity: 0;
   transition: opacity 0.5s ease;
@@ -323,7 +315,7 @@ h1 {
 }
 
 .social a {
-  color: white;
+  color: var(--text-color);
 }
 
 .social {
@@ -353,17 +345,17 @@ form {
 
 label {
   position: absolute;
-  color: white;
+  color: var(--text-color);
   top: 20px;
 }
 
 input,
 textarea {
   border: none;
-  border-bottom: 2px solid white;
+  border-bottom: 2px solid var(--text-color);
   background-color: transparent;
   font-size: 16px;
-  color: white;
+  color: var(--text-color);
   width: 100%;
   height: 50px;
   outline: none;
@@ -379,7 +371,7 @@ textarea {
 label.active {
   top: -15px;
   font-size: 12px;
-  color: gray;
+  color: var(--text-secondary-color);
   animation: floatLabel 0.3s ease forwards;
 }
 
@@ -419,8 +411,8 @@ input[type="file"] {
 .btn-upload {
   display: inline-block;
   padding: 8px 16px;
-  background-color: #007bff;
-  color: #fff;
+  background-color: var(--active-color);
+  color: var(--text-color);
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -428,7 +420,7 @@ input[type="file"] {
 }
 
 .btn-upload:hover {
-  background-color: #0056b3;
+  background-color: var(--active-dark-color);
 }
 
 
@@ -440,15 +432,14 @@ input[type="file"] {
 
 
 .file span {
-  color: white;
-  color: white;
+  color: var(--text-color);
     position: relative;
     display: flex;
     flex-direction: column;
 }
 
 .file span a {
-  color: white;
+  color: var(--text-color);
   font-style: italic;
   font-weight: bold;
 }
@@ -463,8 +454,8 @@ input[type="file"] {
 input:-webkit-autofill,
 textarea:-webkit-autofill,
 select:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px #222222 inset !important;
-  box-shadow: 0 0 0px 1000px #222222 inset !important;
+  -webkit-box-shadow: 0 0 0px 1000px var(--bg-main-color) inset !important;
+  box-shadow: 0 0 0px 1000px var(--bg-main-color) inset !important;
   -webkit-text-fill-color: #fff !important;
   color: #fff !important;
 }
@@ -472,9 +463,9 @@ select:-webkit-autofill {
 input:-moz-autofill,
 textarea:-moz-autofill,
 select:-moz-autofill {
-  box-shadow: 0 0 0px 1000px #222222 inset !important;
-  -moz-text-fill-color: #fff !important;
-  color: #fff !important;
+  box-shadow: 0 0 0px 1000px var((--bg-main-color)) inset !important;
+  -moz-text-fill-color: var(--text-color) !important;
+  color: var(--text-color) !important;
 }
 
 

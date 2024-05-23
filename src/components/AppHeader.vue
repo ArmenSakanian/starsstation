@@ -159,10 +159,10 @@ export default {
   position: absolute;
   width: 100%;
   height: 1px;
-  background-color: rgb(112, 112, 112);
+  background-color: var(--br-color);
   z-index: 9999;
   display: none; 
-  top: 00;
+  top: 3px;
 }
 
 .header-container {
@@ -172,13 +172,13 @@ export default {
   width: 100%;
   display: flex;
   align-items: center;
-  background-color: #171717;
-  color: white;
-  padding: 10px 20px;
+  background-color: var(--bg-secondary-color);
+  color: var(--text-color);
+  padding: 8px 10px;
 }
 
 .logo {
-  height: 50px;
+  height: 60px;
   margin-right: 30px;
 }
 
@@ -196,24 +196,24 @@ nav ul {
 
 nav ul li a,
 nav li a {
-  color: white;
+  color: var(--text-color);
   text-decoration: none;
   font-size: 20px;
   transition: 1s;
 }
 
 nav ul li a:hover {
-  color: blue;
+  color: var(--active-color);
 }
 
 nav ul li .router-link-active {
-    color: blue;
+    color: var(--active-color);
   }
 .dropdown-content {
   display: block;
   position: absolute;
   min-width: 260px;
-  background-color: #171717;
+  background-color: var(--bg-secondary-color);
   z-index: 1;
   opacity: 0;
   transform: scaleY(0);
@@ -227,7 +227,7 @@ nav ul li .router-link-active {
 }
 
 .dropdown-content a {
-  color: white;
+  color: var(--text-color);
   padding: 12px 16px;
   text-decoration: none;
   display: block;
@@ -235,8 +235,8 @@ nav ul li .router-link-active {
 }
 
 .dropdown-content a:hover {
-  background-color: white;
-  color: blue;
+  background-color: var(--text-color);
+  color: var(--active-color);
   transition: background-color 0.8s, color 0.8s;
 }
 
@@ -256,7 +256,7 @@ nav ul li .router-link-active {
 
 .language-active {
   text-decoration: underline;
-  color: blue;
+  color: var(--active-color);
 }
 
 .icon {
@@ -275,7 +275,7 @@ svg {
 
 svg path {
   fill: none;
-  stroke: white;
+  stroke: var(--text-color);
   stroke-width: 1px;
 }
 
@@ -340,7 +340,7 @@ svg.active #bottom {
     position: absolute;
     height: 100vh;
     width: 100%;
-    background-color: #171717;
+    background-color: var(--bg-secondary-color);
     top: 76px;
     transition: left 0.5s ease-in-out;
     overflow-y: scroll;
@@ -359,7 +359,7 @@ svg.active #bottom {
     padding: 20px;
     margin-right: 20px;
     position: relative;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+    border-bottom: 1px solid var(--br-color);
   }
 
 

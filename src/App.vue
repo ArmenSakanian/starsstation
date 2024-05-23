@@ -17,20 +17,51 @@ export default {
   components: {
     AppHeader,
     AppFooter
-  }
+  },
+  methods: {
+    splitText(key) {
+      const text = this.$t(key);
+      const parts = text.split(/(<color-bold>.*?<\/color-bold>)/g).filter(Boolean);
+      return parts.map(part => {
+        if (part.startsWith('<color-bold>') && part.endsWith('</color-bold>')) {
+          return {
+            text: part.slice(12, -13), // Убираем теги более элегантно
+            class: 'color-bold'
+          };
+        } else {
+          return {
+            text: part,
+            class: ''
+          };
+        }
+      });
+    },
+  },
+  provide() {
+    return {
+      splitText: this.splitText,
+    };
+  },
 };
 </script>
 
 <style>
 
-  
-
-@font-face {
-  font-family: Cinzel;
-  src: url(/src/assets/fonts/Cinzel-VariableFont_wght.ttf),
-    url(/src/assets/fonts/static/Cinzel-Bold.ttf),
-    url(/src/assets/fonts/static/Cinzel-Regular.ttf);
+:root {
+  --text-color: #ffffff;
+  --br-color: #757575;
+  --text-secondary-color: #757575;
+  --bg-secondary-color: #171717;
+  --bg-main-color: #222222;
+  --active-color: #FF8D00;
+  --active-dark-color: #ac5e00;
+  --instagram-color: #cd486b;
+  --facebook-color: #1877F2;
+  --whatsapp-color: #128C7E;
+  --youtube-color: #FF0000;
 }
+
+
 
 
 #imagine-yourself {
@@ -61,13 +92,14 @@ export default {
 }
 
 body {
-  font-family: "Cinzel", serif;
+  font-family: "Roboto Condensed", sans-serif;
+  font-style: normal;
+  font-weight: 300;
 
 }
-
-li {
-  font-weight: 100;
-  font-style: italic;
+#app {
+  display: grid;
+  grid-template-rows: 80px 1fr auto;
 }
 
 h1 {
@@ -80,18 +112,19 @@ h1 {
 .learn-more, .send {
   border: 2px solid white;
   border-radius: 5px;
-  background: linear-gradient(to top, rgb(255, 255, 255) 50%, transparent 50%);
+  background: linear-gradient(to top, var(--active-color) 50%, transparent 50%);
   background-size: 100% 200%;
   color: white;
   font-size: 20px;
   cursor: pointer;
-  transition: .4s ease;
+  transition: .3s ease;
 }
 
 .learn-more:hover, .send:hover {
   border-radius: 0;
   background-position: 0 100%;
   color: black;
+  border: 2px solid var(--active-color);
 }
 
 
@@ -123,6 +156,7 @@ h1 {
 }
 
 .service_item h1 {
+  letter-spacing: 5px;
   margin-bottom: 50px;
 }
 
@@ -151,7 +185,6 @@ h1 {
     background-color: #222222;
     border-top: 1px solid #757575;
     border-bottom: 1px solid #757575;
-    margin-top: 76px;
 }
 
 .services-about {
@@ -173,8 +206,7 @@ h1 {
 
 .color-bold {
   font-weight: bold;
-  color: rgb(255, 255, 255);
-  text-shadow: 0px 0 20px #1cff00;
+  color: var(--active-color);
 }
 
 .arrow {
@@ -208,19 +240,19 @@ h1 {
 
 
 .instagram-icon:hover {
-  color: #cd486b;
+  color: var(--instagram-color);
 }
 
 .facebook-icon:hover {
-  color: #1877F2; /* Цвет при наведении */
+  color: var(--facebook-color); 
 }
 
 .whatsapp-icon:hover {
-  color: #128C7E; /* Цвет при наведении */
+  color: var(--whatsapp-color); 
 }
 
 .youtube-icon:hover {
-  color: #FF0000; /* Цвет при наведении */
+  color: var(--youtube-color); 
 }
 
 .social li {
