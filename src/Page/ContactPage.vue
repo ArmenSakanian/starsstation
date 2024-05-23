@@ -24,10 +24,13 @@
             <img src="@/assets/logo/Logo-text_white.svg" alt="Logo">
           </div>
           <div class="social">
-            <li><a href="https://www.youtube.com/"><i class="fa-brands fa-instagram"></i></a> </li>
-            <li><a href="https://www.youtube.com/"><i class="fa-brands fa-facebook"></i></a> </li>
-            <li><a href="https://www.youtube.com/"><i class="fa-brands fa-youtube"></i></a> </li>
-            <li><a href="https://www.youtube.com/"><i class="fa-brands fa-whatsapp"></i></a> </li>
+            <li><a href="https://www.instagram.com/starsstationstudio?igsh=cDdmczIxc2ljMzJq"><font-awesome-icon
+                :icon="['fab', 'instagram']" class="custom-icon instagram-icon" /></a></li>
+          <li><a href="#"><font-awesome-icon :icon="['fab', 'facebook']" class="custom-icon facebook-icon" /></a></li>
+          <li><a href="https://wa.me/41779441743"><font-awesome-icon :icon="['fab', 'whatsapp']"
+                class="custom-icon whatsapp-icon" /></a></li>
+          <li><a href="https://www.youtube.com/@StarsStationStudio"><font-awesome-icon :icon="['fab', 'youtube']"
+                class="custom-icon youtube-icon" /></a></li>
           </div>
         </div>
       </div>

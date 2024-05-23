@@ -1,13 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomePage from './Page/HomePage.vue';
-import AboutPage from './Page/AboutPage.vue';
-import ContactPage from './Page/ContactPage.vue';
-import YourselfPage from './Page/YourselfPage.vue';
-import AdvertisingPage from './Page/AdvertisingPage.vue';
-import NetworkPage from './Page/NetworkPage.vue';
-import MontagePage from './Page/MontagePage.vue';
-import RapPage from './Page/RapPage.vue';
-import NotFound from './Page/NotFound.vue'; // Импортируем компонент NotFound
+
+const HomePage = () => import('./Page/HomePage.vue');
+const AboutPage = () => import('./Page/AboutPage.vue');
+const ContactPage = () => import('./Page/ContactPage.vue');
+const YourselfPage = () => import('./Page/YourselfPage.vue');
+const AdvertisingPage = () => import('./Page/AdvertisingPage.vue');
+const NetworkPage = () => import('./Page/NetworkPage.vue');
+const MontagePage = () => import('./Page/MontagePage.vue');
+const RapPage = () => import('./Page/RapPage.vue');
+const NotFound = () => import('./Page/NotFound.vue'); // Импортируем компонент NotFound динамически
 
 const routes = [
   { path: '/', component: HomePage, name: 'Home' },
