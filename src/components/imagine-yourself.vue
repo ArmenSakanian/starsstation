@@ -9,7 +9,20 @@
   
   <script>
   export default {
-    name: 'ImagineYourself'
+    name: 'ImagineYourself',
+    mounted() {
+    const scrollToId = this.$route.query.scrollToId;
+    if (scrollToId) {
+      this.$nextTick(() => {
+        const element = document.getElementById(scrollToId);
+        if (element) {
+          const yOffset = -50;
+          const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      });
+    }
+  }
   }
   </script>
   

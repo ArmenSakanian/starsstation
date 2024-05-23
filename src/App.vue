@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <!-- <LoadingScreen v-if="isLoading" /> -->
     <AppHeader />
     <main>
       <router-view />
@@ -79,14 +78,12 @@ h1 {
   font-weight: bold;
 }
 
-.learn-more {
-  border-radius: 100px 0 100px 10px;
-}
+
 
 .learn-more, .send {
   border: 2px solid white;
+  border-radius: 5px;
   background: linear-gradient(to top, rgb(255, 255, 255) 50%, transparent 50%);
-
   background-size: 100% 200%;
   color: white;
   font-size: 20px;
@@ -94,7 +91,7 @@ h1 {
   transition: .4s ease;
 }
 
-.learn-more, .send:hover {
+.learn-more:hover, .send:hover {
   border-radius: 0;
   background-position: 0 100%;
   color: black;
@@ -132,7 +129,7 @@ h1 {
 }
 
 .service_item button {
-  padding: 20px 70px;
+  padding: 20px 20px;
   font-style: italic;
 }
 
@@ -198,27 +195,28 @@ h1 {
 }
 
 
-.fa-brands {
+.custom-icon {
   font-size: 30px;
 }
 
-.fa-youtube:hover {
-  color: #c4302b;
+
+
+
+
+.instagram-icon:hover {
+  color: #cd486b;
 }
 
-.fa-whatsapp:hover {
-  color: #25D366;
+.facebook-icon:hover {
+  color: #1877F2; /* Цвет при наведении */
 }
 
-.fa-instagram:hover {
-  background: linear-gradient(45deg, #405DE6, #5B51D8, #833AB4, #C13584, #E1306C, #FD1D1D, #F56040, #777737, #FCAF45, #FFDC80);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+.whatsapp-icon:hover {
+  color: #128C7E; /* Цвет при наведении */
 }
 
-.fa-facebook:hover {
-  color: #3b5998;
+.youtube-icon:hover {
+  color: #FF0000; /* Цвет при наведении */
 }
 
 .social li {

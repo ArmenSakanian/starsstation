@@ -35,6 +35,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
         $mail = new PHPMailer(true);
 
+        // Установка кодировки
+        $mail->CharSet = 'UTF-8';
+        $mail->Encoding = 'base64';
+
         // Настройка SMTP
         $mail->isSMTP();
         $mail->Host = 'mail.infomaniak.com';
@@ -62,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->Body = $bodyContent;
 
         // Прикрепление файлов, если они есть
-        if (!empty($_FILES['files']['name'])) {
+        if (!empty($_FILES['files']['name'][0])) {
             foreach ($_FILES['files']['name'] as $key => $value) {
                 if ($_FILES['files']['error'][$key] == UPLOAD_ERR_OK) {
                     $tmp_name = $_FILES['files']['tmp_name'][$key];

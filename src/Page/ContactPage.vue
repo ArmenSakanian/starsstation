@@ -1,4 +1,8 @@
 <template>
+    <head>
+  <title>Contact</title>
+  <meta name="description" content="+79995470177 sakanyan2004@gmail.com">
+</head>
   <div class="contact">
     <div class="contact__container">
       <div class="contact__container-item info">
@@ -116,12 +120,12 @@ export default {
   computed: {
     displayedFileList() {
       if (this.showFullFileList) {
-        return this.fileList.join(', ');
+        return this.fileList.map(file => file.name).join(', ');
       }
       if (this.fileList.length > 3) {
-        return `${this.fileList.slice(0, 3).join(', ')}`;
+        return `${this.fileList.slice(0, 3).map(file => file.name).join(', ')}`;
       }
-      return this.fileList.join(', ');
+      return this.fileList.map(file => file.name).join(', ');
     }
   },
   created() {
@@ -137,7 +141,7 @@ export default {
       }
     },
     updateFileList(event) {
-      this.fileList = Array.from(event.target.files).map(file => file.name);
+      this.fileList = Array.from(event.target.files); // Сохраняем файлы
       this.showFullFileList = false;  // Скрыть полный список при выборе новых файлов
     },
     toggleFileList() {
@@ -159,7 +163,7 @@ export default {
           formData.append(key, this.inputs[key]);
         });
         this.fileList.forEach(file => {
-          formData.append('files[]', file);
+          formData.append('files[]', file); // Добавляем файлы в FormData
         });
         formData.append('csrf_token', this.csrfToken);
 
@@ -199,7 +203,7 @@ export default {
       return true;
     }
   }
-}
+};
 </script>
 
 

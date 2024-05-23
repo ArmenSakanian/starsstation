@@ -24,7 +24,7 @@ const router = createRouter({
   routes,
   scrollBehavior(to, from, savedPosition) {
     // Специальное поведение прокрутки для определённых маршрутов
-    if (to.name === 'contact' || to.name === 'montage') {
+    if (to.name === 'Contact' || to.name === 'Montage') {
       return savedPosition ? savedPosition : { top: 0 };
     }
     

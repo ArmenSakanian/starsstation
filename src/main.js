@@ -1,7 +1,8 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import { createI18n } from 'vue-i18n';
-import router from './router';  // Убедитесь, что экспорт router включает scrollBehavior
+import router from './router';
+import FontAwesomeIcon from './font-awesome';
 
 // Импорт переводов
 import en from './locales/en.json';
@@ -30,4 +31,5 @@ const i18n = createI18n({
 const app = createApp(App);
 app.use(router);
 app.use(i18n);
+app.component('font-awesome-icon', FontAwesomeIcon);
 app.mount('#app');

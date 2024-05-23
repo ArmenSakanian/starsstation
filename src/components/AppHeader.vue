@@ -94,18 +94,18 @@ export default {
       event.preventDefault();
     },
     scrollToElement(event, id) {
-      event.preventDefault();
-      if (this.$route.name === 'home') {
-        const element = document.getElementById(id);
-        if (element) {
-          const yOffset = -50;
-          const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-          window.scrollTo({ top: y, behavior: 'smooth' });
-        }
-      } else {
-        this.$router.push({ name: 'home', query: { scrollToId: id } });
-      }
-    },
+  event.preventDefault();
+  if (this.$route.name === 'Home') {
+    const element = document.getElementById(id);
+    if (element) {
+      const yOffset = -50;
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  } else {
+    this.$router.push({ name: 'Home', query: { scrollToId: id } });
+  }
+},
     changeLanguage(event, lang) {
       event.preventDefault();
       const scrollTop = window.pageYOffset;
@@ -214,7 +214,6 @@ nav ul li .router-link-active {
   position: absolute;
   min-width: 260px;
   background-color: #171717;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
   opacity: 0;
   transform: scaleY(0);
