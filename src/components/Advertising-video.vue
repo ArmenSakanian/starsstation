@@ -1,8 +1,9 @@
 <template>
     <div id="advertising-video" class="Services_container all">
       <div class="service_item">
-        <h1 >{{ $t('express your') }}<br>{{ $t('art in video') }}</h1>
+        <h1 >{{ $t('advertising video') }}</h1>
         <router-link to="/Advertising"><button  class="learn-more">{{ $t('learn more') }}</button></router-link>
+        <h3>{{ $t('advertising video-quotes') }}</h3>
       </div>
       
     </div>

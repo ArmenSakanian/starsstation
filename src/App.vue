@@ -9,19 +9,16 @@
 </template>
 
 <script>
-// import LoadingScreen from './components/LoadingScreen.vue';
 import AppHeader from './components/AppHeader.vue';
 import AppFooter from './components/AppFooter.vue';
 
 export default {
   name: 'App',
   components: {
-    // LoadingScreen,
     AppHeader,
     AppFooter
-  },
-  
-}
+  }
+};
 </script>
 
 <style>
@@ -120,6 +117,7 @@ h1 {
 }
 
 .service_item h1,
+.service_item h3,
 .service_item button {
   text-transform: uppercase;
 }
@@ -131,15 +129,21 @@ h1 {
 .service_item button {
   padding: 20px 20px;
   font-style: italic;
+  margin-bottom: 50px;
 }
 
-.service_item {
-  margin-right: 200px;
-  text-align: center;
+.service_item h3 {
+  letter-spacing: 3px;
 }
 
-.service_item:nth-child(odd) {
+.Services_container:nth-child(even) .service_item{
   margin-left: 200px;
+  text-align: start;
+}
+
+.Services_container:nth-child(odd) .service_item {
+  margin-right: 200px;
+  text-align: end;
 }
 
 

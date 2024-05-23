@@ -7,6 +7,7 @@ import AdvertisingPage from './Page/AdvertisingPage.vue';
 import NetworkPage from './Page/NetworkPage.vue';
 import MontagePage from './Page/MontagePage.vue';
 import RapPage from './Page/RapPage.vue';
+import NotFound from './Page/NotFound.vue'; // Импортируем компонент NotFound
 
 const routes = [
   { path: '/', component: HomePage, name: 'Home' },
@@ -16,21 +17,19 @@ const routes = [
   { path: '/Advertising', component: AdvertisingPage, name: 'Advertising' },
   { path: '/Network', component: NetworkPage, name: 'Network' },
   { path: '/Montage', component: MontagePage, name: 'Montage' },
-  { path: '/Rap', component: RapPage, name: 'Rap' }
+  { path: '/Rap', component: RapPage, name: 'Rap' },
+  { path: '/:catchAll(.*)', component: NotFound, name: 'NotFound' } // Добавляем маршрут для несуществующих страниц
 ];
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
-  scrollBehavior(to, from, savedPosition) {
-    // Специальное поведение прокрутки для определённых маршрутов
-    if (to.name === 'Contact' || to.name === 'Montage') {
-      return savedPosition ? savedPosition : { top: 0 };
+  scrollBehavior(to) {
+    if (to.name === 'Home') {
+      return false; // Оставляем прокрутку как есть для домашней страницы
+    } else {
+      return { top: 0 }; // Сбрасываем прокрутку для всех остальных страниц
     }
-    
-
-    // Для всех остальных маршрутов сохраняем текущее положение прокрутки
-    return savedPosition;
   }
 });
 
