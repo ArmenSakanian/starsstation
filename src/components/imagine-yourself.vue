@@ -32,7 +32,7 @@
 
   @media screen and (max-width: 1024px) {
     #imagine-yourself {
-    background-image:linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0.5)), url('@/assets/img-mobile/Imaginez-vous-mobile.png');
+    background-image:linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0.5)), url('@/assets/img-mobile/Imaginez-vous-mobile.webp');
   }
   }
   </style>

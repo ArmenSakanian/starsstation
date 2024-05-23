@@ -22,7 +22,7 @@ export default {
 
 @media screen and (max-width: 1024px) {
   #montage-video {
-  background-image: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0.5)), url('@/assets/img-mobile/Montage-video-mobile.png');
+  background-image: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0.5)), url('@/assets/img-mobile/Montage-video-mobile.webp');
 }
   }
 

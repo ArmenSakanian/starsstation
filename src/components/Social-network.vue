@@ -19,7 +19,7 @@
 
   @media screen and (max-width: 1024px) {
   #Social-network {
-  background-image: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0.5)), url('@/assets/img-mobile/Social-network-mobile.png');
+  background-image: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0.5)), url('@/assets/img-mobile/Social-network-mobile.webp');
 }
   }
 

@@ -21,7 +21,7 @@
 
   @media screen and (max-width: 1024px) {
   #advertising-video {
-  background-image: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0.5)), url('@/assets/img-mobile/Advertising-video-mobile.png');
+  background-image: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0.5)), url('@/assets/img-mobile/Advertising-video-mobile.webp');
 }
   }
   </style>
