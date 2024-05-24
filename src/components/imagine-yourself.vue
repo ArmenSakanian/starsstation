@@ -10,19 +10,7 @@
   <script>
   export default {
     name: 'ImagineYourself',
-    mounted() {
-    const scrollToId = this.$route.query.scrollToId;
-    if (scrollToId) {
-      this.$nextTick(() => {
-        const element = document.getElementById(scrollToId);
-        if (element) {
-          const yOffset = -50;
-          const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-          window.scrollTo({ top: y, behavior: 'smooth' });
-        }
-      });
-    }
-  }
+    inject: ['splitText'],
   }
   </script>
   
@@ -32,7 +20,7 @@
 
   @media screen and (max-width: 1024px) {
     #imagine-yourself {
-    background-image:linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0.5)), url('@/assets/img-mobile/Imaginez-vous-mobile.webp');
+    background-image:linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0.5)), url('@/assets/img-mobile/imagine-yourself-mobile.webp');
   }
   }
   </style>

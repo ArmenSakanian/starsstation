@@ -1,4 +1,3 @@
-<!-- AboutPage.vue -->
 <template>
   <head>
   <title> About Us</title>

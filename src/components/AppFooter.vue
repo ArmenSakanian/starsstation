@@ -5,7 +5,7 @@
         <img src="@/assets/logo/Logomark White.svg" alt="Logo">
       </div>
       <div class="footer__links footer__item">
-        <h1>Links</h1>
+        <h1>{{ $t('link') }}</h1>
         <div class="links ">
           <li><router-link to="/">{{ $t('home') }}</router-link></li>
           <li><router-link to="/About">{{ $t('about') }}</router-link></li>
@@ -13,7 +13,7 @@
         </div>
       </div>
       <div class="footer__service footer__item">
-        <h1>Service</h1>
+        <h1>{{ $t('service') }}</h1>
         <div class="service">
           <router-link to="/Yourself">
             <li><a href="#">{{ $t('imagine yourself') }}</a></li>
@@ -33,7 +33,7 @@
         </div>
       </div>
       <div class="footer__social footer__item">
-        <h1>Social</h1>
+        <h1>{{ $t('social') }}</h1>
         <div class="social">
           <li><a href="https://www.instagram.com/starsstationstudio?igsh=cDdmczIxc2ljMzJq"><font-awesome-icon
                 :icon="['fab', 'instagram']" class="custom-icon instagram-icon" /></a></li>
@@ -45,13 +45,23 @@
         </div>
       </div>
       <div class="footer__video footer__item" @click="toggleVideo">
-        <h1>INTRO</h1>
-
-        <div class="video">
-          <iframe width="100%" height="auto" src="https://www.youtube.com/embed/DzXGOEEFdG4?control=0"
-            title="YouTube video player" frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <h1>{{ $t('intro') }}</h1>
+        <div class="video-container">
+          <video ref="video" @click="togglePlay" @error="handleError">
+            <source :src="videoMp4" type="video/mp4">
+            <source :src="videoWebp" type="video/webp">
+            Your browser does not support the video tag.
+          </video>
+          <div v-if="error" class="video-error">{{ error }}</div>
+          <button v-if="!isPlaying" @click="togglePlay" class="play-button">
+            <font-awesome-icon icon="fa-solid fa-play" />
+          </button>
+          <button v-if="isPlaying" @click="togglePlay" class="pause-button">
+            <font-awesome-icon icon="fa-solid fa-pause" />
+          </button>
+          <button @click="setFullScreen" class="fullscreen-button">
+            <font-awesome-icon icon="fa-solid fa-expand" />
+          </button>
         </div>
       </div>
     </div>
@@ -64,6 +74,20 @@
 <script>
 export default {
   name: 'AppFooter',
+  data() {
+    return {
+      isPlaying: false,
+      error: null
+    }
+  },
+  computed: {
+    videoMp4() {
+      return require('@/assets/media/intro_1.mp4');
+    },
+    // videoWebp() {
+    //   return require('@/assets/media/your-video.webp');
+    // }
+  },
   methods: {
     scrollToElement(event, id) {
       event.preventDefault();
@@ -73,11 +97,35 @@ export default {
         const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
         window.scrollTo({ top: y, behavior: 'smooth' });
       }
+    },
+    togglePlay() {
+      const videoElement = this.$refs.video;
+      if (videoElement.paused) {
+        videoElement.play();
+        this.isPlaying = true;
+      } else {
+        videoElement.pause();
+        this.isPlaying = false;
+      }
+    },
+    handleError() {
+      this.error = 'Failed to load video. Please try again later.';
+    },
+    setFullScreen() {
+      const videoElement = this.$refs.video;
+      if (videoElement.requestFullscreen) {
+        videoElement.requestFullscreen();
+      } else if (videoElement.mozRequestFullScreen) { /* Firefox */
+        videoElement.mozRequestFullScreen();
+      } else if (videoElement.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+        videoElement.webkitRequestFullscreen();
+      } else if (videoElement.msRequestFullscreen) { /* IE/Edge */
+        videoElement.msRequestFullscreen();
+      }
     }
   }
 }
 </script>
-
 <style scoped>
 .footer__video {
   position: relative;
@@ -152,6 +200,57 @@ video {
   flex-direction: column;
   text-align: center;
   align-items: center;
+}
+
+.video-container {
+  width: 100%;
+  position: relative;
+}
+
+video {
+  width: 100%;
+  height: auto;
+  display: block;
+  cursor: pointer;
+  background-color: black;
+  border-radius: 20px;
+}
+
+.video-error {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 0, 0, 0.8);
+  color: white;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.play-button,
+.pause-button,
+.fullscreen-button {
+  position: absolute;
+  bottom: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.play-button {
+  left: 10px;
+}
+
+.pause-button {
+  left: 10px;
+}
+
+.fullscreen-button {
+  right: 10px;
 }
 
 

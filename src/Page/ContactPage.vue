@@ -1,8 +1,4 @@
 <template>
-    <head>
-  <title>Contact</title>
-  <meta name="description" content="+79995470177 sakanyan2004@gmail.com">
-</head>
   <div class="contact">
     <div class="contact__container">
       <div class="contact__container-item info">
@@ -11,13 +7,13 @@
           <div class="contact-group">
             <button class="contact-button">
               <span class="icon"><img src="@/assets/telephone.svg" alt=""></span>
-              <a href="tel:+79995470177">+7 999 547 01 77</a>
+              <a href="tel:++41779441743">+41 77 944 17 43</a>
             </button>
           </div>
           <div class="contact-group">
             <button class="contact-button">
               <span class="icon"><img src="@/assets/email.svg" alt=""></span>
-              <a href="mailto:sakanyan2004@gmail.com">sakanyan2004@gmail.com</a>
+              <a href="mailto:support@starsstation.ch">support@starsstation.ch</a>
             </button>
           </div>
           <div class="contact-group logo">
@@ -25,12 +21,12 @@
           </div>
           <div class="social">
             <li><a href="https://www.instagram.com/starsstationstudio?igsh=cDdmczIxc2ljMzJq"><font-awesome-icon
-                :icon="['fab', 'instagram']" class="custom-icon instagram-icon" /></a></li>
-          <li><a href="#"><font-awesome-icon :icon="['fab', 'facebook']" class="custom-icon facebook-icon" /></a></li>
-          <li><a href="https://wa.me/41779441743"><font-awesome-icon :icon="['fab', 'whatsapp']"
-                class="custom-icon whatsapp-icon" /></a></li>
-          <li><a href="https://www.youtube.com/@StarsStationStudio"><font-awesome-icon :icon="['fab', 'youtube']"
-                class="custom-icon youtube-icon" /></a></li>
+                  :icon="['fab', 'instagram']" class="custom-icon instagram-icon" /></a></li>
+            <li><a href="#"><font-awesome-icon :icon="['fab', 'facebook']" class="custom-icon facebook-icon" /></a></li>
+            <li><a href="https://wa.me/41779441743"><font-awesome-icon :icon="['fab', 'whatsapp']"
+                  class="custom-icon whatsapp-icon" /></a></li>
+            <li><a href="https://www.youtube.com/@StarsStationStudio"><font-awesome-icon :icon="['fab', 'youtube']"
+                  class="custom-icon youtube-icon" /></a></li>
           </div>
         </div>
       </div>
@@ -63,27 +59,35 @@
                 v-model="inputs.tel" ref="tel">
             </div>
             <div class="form-group">
-              <label :class="{ 'active': activeInputs.message, 'inactive': !activeInputs.message }" for="message">{{
-                $t('message') }}</label>
+              <label :class="{ 'active': activeInputs.message, 'inactive': !activeInputs.message }" for="message">
+                {{ $t('message') }}
+              </label>
               <textarea @focus="handleFocus('message')" @blur="handleBlur('message')" name="message" id="message"
-                rows="4" v-model="inputs.message" ref="message"></textarea>
+                rows="4" v-model="inputs.message" ref="message" @input="autoResize"></textarea>
             </div>
             <div class="form-controls">
               <div class="form-group file inline">
-                <input type="file" name="files[]" id="attachment" accept=".png, .jpeg, .jpg, .svg, .pdf, .docx" multiple
-                  @change="updateFileList">
-                <label for="attachment" class="btn-upload">{{ $t('attach') }}</label>
-                <span v-if="fileList.length > 0">
-                  {{ displayedFileList }}
-                  <a href="#" @click.prevent="toggleFileList" v-if="fileList.length > 3">
-                    {{ showFullFileList ? $t('hide') : `${$t('and')} ${fileList.length - 3} ${$t('more')}` }}
-                  </a>
-                </span>
+                <div class="file-drop-area" @dragover.prevent @drop.prevent="handleDrop">
+                  <input type="file" name="files[]" id="attachment" accept=".png, .jpeg, .jpg, .svg, .pdf, .docx"
+                    multiple @change="updateFileList">
+                  <label for="attachment" class="btn-upload">{{ $t('attach') }}</label>
+                </div>
               </div>
               <input type="hidden" v-model="csrfToken" name="csrf_token">
               <div class="form-group form-button inline">
-                <button class="send" type="submit">{{ $t('send') }}</button>
+                <button class="send" type="submit" :disabled="isSubmitting">
+  <span>{{ isSubmitting ? $t('sending') : $t('send') }}</span>
+  <span v-if="isSubmitting" class="loader"></span>
+</button>
               </div>
+            </div>
+            <div class="file-name">
+              <span v-if="fileList.length > 0">
+                {{ displayedFileList }}
+                <a href="#" @click.prevent="toggleFileList" v-if="fileList.length > 3">
+                  {{ showFullFileList ? $t('hide') : `${$t('and')} ${fileList.length - 3} ${$t('more')}` }}
+                </a>
+              </span>
             </div>
           </div>
         </form>
@@ -91,7 +95,6 @@
     </div>
   </div>
 </template>
-
 
 <script>
 import axios from 'axios';
@@ -117,7 +120,8 @@ export default {
       },
       fileList: [],
       showFullFileList: false,
-      csrfToken: ''
+      csrfToken: '',
+      isSubmitting: false // Новая переменная состояния для загрузки
     };
   },
   computed: {
@@ -126,7 +130,7 @@ export default {
         return this.fileList.map(file => file.name).join(', ');
       }
       if (this.fileList.length > 3) {
-        return `${this.fileList.slice(0, 3).map(file => file.name).join(', ')}`;
+        return `${this.fileList.slice(0, 3).map(file => file.name).join(', ')} ${this.$t('and')} ${this.fileList.length - 3} ${this.$t('more')}`;
       }
       return this.fileList.map(file => file.name).join(', ');
     }
@@ -147,6 +151,11 @@ export default {
       this.fileList = Array.from(event.target.files); // Сохраняем файлы
       this.showFullFileList = false;  // Скрыть полный список при выборе новых файлов
     },
+    handleDrop(event) {
+      const droppedFiles = event.dataTransfer.files;
+      this.fileList = Array.from(droppedFiles);
+      this.showFullFileList = false; // Скрыть полный список при выборе новых файлов
+    },
     toggleFileList() {
       this.showFullFileList = !this.showFullFileList;
     },
@@ -161,6 +170,7 @@ export default {
     },
     submitForm() {
       if (this.validateInputs()) {
+        this.isSubmitting = true; // Показать индикатор загрузки
         const formData = new FormData();
         Object.keys(this.inputs).forEach(key => {
           formData.append(key, this.inputs[key]);
@@ -178,6 +188,7 @@ export default {
               timer: 3000,
               showConfirmButton: false
             });
+            this.resetForm(); // Очистить поля формы
           })
           .catch(error => {
             Swal.fire({
@@ -187,6 +198,9 @@ export default {
               timer: 3000,
               showConfirmButton: false
             });
+          })
+          .finally(() => {
+            this.isSubmitting = false; // Скрыть индикатор загрузки
           });
       } else {
         Swal.fire({
@@ -197,6 +211,18 @@ export default {
         });
       }
     },
+    resetForm() {
+      this.inputs = {
+        name: '',
+        surname: '',
+        email: '',
+        tel: '',
+        message: ''
+      };
+      this.fileList = [];
+      this.showFullFileList = false;
+      this.$refs.form.reset(); // Сбросить форму
+    },
     validateInputs() {
       for (const key in this.inputs) {
         if (this.inputs[key].trim() === '') {
@@ -204,6 +230,19 @@ export default {
         }
       }
       return true;
+    },
+    autoResize() {
+      const textarea = this.$refs.message;
+      textarea.style.height = '50px'; // Устанавливаем высоту по умолчанию
+      textarea.style.height = textarea.scrollHeight + 'px'; // Устанавливаем новую высоту на основе содержимого
+    }
+  },
+  mounted() {
+    this.autoResize();
+  },
+  watch: {
+    'inputs.message': function () {
+      this.autoResize();
     }
   }
 };
@@ -216,8 +255,6 @@ export default {
 
 
 <style scoped>
-
-
 h1 {
   color: var(--text-color);
   font-size: 48px;
@@ -273,6 +310,7 @@ h1 {
   margin-left: 10px;
   font-size: 20px;
 }
+
 .contact-button {
   display: inline-flex;
   align-items: center;
@@ -341,7 +379,8 @@ form {
   justify-content: space-between;
 }
 
-.form-group, .file label {
+.feedback_container>.form-group,
+.file label {
   position: relative;
   margin-bottom: 50px;
 }
@@ -352,6 +391,14 @@ label {
   top: 20px;
 }
 
+input {
+  height: 50px;
+}
+
+textarea {
+  resize: none;
+}
+
 input,
 textarea {
   border: none;
@@ -360,7 +407,6 @@ textarea {
   font-size: 16px;
   color: var(--text-color);
   width: 100%;
-  height: 50px;
   outline: none;
 }
 
@@ -413,35 +459,42 @@ input[type="file"] {
 
 .btn-upload {
   display: inline-block;
-  padding: 8px 16px;
-  background-color: var(--active-color);
+  padding: 20px 50px;
   color: var(--text-color);
-  border: none;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  font-weight: bold;
+  border: 2px dashed var(--br-color);
+  transition: .5s ease;
 }
 
+
+
 .btn-upload:hover {
-  background-color: var(--active-dark-color);
+  background-color: var(--active-color);
+  border: 2px dashed var(--active-color);
+  color: var(--bg-main-color);
+
 }
 
 
 .form-controls {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  gap: 20px;
 }
 
 
 
-.file span {
+.file-name span {
   color: var(--text-color);
-    position: relative;
-    display: flex;
-    flex-direction: column;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
-.file span a {
+.file-name span a {
   color: var(--text-color);
   font-style: italic;
   font-weight: bold;
@@ -450,8 +503,26 @@ input[type="file"] {
 
 .form-button button {
   padding: 10px 20px;
-  position: relative;
-  top: 20px;
+}
+
+
+
+
+.loader {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid var(--br-color);
+  border-radius: 50%;
+  border-top-color: var(--active-color);
+  animation: spin 1s ease-in-out infinite;
+  margin-left: 8px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 input:-webkit-autofill,

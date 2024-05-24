@@ -3,17 +3,17 @@
     <div class="service_item">
       <h1 >{{ $t('montage video') }}</h1>
       <router-link  to="/Montage"><button  class="learn-more">{{ $t('learn more') }}</button></router-link>
-      <h3>{{ $t('montage video-quotes') }}</h3>
+      <div class="quotes">
+          <span v-for="(part, index) in splitText('montage video-quotes')" :key="index" :class="part.class">{{ part.text }}</span>
+        </div>
     </div>
-    <span class="arrow"><svg width="45" height="26" viewBox="0 0 45 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0.5 0.5L22.5 24.5L44.5 0.5" stroke="white" />
-      </svg></span>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'MontageVideo'
+  name: 'MontageVideo',
+  inject: ['splitText'],
 }
 </script>
 
@@ -22,7 +22,7 @@ export default {
 
 @media screen and (max-width: 1024px) {
   #montage-video {
-  background-image: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0.5)), url('@/assets/img-mobile/Montage-video-mobile.webp');
+  background-image: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0.5)), url('@/assets/img-mobile/montage-video-mobile.webp');
 }
   }
 

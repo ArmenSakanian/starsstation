@@ -13,11 +13,11 @@
               @mouseover="handleMouseOver" 
               @mouseleave="handleMouseLeave" 
               @click="handleMobileClick">
-            <a href="#services">{{ $t('services') }}</a>
+            <a href="#services">{{ $t('service') }}</a>
             <ul class="dropdown-content dropdown-content-service" :class="{ show: isMenuVisible }">
               <li><a href="#" @click="scrollToElement($event, 'imagine-yourself'); closeMenu()">{{ $t('imagine yourself') }}</a></li>
               <li><a href="#" @click="scrollToElement($event, 'advertising-video'); closeMenu()">{{ $t('advertising video') }}</a></li>
-              <li><a href="#" @click="scrollToElement($event, 'Social-network'); closeMenu()">{{ $t('social network') }}</a></li>
+              <li><a href="#" @click="scrollToElement($event, 'social-network'); closeMenu()">{{ $t('social network') }}</a></li>
               <li><a href="#" @click="scrollToElement($event, 'montage-video'); closeMenu()">{{ $t('montage') }} {{ $t('video') }}</a></li>
               <li><a href="#" @click="scrollToElement($event, 'rap-clip'); closeMenu()">{{ $t('rap clip') }}</a></li>
             </ul>
@@ -117,13 +117,19 @@ export default {
       });
     },
     toggleMenu() {
-      this.menuPosition = this.menuPosition === '100%' ? '0' : '100%';
-    },
-    closeMenu() {
-      if (this.isMenuOpen) {
-        this.menuPosition = '100%';
-      }
-    },
+    this.menuPosition = this.menuPosition === '100%' ? '0' : '100%';
+    if (this.isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  },
+  closeMenu() {
+    if (this.isMenuOpen) {
+      this.menuPosition = '100%';
+      document.body.style.overflow = '';
+    }
+  },
     handleMouseOver() {
       if (window.innerWidth >= 769) {
         this.isMenuVisible = true;
@@ -150,6 +156,7 @@ export default {
   }
 }
 </script>
+
 
 <style scoped>
 
@@ -365,7 +372,7 @@ svg.active #bottom {
 
   .dropdown-content {
     background-color: transparent;
-    padding-top: 20px;
+    padding: 20px 0px 200px 0;
     left: 0;
     right: 0;
     min-width: 50%;
@@ -380,7 +387,7 @@ svg.active #bottom {
 
   nav ul li a,
   nav li a {
-    font-size: 14px;
+    font-size: 18px;
   }
 
 }

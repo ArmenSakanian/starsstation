@@ -7,13 +7,13 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://www.starsstation.ch/about</loc>
+    <loc>https://www.starsstation.ch/About</loc>
     <lastmod>2024-05-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.starsstation.ch/contact</loc>
+    <loc>https://www.starsstation.ch/Contact</loc>
     <lastmod>2024-05-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

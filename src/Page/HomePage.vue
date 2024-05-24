@@ -3,6 +3,12 @@
   <title>Stars Station Studio</title>
   <meta name="description" content="IMAGINE YOURSELF, EXPRESS YOUR ART IN VIDEO, SOCIAL NETWORK, MONTAGE VIDEO, RAP CLIP">
 </head>
+    <div class="arrow_container">
+      <span class="arrow"><svg width="35" height="21" viewBox="0 0 45 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0.5 0.5L22.5 24.5L44.5 0.5" stroke="white" />
+      </svg>
+    </span>
+    </div>
     <div>
       <ImagineYourself/>
       <AdvertisingVideo/>
