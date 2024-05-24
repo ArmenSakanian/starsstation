@@ -2,7 +2,8 @@
 <template>
     <div  class="service__container-about all">
         <div class="services-about">
-            <h1>{{ $t('advertising video-quotes') }}</h1>
+            <h1>    <span v-for="(part, index) in splitText('advertising video-quotes')" :key="index" :class="part.class">{{ part.text }}</span>
+            </h1>
             <div class="about__text">
     <span v-for="(part, index) in splitText('advertising-about')" :key="index" :class="part.class">{{ part.text }}</span>
   </div>

@@ -68,8 +68,7 @@
             <div class="form-controls">
               <div class="form-group file inline">
                 <div class="file-drop-area" @dragover.prevent @drop.prevent="handleDrop">
-                  <input type="file" name="files[]" id="attachment" accept=".png, .jpeg, .jpg, .svg, .pdf, .docx"
-                    multiple @change="updateFileList">
+                  <input type="file" name="files[]" id="attachment" accept=".png, .jpeg, .jpg, .svg, .pdf, .docx, .txt, .odt, .xlsx, .ods, .gif, .bmp, .tiff, .pptx, .odp" multiple @change="updateFileList">
                   <label for="attachment" class="btn-upload">{{ $t('attach') }}</label>
                 </div>
               </div>
