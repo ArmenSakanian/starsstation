@@ -147,8 +147,54 @@ export default {
       }
     },
     updateFileList(event) {
-      this.fileList = Array.from(event.target.files); // Сохраняем файлы
-      this.showFullFileList = false;  // Скрыть полный список при выборе новых файлов
+      const newFiles = Array.from(event.target.files);
+      const allowedTypes = [
+        'image/png', 'image/jpeg', 'image/jpg', 'image/svg+xml',
+        'application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'text/plain', 'application/vnd.oasis.opendocument.text',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.oasis.opendocument.spreadsheet',
+        'image/gif', 'image/bmp', 'image/tiff', 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+        'application/vnd.oasis.opendocument.presentation'
+      ];
+      const maxSize = 10 * 1024 * 1024; // 10 MB
+
+      newFiles.forEach(file => {
+        console.log(`Checking file: ${file.name}, size: ${file.size}, type: ${file.type}`);
+        if (this.fileList.some(existingFile => existingFile.name === file.name)) {
+          Swal.fire({
+            icon: 'warning',
+            title: this.$t('duplicate_file'),
+            text: `${file.name} ${this.$t('is_already_selected')}.`,
+            timer: 3000,
+            showConfirmButton: false
+          });
+          return;
+        }
+        if (!allowedTypes.includes(file.type)) {
+          Swal.fire({
+            icon: 'warning',
+            title: this.$t('unsupported_file_type'),
+            text: `${file.name} ${this.$t('is_not_a_supported_file_type')}.`,
+            timer: 3000,
+            showConfirmButton: false
+          });
+          return;
+        }
+        if (file.size > maxSize) {
+          Swal.fire({
+            icon: 'warning',
+            title: this.$t('file_too_large'),
+            text: `${file.name} ${this.$t('is_too_large')}. ${this.$t('maximum_size_is')} 10 MB.`,
+            timer: 3000,
+            showConfirmButton: false
+          });
+          return;
+        }
+        this.fileList.push(file); // Добавляем файл только после всех проверок
+        console.log(`File added: ${file.name}`);
+      });
+
+      this.showFullFileList = false;
     },
     handleDrop(event) {
       const droppedFiles = event.dataTransfer.files;

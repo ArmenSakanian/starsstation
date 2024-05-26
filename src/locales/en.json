@@ -40,5 +40,9 @@
   "mail_sent_successfully": "Message sent successfully",
   "success_message": "Message sent successfully!",
   "error_message": "Error sending message",
-  "fill_all_fields": "Please fill all fields."
+  "fill_all_fields": "Please fill all fields.",
+  "unsupported_file_type":"Unsupported file type",
+  "duplicate_file": "Duplicate file",
+  "is_too_large": "Is too large"
+
 }

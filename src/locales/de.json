@@ -40,5 +40,7 @@
   "mail_sent_successfully": "Nachricht erfolgreich gesendet",
   "success_message": "Nachricht erfolgreich gesendet!",
   "error_message": "Fehler beim Senden der Nachricht",
-  "fill_all_fields": "Bitte füllen Sie alle Felder aus."
+  "fill_all_fields": "Bitte füllen Sie alle Felder aus.",
+  "unsupported_file_type":"Nicht unterstütztes Dateiformat"
+
 }
