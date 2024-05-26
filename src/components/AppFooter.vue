@@ -35,13 +35,10 @@
       <div class="footer__social footer__item">
         <h1>{{ $t('social') }}</h1>
         <div class="social">
-          <li><a href="https://www.instagram.com/starsstationstudio?igsh=cDdmczIxc2ljMzJq"><font-awesome-icon
-                :icon="['fab', 'instagram']" class="custom-icon instagram-icon" /></a></li>
-          <li><a href="#"><font-awesome-icon :icon="['fab', 'facebook']" class="custom-icon facebook-icon" /></a></li>
-          <li><a href="https://wa.me/41779441743"><font-awesome-icon :icon="['fab', 'whatsapp']"
-                class="custom-icon whatsapp-icon" /></a></li>
-          <li><a href="https://www.youtube.com/@StarsStationStudio"><font-awesome-icon :icon="['fab', 'youtube']"
-                class="custom-icon youtube-icon" /></a></li>
+          <li><a href="https://www.instagram.com/starsstationstudio?igsh=cDdmczIxc2ljMzJq"><i class="fab fa-instagram custom-icon instagram-icon"></i></a></li>
+<li><a href="#"><i class="fab fa-facebook custom-icon facebook-icon"></i></a></li>
+<li><a href="https://wa.me/41779441743"><i class="fab fa-whatsapp custom-icon whatsapp-icon"></i></a></li>
+<li><a href="https://www.youtube.com/@StarsStationStudio"><i class="fab fa-youtube custom-icon youtube-icon"></i></a></li>
         </div>
       </div>
       <div class="footer__video footer__item" @click="toggleVideo">
@@ -54,14 +51,14 @@
           </video>
           <div v-if="error" class="video-error">{{ error }}</div>
           <button v-if="!isPlaying" @click="togglePlay" class="play-button">
-            <font-awesome-icon icon="fa-solid fa-play" />
-          </button>
-          <button v-if="isPlaying" @click="togglePlay" class="pause-button">
-            <font-awesome-icon icon="fa-solid fa-pause" />
-          </button>
-          <button @click="setFullScreen" class="fullscreen-button">
-            <font-awesome-icon icon="fa-solid fa-expand" />
-          </button>
+    <i class="fas fa-play"></i>
+</button>
+<button v-if="isPlaying" @click="togglePlay" class="pause-button">
+    <i class="fas fa-pause"></i>
+</button>
+<button @click="setFullScreen" class="fullscreen-button">
+    <i class="fas fa-expand"></i>
+</button>
         </div>
       </div>
     </div>
@@ -82,8 +79,8 @@ export default {
   },
   computed: {
     videoMp4() {
-      return require('@/assets/media/intro_1.mp4');
-    },
+      return 'https://starsstation.ch/media/intro_1.b1d5cb81.mp4';
+    }
     // videoWebp() {
     //   return require('@/assets/media/your-video.webp');
     // }

@@ -17,7 +17,7 @@
             </button>
           </div>
           <div class="contact-group logo">
-            <img src="@/assets/logo/Logo-text_white.svg" alt="Logo">
+            <router-link to="/"><img src="@/assets/logo/Logo-text_white.svg" alt="Logo"></router-link>
           </div>
           <div class="social">
             <li><a href="https://www.instagram.com/starsstationstudio?igsh=cDdmczIxc2ljMzJq"><font-awesome-icon
@@ -67,23 +67,35 @@
             </div>
             <div class="form-controls">
               <div class="form-group file inline">
-                <div class="file-drop-area" @dragover.prevent @drop.prevent="handleDrop">
-                  <input type="file" name="files[]" id="attachment" accept=".png, .jpeg, .jpg, .svg, .pdf, .docx, .txt, .odt, .xlsx, .ods, .gif, .bmp, .tiff, .pptx, .odp" multiple @change="updateFileList">
+                <div class="file-drop-area" @dragover.prevent @drop="handleDrop">
+                  <input type="file" name="files[]" id="attachment"
+                    accept=".png, .jpeg, .jpg, .svg, .pdf, .docx, .txt, .odt, .xlsx, .ods, .gif, .bmp, .tiff, .pptx, .odp"
+                    multiple @change="updateFileList">
                   <label for="attachment" class="btn-upload">{{ $t('attach') }}</label>
                 </div>
               </div>
               <input type="hidden" v-model="csrfToken" name="csrf_token">
               <div class="form-group form-button inline">
                 <button class="send" type="submit" :disabled="isSubmitting">
-  <span>{{ isSubmitting ? $t('sending') : $t('send') }}</span>
-  <span v-if="isSubmitting" class="loader"></span>
-</button>
+                  <span>{{ isSubmitting ? $t('sending') : $t('send') }}</span>
+                  <span v-if="isSubmitting" class="loader"></span>
+                </button>
               </div>
             </div>
-            <div class="file-name">
-              <span v-if="fileList.length > 0">
-                {{ displayedFileList }}
-                <a href="#" @click.prevent="toggleFileList" v-if="fileList.length > 3">
+            <div class="consent">
+              <input type="checkbox" id="consent" v-model="consentGiven">
+              <p>{{ $t('agreement') }}<router-link to="/Privacy">{{ $t('privacy_policy_title') }}</router-link>
+              </p>
+            </div>
+            <div class="file-list">
+              <ul v-if="fileList.length > 0">
+                <li v-for="(file, index) in displayedFileList" :key="index">
+                  {{ file.name }}
+                  <button @click.prevent="removeFile(index)" class="remove-file">x</button>
+                </li>
+              </ul>
+              <span v-if="fileList.length > 3">
+                <a href="#" @click.prevent="toggleFileList">
                   {{ showFullFileList ? $t('hide') : `${$t('and')} ${fileList.length - 3} ${$t('more')}` }}
                 </a>
               </span>
@@ -96,9 +108,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-import Swal from 'sweetalert2';
-
 export default {
   name: 'ContactPage',
   data() {
@@ -120,18 +129,16 @@ export default {
       fileList: [],
       showFullFileList: false,
       csrfToken: '',
-      isSubmitting: false // Новая переменная состояния для загрузки
+      isSubmitting: false, // Новая переменная состояния для загрузки
+      consentGiven: false // Новая переменная состояния для согласия
     };
   },
   computed: {
     displayedFileList() {
       if (this.showFullFileList) {
-        return this.fileList.map(file => file.name).join(', ');
+        return this.fileList;
       }
-      if (this.fileList.length > 3) {
-        return `${this.fileList.slice(0, 3).map(file => file.name).join(', ')} ${this.$t('and')} ${this.fileList.length - 3} ${this.$t('more')}`;
-      }
-      return this.fileList.map(file => file.name).join(', ');
+      return this.fileList.slice(0, 3);
     }
   },
   created() {
@@ -197,9 +204,49 @@ export default {
       this.showFullFileList = false;
     },
     handleDrop(event) {
-      const droppedFiles = event.dataTransfer.files;
-      this.fileList = Array.from(droppedFiles);
-      this.showFullFileList = false; // Скрыть полный список при выборе новых файлов
+      event.preventDefault();
+      const droppedFiles = Array.from(event.dataTransfer.files);
+      const allowedTypes = [
+        'image/png', 'image/jpeg', 'image/jpg', 'image/svg+xml',
+        'application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'text/plain', 'application/vnd.oasis.opendocument.text',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.oasis.opendocument.spreadsheet',
+        'image/gif', 'image/bmp', 'image/tiff', 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+        'application/vnd.oasis.opendocument.presentation'
+      ];
+      const maxSize = 10 * 1024 * 1024; // 10 MB
+      const errors = []; // Массив для сбора ошибок
+
+      droppedFiles.forEach(file => {
+        if (this.fileList.some(existingFile => existingFile.name === file.name)) {
+          errors.push(`${file.name} ${this.$t('is_already_selected')}`);
+          return;
+        }
+        if (!allowedTypes.includes(file.type)) {
+          errors.push(`${file.name} ${this.$t('is_not_a_supported_file_type')}`);
+          return;
+        }
+        if (file.size > maxSize) {
+          errors.push(`${file.name} ${this.$t('is_too_large')}. ${this.$t('maximum_size_is')} 10 MB.`);
+          return;
+        }
+        this.fileList.push(file); // Добавляем файл только после всех проверок
+      });
+
+      if (errors.length > 0) {
+        Swal.fire({
+          icon: 'warning',
+          title: this.$t('file_upload_error'),
+          html: errors.join('<br>'),
+          timer: 3000,
+          showConfirmButton: false
+        });
+      }
+
+      this.showFullFileList = false;
+    },
+    removeFile(index) {
+      this.fileList.splice(index, 1);
     },
     toggleFileList() {
       this.showFullFileList = !this.showFullFileList;
@@ -214,6 +261,17 @@ export default {
         });
     },
     submitForm() {
+      if (!this.consentGiven) {
+        Swal.fire({
+          icon: 'warning',
+          title: this.$t('required_consent'),
+          text: this.$t('you_must_agree_to_the_processing_of_personal_data'),
+          timer: 3000,
+          showConfirmButton: false
+        });
+        return;
+      }
+
       if (this.validateInputs()) {
         this.isSubmitting = true; // Показать индикатор загрузки
         const formData = new FormData();
@@ -266,6 +324,7 @@ export default {
       };
       this.fileList = [];
       this.showFullFileList = false;
+      this.consentGiven = false;
       this.$refs.form.reset(); // Сбросить форму
     },
     validateInputs() {
@@ -292,6 +351,10 @@ export default {
   }
 };
 </script>
+
+
+
+
 
 
 
@@ -504,7 +567,7 @@ input[type="file"] {
 
 .btn-upload {
   display: inline-block;
-  padding: 20px 50px;
+  padding: 20px 10px;
   color: var(--text-color);
   border-radius: 4px;
   cursor: pointer;
@@ -532,17 +595,86 @@ input[type="file"] {
 
 
 
-.file-name span {
-  color: var(--text-color);
-  position: relative;
-  display: flex;
-  flex-direction: column;
+.file-list ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 
-.file-name span a {
+.file-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+  padding: 5px;
+  border: 1px solid var(--br-color);
+  border-radius: 4px;
+}
+
+.remove-file {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 0 10px;
+}
+
+.remove-file:hover {
+  color: var(--active-color);
+}
+
+.file-list span a {
   color: var(--text-color);
   font-style: italic;
   font-weight: bold;
+  cursor: pointer;
+}
+
+
+.consent {
+  display: flex;
+  align-items: center;
+  margin: 20px auto
+}
+
+.consent input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--br-color);
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  margin-right: 10px;
+}
+
+.consent input[type="checkbox"]:checked {
+  background-color: var(--active-color);
+  border-color: var(--active-color);
+}
+
+.consent input[type="checkbox"]:checked::after {
+  content: '✔';
+  color: var(--text-color);
+  font-size: 16px;
+  position: absolute;
+  top: -5px;
+    left: 2px;
+}
+
+.consent p {
+  color: var(--text-color);
+  margin: 0; 
+}
+
+.consent a {
+  color: var(--text-color);
+  margin-left: 10px;
 }
 
 

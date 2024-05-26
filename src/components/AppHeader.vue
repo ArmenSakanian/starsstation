@@ -2,7 +2,7 @@
   <header>
     <router-link></router-link>
     <div class="header-container">
-      <router-link to="/"><img src="@/assets/logo/Logo-Full_white.svg" alt="Stars Station Logo" class="logo" /></router-link>
+      <router-link to="/"><img src="@/assets/logo/Logo-Full_white.svg" alt="Logo" class="logo" /></router-link>
       <nav class="menu" :style="{ left: menuPosition }">
         <div class="header__bottom"></div>
         <ul class="menu-ul">
@@ -215,6 +215,7 @@ nav ul li a:hover {
 
 nav ul li .router-link-active {
     color: var(--active-color);
+    font-weight: bold;
   }
 .dropdown-content {
   display: block;
@@ -242,9 +243,10 @@ nav ul li .router-link-active {
 }
 
 .dropdown-content a:hover {
-  background-color: var(--text-color);
+  background-color: var(--bg-main-color);
   color: var(--active-color);
   transition: background-color 0.8s, color 0.8s;
+  font-weight: bold
 }
 
 
