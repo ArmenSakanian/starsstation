@@ -2,8 +2,8 @@
   <div class="not-found">
     <div class="content">
       <img src="@/assets/notfound.png" alt="Page not found" class="error-image" />
-      <h1>Страница не найдена</h1>
-      <p>Извините, но страница, которую вы ищете, не существует.</p>
+      <h1>{{ $t('notfound') }}</h1>
+      <p>{{ $t('notfound-text') }}</p>
     </div>
   </div>
 </template>

@@ -1,4 +1,3 @@
-<!-- AboutPage.vue -->
 <template>
     <div  class="service__container-about all">
         <div class="services-about">

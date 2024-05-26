@@ -288,7 +288,8 @@ top: 100%;
 }
 
 .social li:hover {
-  transform: translateY(-15px);
+  transform: translateY(-15px) scale(1.3);
+
 }
 
 .links li,
