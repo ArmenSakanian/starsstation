@@ -1,10 +1,12 @@
 <template>
-    <div id="imagine-yourself" class="Services_container all">
-      <div  class="service_item">
-        <h1>{{ $t('imagine yourself') }}</h1>
-        <router-link  to="/Yourself"><button class="learn-more">{{ $t('learn more') }}</button></router-link>
-      </div>
-    </div>
+<div id="imagine-yourself" class="Services_container all">
+  <div class="service_item">
+    <h1>{{ $t('imagine yourself') }}</h1>
+    <router-link to="/Yourself">
+      <button class="learn-more" aria-label="Learn more about imagining yourself">{{ $t('learn more') }}</button>
+    </router-link>
+  </div>
+</div>
   </template>
   
   <script>

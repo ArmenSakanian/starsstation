@@ -4,36 +4,39 @@
     <div class="header-container">
       <router-link to="/"><img src="@/assets/logo/Logo-Full_white.svg" alt="Logo" class="logo" /></router-link>
       <nav class="menu" :style="{ left: menuPosition }">
-        <div class="header__bottom"></div>
-        <ul class="menu-ul">
-          <li><router-link to="/" @click="closeMenu">{{ $t('home') }}</router-link></li>
-          <li><router-link to="/about" @click="closeMenu">{{ $t('about') }}</router-link></li>
-          <li><router-link to="/contact" @click="closeMenu">{{ $t('contact') }}</router-link></li>
-          <li class="dropdown" menu ul li
-              @mouseover="handleMouseOver" 
-              @mouseleave="handleMouseLeave" 
-              @click="handleMobileClick">
-            <a href="#services">{{ $t('service') }}</a>
-            <ul class="dropdown-content dropdown-content-service" :class="{ show: isMenuVisible }">
-              <li><a href="#" @click="scrollToElement($event, 'imagine-yourself'); closeMenu()">{{ $t('imagine yourself') }}</a></li>
-              <li><a href="#" @click="scrollToElement($event, 'advertising-video'); closeMenu()">{{ $t('advertising video') }}</a></li>
-              <li><a href="#" @click="scrollToElement($event, 'social-network'); closeMenu()">{{ $t('social network') }}</a></li>
-              <li><a href="#" @click="scrollToElement($event, 'montage-video'); closeMenu()">{{ $t('montage') }} {{ $t('video') }}</a></li>
-              <li><a href="#" @click="scrollToElement($event, 'rap-clip'); closeMenu()">{{ $t('rap clip') }}</a></li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
-      <nav class="language-menu">
-        <li class="language">
-          <a class="language-active" href="#" @click="handleActiveLanguageClick($event)">{{ $i18n.locale.toUpperCase() }}</a>
-          <ul class="language-inactive">
-            <li v-for="lang in filteredLanguages" :key="lang">
-              <a href="#" @click="changeLanguage($event, lang)">{{ lang.toUpperCase() }}</a>
-            </li>
-          </ul>
+  <div class="header__bottom"></div>
+  <ul class="menu-ul">
+    <li><router-link to="/" @click="closeMenu">{{ $t('home') }}</router-link></li>
+    <li><router-link to="/about" @click="closeMenu">{{ $t('about') }}</router-link></li>
+    <li><router-link to="/contact" @click="closeMenu">{{ $t('contact') }}</router-link></li>
+    <li class="dropdown" 
+        @mouseover="handleMouseOver" 
+        @mouseleave="handleMouseLeave" 
+        @click="handleMobileClick">
+      <a href="#services">{{ $t('service') }}</a>
+      <ul class="dropdown-content dropdown-content-service" :class="{ show: isMenuVisible }">
+        <li><a href="#" @click="scrollToElement($event, 'imagine-yourself'); closeMenu()">{{ $t('imagine yourself') }}</a></li>
+        <li><a href="#" @click="scrollToElement($event, 'advertising-video'); closeMenu()">{{ $t('advertising video') }}</a></li>
+        <li><a href="#" @click="scrollToElement($event, 'social-network'); closeMenu()">{{ $t('social network') }}</a></li>
+        <li><a href="#" @click="scrollToElement($event, 'montage-video'); closeMenu()">{{ $t('montage') }} {{ $t('video') }}</a></li>
+        <li><a href="#" @click="scrollToElement($event, 'rap-clip'); closeMenu()">{{ $t('rap clip') }}</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+<nav class="language-menu">
+  <ul>
+    <li class="language">
+      <a class="language-active" href="#" @click="handleActiveLanguageClick($event)">{{ $i18n.locale.toUpperCase() }}</a>
+      <ul class="language-inactive">
+        <li v-for="lang in filteredLanguages" :key="lang">
+          <a href="#" @click="changeLanguage($event, lang)">{{ lang.toUpperCase() }}</a>
         </li>
-      </nav>
+      </ul>
+    </li>
+  </ul>
+</nav>
       <div class="icon" @click="toggleMenu">
         <svg :class="{ 'active': isMenuOpen }" width="30" height="30" viewBox="0 0 32 42" xmlns="http://www.w3.org/2000/svg">
           <g transform="matrix(1,0,0,1,-389.5,-264.004)">

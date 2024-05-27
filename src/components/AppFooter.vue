@@ -10,6 +10,7 @@
           <li><router-link to="/">{{ $t('home') }}</router-link></li>
           <li><router-link to="/About">{{ $t('about') }}</router-link></li>
           <li><router-link to="/Contact">{{ $t('contact') }}</router-link></li>
+          <li><router-link to="/Privacy">{{ $t('privacy_policy_title') }}</router-link></li>
         </div>
       </div>
       <div class="footer__service footer__item">
@@ -35,32 +36,40 @@
       <div class="footer__social footer__item">
         <h1>{{ $t('social') }}</h1>
         <div class="social">
-          <li><a href="https://www.instagram.com/starsstationstudio?igsh=cDdmczIxc2ljMzJq"><i class="fab fa-instagram custom-icon instagram-icon"></i></a></li>
-<li><a href="#"><i class="fab fa-facebook custom-icon facebook-icon"></i></a></li>
-<li><a href="https://wa.me/41779441743"><i class="fab fa-whatsapp custom-icon whatsapp-icon"></i></a></li>
-<li><a href="https://www.youtube.com/@StarsStationStudio"><i class="fab fa-youtube custom-icon youtube-icon"></i></a></li>
+          <li>
+            <a href="https://www.instagram.com/starsstationstudio?igsh=cDdmczIxc2ljMzJq" aria-label="Instagram">
+              <i class="fab fa-instagram custom-icon instagram-icon"></i>
+            </a>
+          </li>
+          <li>
+            <a href="#" aria-label="Facebook">
+              <i class="fab fa-facebook custom-icon facebook-icon"></i>
+            </a>
+          </li>
+          <li>
+            <a href="https://wa.me/41779441743" aria-label="WhatsApp">
+              <i class="fab fa-whatsapp custom-icon whatsapp-icon"></i>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.youtube.com/@StarsStationStudio" aria-label="YouTube">
+              <i class="fab fa-youtube custom-icon youtube-icon"></i>
+            </a>
+          </li>
         </div>
       </div>
       <div class="footer__video footer__item" @click="toggleVideo">
-        <h1>{{ $t('intro') }}</h1>
-        <div class="video-container">
-          <video ref="video" @click="togglePlay" @error="handleError">
-            <source :src="videoMp4" type="video/mp4">
-            <source :src="videoWebp" type="video/webp">
-            Your browser does not support the video tag.
-          </video>
-          <div v-if="error" class="video-error">{{ error }}</div>
-          <button v-if="!isPlaying" @click="togglePlay" class="play-button">
-    <i class="fas fa-play"></i>
-</button>
-<button v-if="isPlaying" @click="togglePlay" class="pause-button">
-    <i class="fas fa-pause"></i>
-</button>
-<button @click="setFullScreen" class="fullscreen-button">
-    <i class="fas fa-expand"></i>
-</button>
-        </div>
-      </div>
+    <h1>{{ $t('intro') }}</h1>
+    <div class="video-container">
+      <video ref="video" controls @error="handleError">
+        <source :src="videoMp4" type="video/mp4">
+        <source :src="videoWebp" type="video/webp">
+        Your browser does not support the video tag.
+        <track src="https://starsstation.ch/subtitles.vtt" kind="captions" srclang="en" label="English">
+      </video>
+      <div v-if="error" class="video-error">{{ error }}</div>
+    </div>
+  </div>
     </div>
     <div class="copyright">
       ©2024 Stars Station Studio | All Rights Reserved
@@ -73,7 +82,6 @@ export default {
   name: 'AppFooter',
   data() {
     return {
-      isPlaying: false,
       error: null
     }
   },
@@ -86,39 +94,8 @@ export default {
     // }
   },
   methods: {
-    scrollToElement(event, id) {
-      event.preventDefault();
-      const element = document.getElementById(id);
-      if (element) {
-        const yOffset = -50;
-        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-        window.scrollTo({ top: y, behavior: 'smooth' });
-      }
-    },
-    togglePlay() {
-      const videoElement = this.$refs.video;
-      if (videoElement.paused) {
-        videoElement.play();
-        this.isPlaying = true;
-      } else {
-        videoElement.pause();
-        this.isPlaying = false;
-      }
-    },
     handleError() {
       this.error = 'Failed to load video. Please try again later.';
-    },
-    setFullScreen() {
-      const videoElement = this.$refs.video;
-      if (videoElement.requestFullscreen) {
-        videoElement.requestFullscreen();
-      } else if (videoElement.mozRequestFullScreen) { /* Firefox */
-        videoElement.mozRequestFullScreen();
-      } else if (videoElement.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-        videoElement.webkitRequestFullscreen();
-      } else if (videoElement.msRequestFullscreen) { /* IE/Edge */
-        videoElement.msRequestFullscreen();
-      }
     }
   }
 }
@@ -255,7 +232,7 @@ video {
   background-color: var(--bg-main-color);
   padding: 10px;
   text-align: center;
-  color: var(--text-secondary-color);
+  color: var(--text-color);
 }
 
 @media screen and (max-width: 1024px) {

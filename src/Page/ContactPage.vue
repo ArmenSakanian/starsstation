@@ -5,17 +5,23 @@
         <h1>{{ $t('contact') }}</h1>
         <div class="contact-info">
           <div class="contact-group">
-            <button class="contact-button">
-              <span class="icon"><img src="@/assets/telephone.svg" alt=""></span>
-              <a href="tel:++41779441743">+41 77 944 17 43</a>
-            </button>
-          </div>
-          <div class="contact-group">
-            <button class="contact-button">
-              <span class="icon"><img src="@/assets/email.svg" alt=""></span>
-              <a href="mailto:support@starsstation.ch">support@starsstation.ch</a>
-            </button>
-          </div>
+  <button class="contact-button" aria-label="Call us at +41 77 944 17 43">
+    <span class="icon">
+      <img src="@/assets/telephone.svg" alt="Telephone icon">
+    </span>
+    <a href="tel:++41779441743">+41 77 944 17 43</a>
+  </button>
+</div>
+
+<div class="contact-group">
+  <button class="contact-button" aria-label="Email us at support@starsstation.ch">
+    <span class="icon">
+      <img src="@/assets/email.svg" alt="Email icon">
+    </span>
+    <a href="mailto:support@starsstation.ch">support@starsstation.ch</a>
+  </button>
+</div>
+
           <div class="contact-group logo">
             <router-link to="/"><img src="@/assets/logo/Logo-text_white.svg" alt="Logo"></router-link>
           </div>
@@ -76,10 +82,10 @@
               </div>
               <input type="hidden" v-model="csrfToken" name="csrf_token">
               <div class="form-group form-button inline">
-                <button class="send" type="submit" :disabled="isSubmitting">
-                  <span>{{ isSubmitting ? $t('sending') : $t('send') }}</span>
-                  <span v-if="isSubmitting" class="loader"></span>
-                </button>
+                <button class="send" type="submit" :disabled="isSubmitting" aria-label="Send message">
+  <span>{{ isSubmitting ? $t('sending') : $t('send') }}</span>
+  <span v-if="isSubmitting" class="loader" aria-label="Loading..."></span>
+</button>
               </div>
             </div>
             <div class="consent">
@@ -91,7 +97,9 @@
               <ul v-if="fileList.length > 0">
                 <li v-for="(file, index) in displayedFileList" :key="index">
                   {{ file.name }}
-                  <button @click.prevent="removeFile(index)" class="remove-file">x</button>
+                  <button @click.prevent="removeFile(index)" class="remove-file" aria-label="Remove file">
+  x
+</button>
                 </li>
               </ul>
               <span v-if="fileList.length > 3">

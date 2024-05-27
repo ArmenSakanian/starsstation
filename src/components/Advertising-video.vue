@@ -2,7 +2,7 @@
     <div id="advertising-video" class="Services_container all">
       <div class="service_item">
         <h1 >{{ $t('advertising video') }}</h1>
-        <router-link to="/Advertising"><button  class="learn-more">{{ $t('learn more') }}</button></router-link>
+        <router-link to="/Advertising"><button  class="learn-more" aria-label="Learn more about Advertsing video">{{ $t('learn more') }}</button></router-link>
         <div class="quotes">
           <span v-for="(part, index) in splitText('advertising video-quotes')" :key="index" :class="part.class">{{ part.text }}</span>
         </div>
