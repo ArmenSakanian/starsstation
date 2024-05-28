@@ -7,8 +7,9 @@
   <div class="header__bottom"></div>
   <ul class="menu-ul">
     <li><router-link to="/" @click="closeMenu">{{ $t('home') }}</router-link></li>
-    <li><router-link to="/about" @click="closeMenu">{{ $t('about') }}</router-link></li>
-    <li><router-link to="/contact" @click="closeMenu">{{ $t('contact') }}</router-link></li>
+    <li><router-link to="/About" @click="closeMenu">{{ $t('about') }}</router-link></li>
+    <li><router-link to="/Contact" @click="closeMenu">{{ $t('contact') }}</router-link></li>
+    <li><router-link to="/Portfolio" @click="closeMenu">{{ $t('contact') }}</router-link></li>
     <li class="dropdown" 
         @mouseover="handleMouseOver" 
         @mouseleave="handleMouseLeave" 
@@ -188,6 +189,7 @@ export default {
 }
 
 .logo {
+  width: 140px;
   height: 60px;
   margin-right: 30px;
 }

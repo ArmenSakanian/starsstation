@@ -7,72 +7,76 @@
       <div class="footer__links footer__item">
         <h1>{{ $t('link') }}</h1>
         <div class="links ">
-          <li><router-link to="/">{{ $t('home') }}</router-link></li>
-          <li><router-link to="/About">{{ $t('about') }}</router-link></li>
-          <li><router-link to="/Contact">{{ $t('contact') }}</router-link></li>
-          <li><router-link to="/Privacy">{{ $t('privacy_policy_title') }}</router-link></li>
+          <nav>
+            <ul>
+              <li><router-link to="/">{{ $t('home') }}</router-link></li>
+              <li><router-link to="/About">{{ $t('about') }}</router-link></li>
+              <li><router-link to="/Contact">{{ $t('contact') }}</router-link></li>
+              <li><router-link to="/Privacy">{{ $t('privacy_policy_title') }}</router-link></li>
+            </ul>
+          </nav>
         </div>
       </div>
       <div class="footer__service footer__item">
         <h1>{{ $t('service') }}</h1>
         <div class="service">
-          <router-link to="/Yourself">
-            <li><a href="#">{{ $t('imagine yourself') }}</a></li>
-          </router-link>
-          <router-link to="/Advertising">
-            <li><a href="#">{{ $t('advertising video') }}</a></li>
-          </router-link>
-          <router-link to="/Network">
-            <li><a href="#">{{ $t('social network') }}</a></li>
-          </router-link>
-          <router-link to="/Montage">
-            <li><a href="#">{{ $t('montage') }} {{ $t('video') }}</a></li>
-          </router-link>
-          <router-link to="/Rap">
-            <li><a href="#">{{ $t('rap clip') }}</a></li>
-          </router-link>
+
+          <nav>
+            <ul>
+              <li><router-link to="/Yourself">{{ $t('imagine yourself') }}</router-link></li>
+              <li><router-link to="/Advertising">{{ $t('advertising video') }}</router-link></li>
+              <li><router-link to="/Network">{{ $t('social network') }}</router-link></li>
+              <li><router-link to="/Montage">{{ $t('montage video') }}</router-link></li>
+              <li><router-link to="/Rap">{{ $t('rap clip') }}</router-link></li>
+            </ul>
+          </nav>
+
         </div>
       </div>
-      <div class="footer__social footer__item">
+      <div class="footer__social footer__item" >
         <h1>{{ $t('social') }}</h1>
         <div class="social">
-          <li>
-            <a href="https://www.instagram.com/starsstationstudio?igsh=cDdmczIxc2ljMzJq" aria-label="Instagram">
-              <i class="fab fa-instagram custom-icon instagram-icon"></i>
-            </a>
-          </li>
-          <li>
-            <a href="#" aria-label="Facebook">
-              <i class="fab fa-facebook custom-icon facebook-icon"></i>
-            </a>
-          </li>
-          <li>
-            <a href="https://wa.me/41779441743" aria-label="WhatsApp">
-              <i class="fab fa-whatsapp custom-icon whatsapp-icon"></i>
-            </a>
-          </li>
-          <li>
-            <a href="https://www.youtube.com/@StarsStationStudio" aria-label="YouTube">
-              <i class="fab fa-youtube custom-icon youtube-icon"></i>
-            </a>
-          </li>
+          <nav>
+            <ul>
+              <li>
+                <a href="https://www.instagram.com/starsstationstudio?igsh=cDdmczIxc2ljMzJq" aria-label="Instagram">
+                  <i class="fab fa-instagram custom-icon instagram-icon"></i>
+                </a>
+              </li>
+              <li>
+                <a href="#" aria-label="Facebook">
+                  <i class="fab fa-facebook custom-icon facebook-icon"></i>
+                </a>
+              </li>
+              <li>
+                <a href="https://wa.me/41779441743" aria-label="WhatsApp">
+                  <i class="fab fa-whatsapp custom-icon whatsapp-icon"></i>
+                </a>
+              </li>
+              <li>
+                <a href="https://www.youtube.com/@StarsStationStudio" aria-label="YouTube">
+                  <i class="fab fa-youtube custom-icon youtube-icon"></i>
+                </a>
+              </li>
+            </ul>
+          </nav>
         </div>
       </div>
-      <div class="footer__video footer__item" @click="toggleVideo">
-    <h1>{{ $t('intro') }}</h1>
-    <div class="video-container">
-      <video ref="video" controls @error="handleError">
-        <source :src="videoMp4" type="video/mp4">
-        <source :src="videoWebp" type="video/webp">
-        Your browser does not support the video tag.
-        <track src="https://starsstation.ch/subtitles.vtt" kind="captions" srclang="en" label="English">
-      </video>
-      <div v-if="error" class="video-error">{{ error }}</div>
-    </div>
-  </div>
+      <div class="footer__video footer__item" @click="toggleVideo" >
+        <h1>{{ $t('intro') }}</h1>
+        <div class="video-container">
+          <video ref="video" controls @error="handleError">
+            <source :src="videoMp4" type="video/mp4">
+            <source :src="videoWebp" type="video/webp">
+            Your browser does not support the video tag.
+            <track src="https://starsstation.ch/subtitles.vtt" kind="captions" srclang="en" label="English">
+          </video>
+          <div v-if="error" class="video-error">{{ error }}</div>
+        </div>
+      </div>
     </div>
     <div class="copyright">
-      ©2024 Stars Station Studio | All Rights Reserved
+      <p>©2024 Stars Station Studio | All Rights Reserved</p>
     </div>
   </footer>
 </template>
@@ -111,7 +115,7 @@ export default {
 
 video {
   width: 100%;
-  height: auto;
+  height: 50%;
 }
 
 
@@ -119,7 +123,6 @@ video {
 
 
 .footer__item {
-  width: 100%;
   margin-bottom: 15px;
 }
 
@@ -128,7 +131,7 @@ video {
   color: var(--text-color);
   padding: 20px 50px 0 50px;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   width: 100%;
   align-items: flex-start
 }
@@ -145,6 +148,7 @@ video {
 
 .footer__logo img {
   width: 250px;
+  height: 270px;
 }
 
 .footer__links,
@@ -182,7 +186,8 @@ video {
 }
 
 video {
-  width: 100%;
+  max-width: 500px;
+  max-height: 250px;
   height: auto;
   display: block;
   cursor: pointer;
@@ -233,6 +238,7 @@ video {
   padding: 10px;
   text-align: center;
   color: var(--text-color);
+  font-size: 14px;
 }
 
 @media screen and (max-width: 1024px) {
@@ -249,10 +255,10 @@ video {
   }
 
 
-  .footer__item .links,
-  .footer__item .service,
-  .footer__item .social,
-  .footer__item .video {
+  .footer__item .links nav ul,
+  .footer__item .service nav ul,
+  .footer__item .social nav ul,
+  .footer__item .video nav ul {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;

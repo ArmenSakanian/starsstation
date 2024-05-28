@@ -1,26 +1,26 @@
 <template>
   <div class="contact">
     <div class="contact__container">
-      <div class="contact__container-item info">
+      <div class="contact__container-item info" >
         <h1>{{ $t('contact') }}</h1>
         <div class="contact-info">
           <div class="contact-group">
-  <button class="contact-button" aria-label="Call us at +41 77 944 17 43">
-    <span class="icon">
-      <img src="@/assets/telephone.svg" alt="Telephone icon">
-    </span>
-    <a href="tel:++41779441743">+41 77 944 17 43</a>
-  </button>
-</div>
+            <button class="contact-button" aria-label="Call us at +41 77 944 17 43">
+              <span class="icon">
+                <img src="@/assets/telephone.svg" alt="Telephone icon">
+              </span>
+              <a href="tel:++41779441743">+41 77 944 17 43</a>
+            </button>
+          </div>
 
-<div class="contact-group">
-  <button class="contact-button" aria-label="Email us at support@starsstation.ch">
-    <span class="icon">
-      <img src="@/assets/email.svg" alt="Email icon">
-    </span>
-    <a href="mailto:support@starsstation.ch">support@starsstation.ch</a>
-  </button>
-</div>
+          <div class="contact-group">
+            <button class="contact-button" aria-label="Email us at support@starsstation.ch">
+              <span class="icon">
+                <img src="@/assets/email.svg" alt="Email icon">
+              </span>
+              <a href="mailto:support@starsstation.ch">support@starsstation.ch</a>
+            </button>
+          </div>
 
           <div class="contact-group logo">
             <router-link to="/"><img src="@/assets/logo/Logo-text_white.svg" alt="Logo"></router-link>
@@ -36,7 +36,7 @@
           </div>
         </div>
       </div>
-      <div class="contact__container-item feedback">
+      <div class="contact__container-item feedback" >
         <form @submit.prevent="submitForm" method="POST" action="sendmail.php" enctype="multipart/form-data" ref="form">
           <h1>{{ $t('feedback') }}</h1>
           <div class="feedback_container">
@@ -83,9 +83,9 @@
               <input type="hidden" v-model="csrfToken" name="csrf_token">
               <div class="form-group form-button inline">
                 <button class="send" type="submit" :disabled="isSubmitting" aria-label="Send message">
-  <span>{{ isSubmitting ? $t('sending') : $t('send') }}</span>
-  <span v-if="isSubmitting" class="loader" aria-label="Loading..."></span>
-</button>
+                  <span>{{ isSubmitting ? $t('sending') : $t('send') }}</span>
+                  <span v-if="isSubmitting" class="loader" aria-label="Loading..."></span>
+                </button>
               </div>
             </div>
             <div class="consent">
@@ -98,8 +98,8 @@
                 <li v-for="(file, index) in displayedFileList" :key="index">
                   {{ file.name }}
                   <button @click.prevent="removeFile(index)" class="remove-file" aria-label="Remove file">
-  x
-</button>
+                    x
+                  </button>
                 </li>
               </ul>
               <span v-if="fileList.length > 3">
@@ -439,6 +439,7 @@ h1 {
   position: relative;
   overflow: hidden;
   z-index: 1;
+  transition: 1s;
 }
 
 .contact-button::before {
@@ -458,12 +459,22 @@ h1 {
   opacity: 1;
 }
 
+.contact-button:hover {
+
+  transform: scale(1.2);
+}
+
 .logo {
   position: relative;
 }
 
 .logo img {
   width: 200px;
+  transition: 1s;
+}
+
+.logo img:hover {
+  transform: scale(1.2)
 }
 
 .icon svg {
@@ -672,12 +683,12 @@ input[type="file"] {
   font-size: 16px;
   position: absolute;
   top: -5px;
-    left: 2px;
+  left: 2px;
 }
 
 .consent p {
   color: var(--text-color);
-  margin: 0; 
+  margin: 0;
 }
 
 .consent a {

@@ -9,6 +9,7 @@ const NetworkPage = () => import('./Page/NetworkPage.vue')
 const MontagePage = () => import('./Page/MontagePage.vue')
 const RapPage = () => import('./Page/RapPage.vue')
 const PrivacyPage = () => import('./Page/PrivacyPage.vue')
+const PortfolioPage = () => import('./Page/PortfolioPage.vue')
 const NotFound = () => import('./Page/NotFound.vue')
 
 const routes = [
@@ -21,6 +22,7 @@ const routes = [
   { path: '/Montage', component: MontagePage, name: 'Montage' },
   { path: '/Rap', component: RapPage, name: 'Rap' },
   { path: '/Privacy', component: PrivacyPage, name: 'Privacy' },
+  { path: '/Portfolio', component: PortfolioPage, name: 'Portfolio' },
   { path: '/:catchAll(.*)', component: NotFound, name: 'NotFound' }
 ]
 
