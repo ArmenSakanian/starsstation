@@ -1,42 +1,45 @@
 <template>
   <div class="portfolio">
-    <h1>Портфолио</h1>
+    <h1>{{ $t('our videos') }}</h1>
     <div class="videos">
       <div class="row" v-for="(row, rowIndex) in videoRows" :key="rowIndex">
-        <VideoThumbnail v-for="(video, videoIndex) in row" :key="videoIndex" :video="video" />
+        <div class="video" v-for="(video, videoIndex) in row" :key="videoIndex">
+          <iframe
+            :src="getVideoUrl(video.url)"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+          <p>{{ video.title }}</p>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import VideoThumbnail from '../components/VideoThumbnail.vue';
-
 export default {
   name: 'PortfolioPage',
-  components: {
-    VideoThumbnail
-  },
   data() {
     return {
       videoRows: [
         [
-          { id: 'https://www.youtube.com/embed/nNThGvE4vSU?si=rQ14iDLpNtTV86ox', title: 'Видео 1' },
-          { id: 'https://www.youtube.com/embed/nNThGvE4vSU?si=rQ14iDLpNtTV86ox', title: 'Видео 2' },
-          { id: 'https://www.youtube.com/embed/nNThGvE4vSU?si=rQ14iDLpNtTV86ox', title: 'Видео 3' }
+          { url: 'https://www.youtube.com/embed/gfxDAKyPfR8?si=KHmccuAklFHrgz30', title: 'Restaurant: Il Pulcinella' },
+          { url: 'https://www.youtube.com/embed/nNThGvE4vSU?si=rQ14iDLpNtTV86ox', title: 'Restaurant Valère Pizzeria' },
+          { url: 'https://www.youtube.com/embed/nNThGvE4vSU?si=rQ14iDLpNtTV86ox', title: 'KFC - Conthey' }
         ],
         [
-          { id: 'https://www.youtube.com/embed/nNThGvE4vSU?si=rQ14iDLpNtTV86ox', title: 'Видео 4' },
-          { id: 'https://www.youtube.com/embed/nNThGvE4vSU?si=rQ14iDLpNtTV86ox', title: 'Видео 5' },
-          { id: 'https://www.youtube.com/embed/nNThGvE4vSU?si=rQ14iDLpNtTV86ox', title: 'Видео 6' }
-        ],
-        [
-          { id: 'https://www.youtube.com/embed/nNThGvE4vSU?si=rQ14iDLpNtTV86ox', title: 'Видео 7' },
-          { id: 'https://www.youtube.com/embed/nNThGvE4vSU?si=rQ14iDLpNtTV86ox', title: 'Видео 8' },
-          { id: 'https://www.youtube.com/embed/nNThGvE4vSU?si=rQ14iDLpNtTV86ox', title: 'Видео 9' }
+          { url: 'https://www.youtube.com/embed/GM5hAXYAVjM?si=frhS6gAQjM-pJdUf', title: 'Rap Clip' },
+          { url: 'https://www.youtube.com/embed/nNThGvE4vSU?si=rQ14iDLpNtTV86ox', title: 'Видео 5' },
+          { url: 'https://www.youtube.com/embed/nNThGvE4vSU?si=rQ14iDLpNtTV86ox', title: 'Видео 6' }
         ]
       ]
     };
+  },
+  methods: {
+    getVideoUrl(url) {
+      return url;
+    }
   }
 };
 </script>
@@ -66,6 +69,21 @@ h1 {
   flex-wrap: wrap;
 }
 
+.video {
+  width: 30%;
+  margin: 10px 0;
+  text-align: center;
+}
+
+iframe {
+  width: 100%;
+  height: 250px;
+}
+
+p {
+  margin-top: 10px;
+}
+
 @media (max-width: 768px) {
   .video {
     width: 45%;
@@ -86,3 +104,5 @@ h1 {
   }
 }
 </style>
+
+

@@ -9,7 +9,7 @@
     <li><router-link to="/" @click="closeMenu">{{ $t('home') }}</router-link></li>
     <li><router-link to="/About" @click="closeMenu">{{ $t('about') }}</router-link></li>
     <li><router-link to="/Contact" @click="closeMenu">{{ $t('contact') }}</router-link></li>
-    <li><router-link to="/Portfolio" @click="closeMenu">{{ $t('contact') }}</router-link></li>
+    <li><router-link to="/Portfolio" @click="closeMenu">{{ $t('our videos') }}</router-link></li>
     <li class="dropdown" 
         @mouseover="handleMouseOver" 
         @mouseleave="handleMouseLeave" 
