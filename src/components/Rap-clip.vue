@@ -1,5 +1,5 @@
 <template>
-    <div id="rap-clip" class="Services_container all">
+    <div id="rap-clip" class="Services_container">
       <div class="service_item" >
         <h1  >{{ $t('rap clip') }}</h1>
         <router-link to="/Rap"><button  class="learn-more" aria-label="Learn more about Rap Clip" >{{ $t('learn more') }}</button></router-link>

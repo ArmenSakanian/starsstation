@@ -1,8 +1,19 @@
+
 <template>
   <footer>
     <div class="footer__container">
-      <div class="footer__logo footer__item">
-        <img src="@/assets/logo/Logomark White.svg" alt="Logo">
+      <div class="footer__subscribe footer__item">
+        <h1>{{ $t('subscribe_title') }} Stars Station Studio</h1>
+
+          <div>
+            <form @submit.prevent="subscribe">
+              <div class="form-group">
+                <input type="email" v-model="email" placeholder="Email">
+                <button class="subscribe">{{ $t('send') }}</button>
+              </div>
+            </form>
+          </div>
+
       </div>
       <div class="footer__links footer__item">
         <h1>{{ $t('link') }}</h1>
@@ -20,7 +31,6 @@
       <div class="footer__service footer__item">
         <h1>{{ $t('service') }}</h1>
         <div class="service">
-
           <nav>
             <ul>
               <li><router-link to="/Yourself">{{ $t('imagine yourself') }}</router-link></li>
@@ -30,10 +40,9 @@
               <li><router-link to="/Rap">{{ $t('rap clip') }}</router-link></li>
             </ul>
           </nav>
-
         </div>
       </div>
-      <div class="footer__social footer__item" >
+      <div class="footer__social footer__item">
         <h1>{{ $t('social') }}</h1>
         <div class="social">
           <nav>
@@ -58,25 +67,14 @@
                   <i class="fab fa-youtube custom-icon youtube-icon"></i>
                 </a>
               </li>
+
             </ul>
           </nav>
         </div>
       </div>
-      <div class="footer__video footer__item" @click="toggleVideo" >
-        <h1>{{ $t('intro') }}</h1>
-        <div class="video-container">
-          <video ref="video" controls @error="handleError">
-            <source :src="videoMp4" type="video/mp4">
-            <source :src="videoWebp" type="video/webp">
-            Your browser does not support the video tag.
-            <track src="https://starsstation.ch/subtitles.vtt" kind="captions" srclang="en" label="English">
-          </video>
-          <div v-if="error" class="video-error">{{ error }}</div>
-        </div>
-      </div>
     </div>
     <div class="copyright">
-      <p>©2024 Stars Station Studio | All Rights Reserved</p>
+      <p>©2024 Stars Station Studio</p>
     </div>
   </footer>
 </template>
@@ -86,44 +84,77 @@ export default {
   name: 'AppFooter',
   data() {
     return {
-      error: null
-    }
-  },
-  computed: {
-    videoMp4() {
-      return 'https://starsstation.ch/media/intro_1.b1d5cb81.mp4';
-    }
-    // videoWebp() {
-    //   return require('@/assets/media/your-video.webp');
-    // }
+      email: ''
+    };
   },
   methods: {
-    handleError() {
-      this.error = 'Failed to load video. Please try again later.';
+    async subscribe() {
+      try {
+        const response = await axios.post('subscribe.php', new URLSearchParams({ email: this.email }));
+        console.log(response.data); // Добавьте эту строку для отладки
+        Swal.fire({
+          icon: 'success',
+          title: this.$t('success_title'),
+          text: this.$t(response.data.message_id), // Используем message_id для перевода
+          timer: 3000,
+          showConfirmButton: true,
+          timerProgressBar: true,
+          confirmButtonText: 'OK'
+        });
+        this.email = '';  // Очистить поле ввода
+      } catch (error) {
+        console.error(error);
+        Swal.fire({
+          icon: 'error',
+          title: this.$t('error_title'),
+          text: this.$t('subscribe_error'),
+          timer: 3000,
+          showConfirmButton: true,
+          timerProgressBar: true,
+          confirmButtonText: 'OK'
+        });
+      }
     }
   }
 }
 </script>
 <style scoped>
-.footer__video {
-  position: relative;
-  cursor: pointer;
-  display: grid;
-  place-items: center;
+
+
+
+
+.subscribe {
+  margin-top: 10px;
+  padding: 10px 25px;
+}
+input {
+  height: 50px;
+  border: none;
+  border-bottom: 2px solid var(--text-color);
+  background-color: transparent;
+  font-size: 16px;
+  color: var(--text-color);
+  width: 300px;
+  outline: none;
 }
 
-
-video {
-  width: 100%;
-  height: 50%;
+label.active {
+  top: -15px;
+  font-size: 12px;
+  color: var(--text-secondary-color);
+  animation: floatLabel 0.3s ease forwards;
 }
 
-
-
-
+label.inactive {
+  animation: sinkLabel 0.3s ease forwards;
+}
 
 .footer__item {
   margin-bottom: 15px;
+  flex: 1;
+  min-width: 200px;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 .footer__container {
@@ -131,9 +162,7 @@ video {
   color: var(--text-color);
   padding: 20px 50px 0 50px;
   display: flex;
-  justify-content: space-around;
-  width: 100%;
-  align-items: flex-start
+  flex-wrap: wrap;
 }
 
 .footer__container a {
@@ -141,96 +170,31 @@ video {
   text-decoration: none;
 }
 
-.footer__logo {
-  display: flex;
-  justify-content: center;
-}
 
-.footer__logo img {
-  width: 250px;
-  height: 270px;
-}
-
-.footer__links,
-.footer__service,
-.footer__social,
-.footer__video {
+.footer__item > div {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 30px;
+  text-align: center;
 }
 
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
 
-.footer__links h1,
-.footer__service h1,
-.footer__social h1,
-.footer__video h1 {
+.footer__item h1 {
+  text-align: center;
   font-size: 32px;
   margin-bottom: 10px;
 }
 
-.links,
-.service,
-.social,
-.video {
-  margin-top: 30px;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  align-items: center;
-}
 
-.video-container {
-  width: 100%;
-  position: relative;
-}
 
-video {
-  max-width: 500px;
-  max-height: 250px;
-  height: auto;
-  display: block;
-  cursor: pointer;
-  background-color: black;
-  border-radius: 20px;
-}
 
-.video-error {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: rgba(255, 0, 0, 0.8);
-  color: white;
-  padding: 10px;
-  border-radius: 4px;
-}
 
-.play-button,
-.pause-button,
-.fullscreen-button {
-  position: absolute;
-  bottom: 10px;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-}
 
-.play-button {
-  left: 10px;
-}
-
-.pause-button {
-  left: 10px;
-}
-
-.fullscreen-button {
-  right: 10px;
-}
 
 
 .copyright {
@@ -250,15 +214,11 @@ video {
     flex-wrap: wrap;
   }
 
-  .video_text {
-    display: none;
+  .footer__item {
+    min-width: 100%; /* Элементы занимают всю ширину контейнера */
   }
 
-
-  .footer__item .links nav ul,
-  .footer__item .service nav ul,
-  .footer__item .social nav ul,
-  .footer__item .video nav ul {
+  .footer__item div nav ul {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -267,9 +227,7 @@ video {
     margin: 0;
   }
 
-  .footer__item .links li,
-  .footer__item .service li,
-  .footer__item .social li {
+  .footer__item div li {
     margin-right: 10px;
     margin-bottom: 10px;
   }

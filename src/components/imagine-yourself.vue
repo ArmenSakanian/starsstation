@@ -1,5 +1,5 @@
 <template>
-<div id="imagine-yourself" class="Services_container all">
+<div id="imagine-yourself" class="Services_container">
   <div class="service_item">
     <h1>{{ $t('imagine yourself') }}</h1>
     <router-link to="/Yourself">

@@ -1,24 +1,18 @@
 <template>
-  <div class="contact">
+<div class="contact">
     <div class="contact__container">
-      <div class="contact__container-item info" >
+      <div class="contact__container-item info">
         <h1>{{ $t('contact') }}</h1>
         <div class="contact-info">
           <div class="contact-group">
             <button class="contact-button" aria-label="Call us at +41 77 944 17 43">
-              <span class="icon">
-                <img src="@/assets/telephone.svg" alt="Telephone icon">
-              </span>
-              <a href="tel:++41779441743">+41 77 944 17 43</a>
+              <a href="tel:++41779441743"><i class="fa-solid fa-phone"></i>+41 77 944 17 43</a>
             </button>
           </div>
 
           <div class="contact-group">
             <button class="contact-button" aria-label="Email us at support@starsstation.ch">
-              <span class="icon">
-                <img src="@/assets/email.svg" alt="Email icon">
-              </span>
-              <a href="mailto:support@starsstation.ch">support@starsstation.ch</a>
+              <a href="mailto:support@starsstation.ch"><i class="fa-solid fa-envelope"></i>support@starsstation.ch</a>
             </button>
           </div>
 
@@ -26,61 +20,66 @@
             <router-link to="/"><img src="@/assets/logo/Logo-text_white.svg" alt="Logo"></router-link>
           </div>
           <div class="social">
-            <li><a href="https://www.instagram.com/starsstationstudio?igsh=cDdmczIxc2ljMzJq"><font-awesome-icon
-                  :icon="['fab', 'instagram']" class="custom-icon instagram-icon" /></a></li>
-            <li><a href="#"><font-awesome-icon :icon="['fab', 'facebook']" class="custom-icon facebook-icon" /></a></li>
-            <li><a href="https://wa.me/41779441743"><font-awesome-icon :icon="['fab', 'whatsapp']"
-                  class="custom-icon whatsapp-icon" /></a></li>
-            <li><a href="https://www.youtube.com/@StarsStationStudio"><font-awesome-icon :icon="['fab', 'youtube']"
-                  class="custom-icon youtube-icon" /></a></li>
+            <nav>
+              <ul>
+                <li>
+                  <a href="https://www.instagram.com/starsstationstudio?igsh=cDdmczIxc2ljMzJq" aria-label="Instagram">
+                    <i class="fab fa-instagram custom-icon instagram-icon"></i>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" aria-label="Facebook">
+                    <i class="fab fa-facebook custom-icon facebook-icon"></i>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://wa.me/41779441743" aria-label="WhatsApp">
+                    <i class="fab fa-whatsapp custom-icon whatsapp-icon"></i>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.youtube.com/@StarsStationStudio" aria-label="YouTube">
+                    <i class="fab fa-youtube custom-icon youtube-icon"></i>
+                  </a>
+                </li>
+              </ul>
+            </nav>
           </div>
         </div>
       </div>
-      <div class="contact__container-item feedback" >
+      <div class="contact__container-item feedback">
         <form @submit.prevent="submitForm" method="POST" action="sendmail.php" enctype="multipart/form-data" ref="form">
           <h1>{{ $t('feedback') }}</h1>
           <div class="feedback_container">
             <div class="form-group">
-              <label :class="{ 'active': activeInputs.name, 'inactive': !activeInputs.name }" for="name">{{ $t('name')
-                }}</label>
-              <input @focus="handleFocus('name')" @blur="handleBlur('name')" type="text" id="name" name="name"
-                v-model="inputs.name" ref="name">
+              <label :class="{ 'active': activeInputs.name, 'inactive': !activeInputs.name }" for="name">{{ $t('name') }}</label>
+              <input @focus="handleFocus('name')" @blur="handleBlur('name')" type="text" id="name" name="name" v-model="inputs.name" ref="name">
             </div>
             <div class="form-group">
-              <label :class="{ 'active': activeInputs.surname, 'inactive': !activeInputs.surname }" for="surname">{{
-                $t('surname') }}</label>
-              <input @focus="handleFocus('surname')" @blur="handleBlur('surname')" type="text" id="surname"
-                name="surname" v-model="inputs.surname" ref="surname">
+              <label :class="{ 'active': activeInputs.surname, 'inactive': !activeInputs.surname }" for="surname">{{ $t('surname') }}</label>
+              <input @focus="handleFocus('surname')" @blur="handleBlur('surname')" type="text" id="surname" name="surname" v-model="inputs.surname" ref="surname">
             </div>
             <div class="form-group">
-              <label :class="{ 'active': activeInputs.email, 'inactive': !activeInputs.email }" for="email">{{
-                $t('email') }}</label>
-              <input @focus="handleFocus('email')" @blur="handleBlur('email')" type="email" id="email" name="email"
-                v-model="inputs.email" ref="email">
+              <label :class="{ 'active': activeInputs.email, 'inactive': !activeInputs.email }" for="email">{{ $t('email') }}</label>
+              <input @focus="handleFocus('email')" @blur="handleBlur('email')" type="email" id="email" name="email" v-model="inputs.email" ref="email">
             </div>
             <div class="form-group">
-              <label :class="{ 'active': activeInputs.tel, 'inactive': !activeInputs.tel }" for="tel">{{ $t('tel')
-                }}</label>
-              <input @focus="handleFocus('tel')" @blur="handleBlur('tel')" type="tel" id="tel" name="tel"
-                v-model="inputs.tel" ref="tel">
+              <label :class="{ 'active': activeInputs.tel, 'inactive': !activeInputs.tel }" for="tel">{{ $t('tel') }}</label>
+              <input @focus="handleFocus('tel')" @blur="handleBlur('tel')" type="tel" id="tel" name="tel" v-model="inputs.tel" ref="tel">
             </div>
             <div class="form-group">
-              <label :class="{ 'active': activeInputs.message, 'inactive': !activeInputs.message }" for="message">
-                {{ $t('message') }}
-              </label>
-              <textarea @focus="handleFocus('message')" @blur="handleBlur('message')" name="message" id="message"
-                rows="4" v-model="inputs.message" ref="message" @input="autoResize"></textarea>
+              <label :class="{ 'active': activeInputs.message, 'inactive': !activeInputs.message }" for="message">{{ $t('message') }}</label>
+              <textarea @focus="handleFocus('message')" @blur="handleBlur('message')" name="message" id="message" rows="4" v-model="inputs.message" ref="message" @input="autoResize"></textarea>
             </div>
             <div class="form-controls">
               <div class="form-group file inline">
                 <div class="file-drop-area" @dragover.prevent @drop="handleDrop">
-                  <input type="file" name="files[]" id="attachment"
-                    accept=".png, .jpeg, .jpg, .svg, .pdf, .docx, .txt, .odt, .xlsx, .ods, .gif, .bmp, .tiff, .pptx, .odp"
-                    multiple @change="updateFileList">
+                  <input type="file" name="files[]" id="attachment" accept=".png, .jpeg, .jpg, .svg, .pdf, .docx, .txt, .odt, .xlsx, .ods, .gif, .bmp, .tiff, .pptx, .odp" multiple @change="updateFileList">
                   <label for="attachment" class="btn-upload">{{ $t('attach') }}</label>
                 </div>
               </div>
               <input type="hidden" v-model="csrfToken" name="csrf_token">
+              <input type="hidden" name="language" :value="currentLanguage">
               <div class="form-group form-button inline">
                 <button class="send" type="submit" :disabled="isSubmitting" aria-label="Send message">
                   <span>{{ isSubmitting ? $t('sending') : $t('send') }}</span>
@@ -90,16 +89,17 @@
             </div>
             <div class="consent">
               <input type="checkbox" id="consent" v-model="consentGiven">
-              <p>{{ $t('agreement') }}<router-link to="/Privacy">{{ $t('privacy_policy_title') }}</router-link>
-              </p>
+              <p>{{ $t('agreement') }}<router-link to="/Privacy">{{ $t('privacy_policy_title') }}</router-link></p>
             </div>
             <div class="file-list">
               <ul v-if="fileList.length > 0">
-                <li v-for="(file, index) in displayedFileList" :key="index">
-                  {{ file.name }}
-                  <button @click.prevent="removeFile(index)" class="remove-file" aria-label="Remove file">
-                    x
-                  </button>
+                <li v-for="(file, index) in displayedFileList" :key="index" class="file-item">
+                  <img :src="getFileIcon(file)" alt="file icon" class="file-icon" />
+                  <span class="file-name">{{ file.name }}</span>
+                  <button @click.prevent="removeFile(index)" class="remove-file" aria-label="Remove file"><i class="fa-solid fa-x"></i></button>
+                  <div class="upload-progress">
+                    <div class="upload-progress-bar" :style="{ width: file.progress + '%' }"></div>
+                  </div>
                 </li>
               </ul>
               <span v-if="fileList.length > 3">
@@ -137,11 +137,24 @@ export default {
       fileList: [],
       showFullFileList: false,
       csrfToken: '',
-      isSubmitting: false, // Новая переменная состояния для загрузки
-      consentGiven: false // Новая переменная состояния для согласия
+      isSubmitting: false,
+      consentGiven: false,
+      allowedTypes: [
+        'image/png', 'image/jpeg', 'image/jpg', 'image/svg+xml',
+        'application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'text/plain', 'application/vnd.oasis.opendocument.text',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.oasis.opendocument.spreadsheet',
+        'image/gif', 'image/bmp', 'image/tiff', 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+        'application/vnd.oasis.opendocument.presentation'
+      ],
+      maxSize: 10 * 1024 * 1024, // 10 MB
+      currentUploadIndex: -1
     };
   },
   computed: {
+    currentLanguage() {
+      return this.$i18n.locale; // Получаем текущий язык из i18n
+    },
     displayedFileList() {
       if (this.showFullFileList) {
         return this.fileList;
@@ -163,98 +176,80 @@ export default {
     },
     updateFileList(event) {
       const newFiles = Array.from(event.target.files);
-      const allowedTypes = [
-        'image/png', 'image/jpeg', 'image/jpg', 'image/svg+xml',
-        'application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-        'text/plain', 'application/vnd.oasis.opendocument.text',
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.oasis.opendocument.spreadsheet',
-        'image/gif', 'image/bmp', 'image/tiff', 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-        'application/vnd.oasis.opendocument.presentation'
-      ];
-      const maxSize = 10 * 1024 * 1024; // 10 MB
-
-      newFiles.forEach(file => {
-        console.log(`Checking file: ${file.name}, size: ${file.size}, type: ${file.type}`);
-        if (this.fileList.some(existingFile => existingFile.name === file.name)) {
-          Swal.fire({
-            icon: 'warning',
-            title: this.$t('duplicate_file'),
-            text: `${file.name} ${this.$t('is_already_selected')}.`,
-            timer: 3000,
-            showConfirmButton: false
-          });
-          return;
-        }
-        if (!allowedTypes.includes(file.type)) {
-          Swal.fire({
-            icon: 'warning',
-            title: this.$t('unsupported_file_type'),
-            text: `${file.name} ${this.$t('is_not_a_supported_file_type')}.`,
-            timer: 3000,
-            showConfirmButton: false
-          });
-          return;
-        }
-        if (file.size > maxSize) {
-          Swal.fire({
-            icon: 'warning',
-            title: this.$t('file_too_large'),
-            text: `${file.name} ${this.$t('is_too_large')}. ${this.$t('maximum_size_is')} 10 MB.`,
-            timer: 3000,
-            showConfirmButton: false
-          });
-          return;
-        }
-        this.fileList.push(file); // Добавляем файл только после всех проверок
-        console.log(`File added: ${file.name}`);
-      });
-
-      this.showFullFileList = false;
+      this.processFiles(newFiles);
     },
     handleDrop(event) {
       event.preventDefault();
       const droppedFiles = Array.from(event.dataTransfer.files);
-      const allowedTypes = [
-        'image/png', 'image/jpeg', 'image/jpg', 'image/svg+xml',
-        'application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-        'text/plain', 'application/vnd.oasis.opendocument.text',
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.oasis.opendocument.spreadsheet',
-        'image/gif', 'image/bmp', 'image/tiff', 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-        'application/vnd.oasis.opendocument.presentation'
-      ];
-      const maxSize = 10 * 1024 * 1024; // 10 MB
-      const errors = []; // Массив для сбора ошибок
-
-      droppedFiles.forEach(file => {
+      this.processFiles(droppedFiles);
+    },
+    processFiles(files) {
+      files.forEach(file => {
         if (this.fileList.some(existingFile => existingFile.name === file.name)) {
-          errors.push(`${file.name} ${this.$t('is_already_selected')}`);
+          this.showError(`${file.name} ${this.$t('is_already_selected')}`);
           return;
         }
-        if (!allowedTypes.includes(file.type)) {
-          errors.push(`${file.name} ${this.$t('is_not_a_supported_file_type')}`);
+        if (!this.allowedTypes.includes(file.type)) {
+          this.showError(`${file.name} ${this.$t('is_not_a_supported_file_type')}`);
           return;
         }
-        if (file.size > maxSize) {
-          errors.push(`${file.name} ${this.$t('is_too_large')}. ${this.$t('maximum_size_is')} 10 MB.`);
+        if (file.size > this.maxSize) {
+          this.showError(`${file.name} ${this.$t('is_too_large')}. ${this.$t('maximum_size_is')} 10 MB.`);
           return;
         }
-        this.fileList.push(file); // Добавляем файл только после всех проверок
+        this.fileList.push({ name: file.name, type: file.type, progress: 0, originalFile: file }); // Добавляем файл с начальным прогрессом 0
       });
 
-      if (errors.length > 0) {
-        Swal.fire({
-          icon: 'warning',
-          title: this.$t('file_upload_error'),
-          html: errors.join('<br>'),
-          timer: 3000,
-          showConfirmButton: false
-        });
+      this.showFullFileList = false;
+      if (this.currentUploadIndex === -1) {
+        this.startUploadProgress(0);
+      }
+    },
+    startUploadProgress(index) {
+      if (index >= this.fileList.length) {
+        this.currentUploadIndex = -1;
+        return;
+      }
+      this.currentUploadIndex = index;
+      const file = this.fileList[index];
+      const interval = setInterval(() => {
+        if (file.progress < 100) {
+          file.progress += 10;
+        } else {
+          clearInterval(interval);
+          this.startUploadProgress(index + 1);
+        }
+      }, 200); // 200 ms для каждого шага прогресса (всего 2 секунды)
+    },
+    getFileIcon(file) {
+      if (!file || !file.type) {
+        return require('@/assets/default-icon.png'); // Используем default-icon.png по умолчанию
       }
 
-      this.showFullFileList = false;
+      const fileType = file.type;
+      if (fileType.includes('image')) {
+        return require('@/assets/image-icon.png');
+      } else if (fileType.includes('pdf')) {
+        return require('@/assets/pdf-icon.png');
+      } else if (fileType.includes('wordprocessingml.document')) {
+        return require('@/assets/docx-icon.png');
+      } else if (fileType.includes('text')) {
+        return require('@/assets/text-icon.png');
+      } else if (fileType.includes('spreadsheetml.sheet')) {
+        return require('@/assets/xlsx-icon.png');
+      } else if (fileType.includes('presentationml.presentation')) {
+        return require('@/assets/pptx-icon.png');
+      } else {
+        return require('@/assets/default-icon.png'); // Используем default-icon.png по умолчанию
+      }
     },
     removeFile(index) {
       this.fileList.splice(index, 1);
+      if (this.currentUploadIndex === index) {
+        this.startUploadProgress(index); // Перезапуск прогресса при удалении файла
+      } else if (this.currentUploadIndex > index) {
+        this.currentUploadIndex--; // Корректировка индекса при удалении файла до текущего загружаемого
+      }
     },
     toggleFileList() {
       this.showFullFileList = !this.showFullFileList;
@@ -287,9 +282,10 @@ export default {
           formData.append(key, this.inputs[key]);
         });
         this.fileList.forEach(file => {
-          formData.append('files[]', file); // Добавляем файлы в FormData
+          formData.append('files[]', file.originalFile, file.name); // Используем оригинальный файл
         });
         formData.append('csrf_token', this.csrfToken);
+        formData.append('language', this.currentLanguage); // Добавляем текущий язык
 
         axios.post('sendmail.php', formData)
           .then(() => {
@@ -347,6 +343,15 @@ export default {
       const textarea = this.$refs.message;
       textarea.style.height = '50px'; // Устанавливаем высоту по умолчанию
       textarea.style.height = textarea.scrollHeight + 'px'; // Устанавливаем новую высоту на основе содержимого
+    },
+    showError(message) {
+      Swal.fire({
+        icon: 'warning',
+        title: this.$t('file_upload_error'),
+        text: message,
+        timer: 3000,
+        showConfirmButton: false
+      });
     }
   },
   mounted() {
@@ -360,16 +365,6 @@ export default {
 };
 </script>
 
-
-
-
-
-
-
-
-
-
-
 <style scoped>
 h1 {
   color: var(--text-color);
@@ -382,11 +377,10 @@ h1 {
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
-
 }
 
 .contact__container {
-  padding-top: 150px;
+  padding-top: 50px;
   display: flex;
   justify-content: center;
 }
@@ -397,10 +391,8 @@ h1 {
   overflow: hidden;
 }
 
-
-
 .feedback_container {
-  padding: 20px 100px;
+  padding: 50px 100px;
 }
 
 .contact__container-item h1 {
@@ -408,7 +400,7 @@ h1 {
 }
 
 .contact-info {
-  padding-top: 100px;
+  padding-top: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -423,8 +415,12 @@ h1 {
 .contact-group a {
   text-decoration: underline;
   color: var(--text-color);
-  margin-left: 10px;
   font-size: 20px;
+  transition: opacity 0.5s ease;
+}
+
+.contact-group a i {
+  margin-right: 10px;
 }
 
 .contact-button {
@@ -460,8 +456,11 @@ h1 {
 }
 
 .contact-button:hover {
-
   transform: scale(1.2);
+}
+
+.contact-button a:hover {
+  color: var(--active-color);
 }
 
 .logo {
@@ -486,7 +485,7 @@ h1 {
   color: var(--text-color);
 }
 
-.social {
+.social nav ul {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -501,7 +500,7 @@ form {
   margin: 0 auto;
 }
 
-.line {
+line {
   display: flex;
   justify-content: space-between;
 }
@@ -595,15 +594,11 @@ input[type="file"] {
   transition: .5s ease;
 }
 
-
-
 .btn-upload:hover {
   background-color: var(--active-color);
   border: 2px dashed var(--active-color);
   color: var(--bg-main-color);
-
 }
-
 
 .form-controls {
   display: flex;
@@ -612,45 +607,49 @@ input[type="file"] {
   gap: 20px;
 }
 
-
-
-.file-list ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+.file-item {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: white;
+  border-radius: 14px 15px 0 0;
 }
 
-.file-list li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 5px;
-  padding: 5px;
-  border: 1px solid var(--br-color);
-  border-radius: 4px;
+.file-icon {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.file-name {
+  flex-grow: 1;
+  color: black;
 }
 
 .remove-file {
   background: none;
   border: none;
-  color: var(--text-color);
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
-  padding: 0 10px;
-}
-
-.remove-file:hover {
   color: var(--active-color);
-}
-
-.file-list span a {
-  color: var(--text-color);
-  font-style: italic;
-  font-weight: bold;
   cursor: pointer;
+  margin-left: 10px;
 }
 
+.upload-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: #f0f0f0;
+}
+
+.upload-progress-bar {
+  height: 100%;
+  background-color: rgba(0, 216, 47, 0.781);
+  transition: width .5s; /* Длительность анимации 0.5 секунды */
+}
 
 .consent {
   display: flex;
@@ -696,13 +695,9 @@ input[type="file"] {
   margin-left: 10px;
 }
 
-
 .form-button button {
   padding: 10px 20px;
 }
-
-
-
 
 .loader {
   display: inline-block;
@@ -737,7 +732,6 @@ select:-moz-autofill {
   -moz-text-fill-color: var(--text-color) !important;
   color: var(--text-color) !important;
 }
-
 
 @media screen and (max-width: 1024px) {
   .contact__container {

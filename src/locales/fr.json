@@ -4,7 +4,6 @@
   "contact": "Contact",
   "our videos": "Nos vidéos",
   "service": "Service",
-
   "montage video": "Montage vidéo",
   "montage video-quotes": "Laissez-nous transformer vos <color-bold>idées</color-bold> en une <color-bold>expérience visuelle</color-bold>",
   "social network": "Réseau social",
@@ -87,5 +86,16 @@
   "is_not_a_supported_file_type": "N'est pas un type de fichier pris en charge",
   "is_already_selected": "Est déjà sélectionné",
   "you_must_agree_to_the_processing_of_personal_data": "Vous devez accepter le traitement des données personnelles",
-  "required_consent": "Consentement requis"
+  "required_consent": "Consentement requis",
+  "subscribe_title": "Abonnez-vous à la newsletter",
+  "success_title": "Succès",
+  "error_title": "Erreur",
+  "email_added_successfully": "Email ajouté avec succès",
+  "email_add_error": "Une erreur s'est produite lors de l'inscription",
+  "subscribe_error": "Une erreur s'est produite lors de l'inscription",
+  "support": "Soutien",
+  "subject_prefix": "Soutien Stars Station Studio",
+  "confirmation_subject": "Merci pour votre retour",
+
+  "confirmation_body": "Cher {name},\n\nMerci de nous avoir contactés. Nous avons reçu votre message et nous vous répondrons sous peu.\n\nCordialement,\nL'équipe de support"
 }

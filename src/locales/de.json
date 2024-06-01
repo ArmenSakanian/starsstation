@@ -4,7 +4,7 @@
   "contact": "Kontakt",
   "our videos": "Unsere Videos",
   "service": "Dienstleistung",
-  "montage video": "Videomontage",
+  "montage-video": "Videomontage",
   "montage video-quotes": "Lassen Sie uns Ihre <color-bold>Ideen</color-bold> in ein <color-bold>visuelles Erlebnis</color-bold> verwandeln",
   "social network": "Soziales Netzwerk",
   "advertising video": "Werbevideo",
@@ -80,6 +80,16 @@
   "success_message": "Nachricht erfolgreich gesendet!",
   "error_message": "Fehler beim Senden der Nachricht",
   "fill_all_fields": "Bitte füllen Sie alle Felder aus.",
-  "unsupported_file_type":"Nicht unterstütztes Dateiformat"
+  "unsupported_file_type":"Nicht unterstütztes Dateiformat",
+  "subscribe_title": "Abonniere unseren Newsletter",
+  "success_title": "Erfolg",
+  "error_title": "Fehler",
+  "email_added_successfully": "E-Mail erfolgreich hinzugefügt",
+  "email_add_error": "Fehler bei der Anmeldung",
+  "subscribe_error": "Fehler bei der Anmeldung",
+  "support": "Unterstützung",
+  "subject_prefix": "Unterstützung Stars Station Studio",
+  "confirmation_subject": "Vielen Dank für Ihr Feedback",
 
+  "confirmation_body": "Sehr geehrter {name},\n\nVielen Dank, dass Sie uns kontaktiert haben. Wir haben Ihre Nachricht erhalten und werden uns in Kürze bei Ihnen melden.\n\nMit freundlichen Grüßen,\nSupport-Team"
 }

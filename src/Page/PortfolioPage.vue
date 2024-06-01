@@ -5,7 +5,7 @@
       <div class="row" v-for="(row, rowIndex) in videoRows" :key="rowIndex">
         <div class="video" v-for="(video, videoIndex) in row" :key="videoIndex">
           <iframe
-            :src="getVideoUrl(video.url)"
+            :src="getVideoUrl(video.id)"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen
@@ -22,87 +22,100 @@ export default {
   name: 'PortfolioPage',
   data() {
     return {
-      videoRows: [
-        [
-          { url: 'https://www.youtube.com/embed/gfxDAKyPfR8?si=KHmccuAklFHrgz30', title: 'Restaurant: Il Pulcinella' },
-          { url: 'https://www.youtube.com/embed/nNThGvE4vSU?si=rQ14iDLpNtTV86ox', title: 'Restaurant Valère Pizzeria' },
-          { url: 'https://www.youtube.com/embed/nNThGvE4vSU?si=rQ14iDLpNtTV86ox', title: 'KFC - Conthey' }
-        ],
-        [
-          { url: 'https://www.youtube.com/embed/GM5hAXYAVjM?si=frhS6gAQjM-pJdUf', title: 'Rap Clip' },
-          { url: 'https://www.youtube.com/embed/nNThGvE4vSU?si=rQ14iDLpNtTV86ox', title: 'Видео 5' },
-          { url: 'https://www.youtube.com/embed/nNThGvE4vSU?si=rQ14iDLpNtTV86ox', title: 'Видео 6' }
-        ]
-      ]
+      videos: [],
+      apiKey: 'AIzaSyAxGExZeHJonEjFw2O6bDnEnsdF7HisJRE', // Ваш ключ API
+      channelId: 'UCkMsST6QqVPnjkldq30ZXfw' // Ваш ID канала
     };
   },
-  methods: {
-    getVideoUrl(url) {
-      return url;
+  computed: {
+    videoRows() {
+      const rows = [];
+      const rowSize = 3;
+      for (let i = 0; i < this.videos.length; i += rowSize) {
+        rows.push(this.videos.slice(i, i + rowSize));
+      }
+      return rows;
     }
+  },
+  methods: {
+    getVideoUrl(videoId) {
+      return `https://www.youtube.com/embed/${videoId}`;
+    },
+    async fetchVideos() {
+      try {
+        const response = await axios.get(
+          `https://www.googleapis.com/youtube/v3/search?key=${this.apiKey}&channelId=${this.channelId}&part=snippet,id&order=date&maxResults=10`
+        );
+        this.videos = response.data.items.map(item => ({
+          id: item.id.videoId,
+          title: item.snippet.title
+        }));
+      } catch (error) {
+        console.error('Error fetching videos:', error);
+      }
+    }
+  },
+  mounted() {
+    this.fetchVideos();
   }
 };
 </script>
 
-<style scoped>
+<style>
 .portfolio {
   background-color: var(--bg-main-color);
-  color: var(--text-color);
-  text-align: center;
   padding: 20px;
 }
 
-h1 {
-  margin: 0;
+.portfolio h1 {
+  text-align: center;
+  color: var(--active-color);
 }
 
 .videos {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .row {
   display: flex;
-  justify-content: space-around;
-  margin: 20px 0;
   flex-wrap: wrap;
+  margin-bottom: 20px;
+  width: 80%;
 }
 
 .video {
-  width: 30%;
-  margin: 10px 0;
-  text-align: center;
+  flex: 1 1 calc(33.333% - 20px);
+  margin: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 iframe {
   width: 100%;
-  height: 250px;
+  height: 200px;
 }
 
-p {
-  margin-top: 10px;
+.video p {
+  text-align: center;
+    font-size: 16px;
+    margin-top: 10px;
+    color: #000000;
+    font-weight: bold;
+    background: white;
+    padding: 20px;
+}
+
+/* Медиа-запросы для адаптивного дизайна */
+@media (max-width: 1024px) {
+  .video {
+    flex: 1 1 calc(50% - 20px);
+  }
 }
 
 @media (max-width: 768px) {
   .video {
-    width: 45%;
-  }
-
-  iframe {
-    height: 200px;
-  }
-}
-
-@media (max-width: 480px) {
-  .video {
-    width: 100%;
-  }
-
-  iframe {
-    height: 200px;
+    flex: 1 1 100%;
   }
 }
 </style>
-
-

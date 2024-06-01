@@ -1,5 +1,5 @@
 <template>
-    <div id="social-network" class="Services_container  all">
+    <div id="social-network" class="Services_container">
       <div class="service_item">
         <h1 >{{ $t('social network') }}</h1>
         <router-link to="/Network"><button class="learn-more" aria-label="Learn more about Social Network">{{ $t('learn more') }}</button></router-link>

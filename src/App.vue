@@ -130,7 +130,7 @@ h1 {
 
 
 
-.learn-more, .send {
+.learn-more, .send, .subscribe {
   border: 2px solid white;
   border-radius: 5px;
   background: linear-gradient(to top, var(--active-color) 50%, transparent 50%);
@@ -141,7 +141,7 @@ h1 {
   transition: .3s ease;
 }
 
-.learn-more:hover, .send:hover {
+.learn-more:hover, .send:hover, .subscribe:hover {
   border-radius: 0;
   background-position: 0 100%;
   color: black;
@@ -155,7 +155,8 @@ h1 {
   flex-direction: column;
   justify-content: center;
   background-size: cover;
-  background-position: center;
+    background-position: center;
+    background-repeat: no-repeat;
   height: 100vh;
   width: 100%;
   color: white;
@@ -181,14 +182,6 @@ h1 {
   margin-right: 200px;
 }
 
-
-
-.all {
-  background-attachment: fixed;
-}
-
-
-
 .service_item h1,
 .service_item span,
 .service_item button {
@@ -209,8 +202,6 @@ h1 {
 .service_item span {
   letter-spacing: 3px;
 }
-
-
 
 .service__container-about {
     background-color: #222222;
@@ -330,9 +321,6 @@ top: 100%;
 
 
 
-  .all {
-    background-attachment: scroll;
-  }
 
 
 </style>

@@ -87,5 +87,16 @@
   "is_not_a_supported_file_type": "is not a supported file type",
   "is_already_selected": "is already selected",
   "you_must_agree_to_the_processing_of_personal_data": "You must agree to the processing of personal data",
-  "required_consent": "Required consent"
-}
+  "required_consent": "Required consent",
+  "subscribe_title": "Subscribe to our newsletter",
+  "success_title": "Success",
+  "error_title": "Error",
+  "email_added_successfully": "Email added successfully",
+  "email_add_error": "Error occurred while subscribing",
+  "subscribe_error": "Error occurred while subscribing",
+  "support": "Support",
+  "subject_prefix": "Support Stars Station Studio",
+  "confirmation_subject": "Thank you for your feedback",
+
+  "confirmation_body": "Dear {name},\n\nThank you for reaching out to us. We have received your message and will get back to you shortly.\n\nBest regards,\nSupport Team"
+  }

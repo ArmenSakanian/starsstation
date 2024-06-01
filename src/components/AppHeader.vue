@@ -10,6 +10,7 @@
     <li><router-link to="/About" @click="closeMenu">{{ $t('about') }}</router-link></li>
     <li><router-link to="/Contact" @click="closeMenu">{{ $t('contact') }}</router-link></li>
     <li><router-link to="/Portfolio" @click="closeMenu">{{ $t('our videos') }}</router-link></li>
+    
     <li class="dropdown" 
         @mouseover="handleMouseOver" 
         @mouseleave="handleMouseLeave" 
@@ -19,7 +20,7 @@
         <li><a href="#" @click="scrollToElement($event, 'imagine-yourself'); closeMenu()">{{ $t('imagine yourself') }}</a></li>
         <li><a href="#" @click="scrollToElement($event, 'advertising-video'); closeMenu()">{{ $t('advertising video') }}</a></li>
         <li><a href="#" @click="scrollToElement($event, 'social-network'); closeMenu()">{{ $t('social network') }}</a></li>
-        <li><a href="#" @click="scrollToElement($event, 'montage-video'); closeMenu()">{{ $t('montage') }} {{ $t('video') }}</a></li>
+        <li><a href="#" @click="scrollToElement($event, 'montage-video'); closeMenu()">{{ $t('montage video') }}</a></li>
         <li><a href="#" @click="scrollToElement($event, 'rap-clip'); closeMenu()">{{ $t('rap clip') }}</a></li>
       </ul>
     </li>
@@ -94,6 +95,11 @@ export default {
     document.removeEventListener('click', this.handleClickOutside);
   },
   methods: {
+    changeLanguage(event, lang) {
+      event.preventDefault();
+      this.$i18n.locale = lang;
+      localStorage.setItem('language', lang); // Сохраняем текущий язык в localStorage
+    },
     handleActiveLanguageClick(event) {
       event.preventDefault();
     },
@@ -220,7 +226,6 @@ nav ul li a:hover {
 
 nav ul li .router-link-active {
     color: var(--active-color);
-    font-weight: bold;
   }
 .dropdown-content {
   display: block;
@@ -251,7 +256,6 @@ nav ul li .router-link-active {
   background-color: var(--bg-main-color);
   color: var(--active-color);
   transition: background-color 0.8s, color 0.8s;
-  font-weight: bold
 }
 
 
