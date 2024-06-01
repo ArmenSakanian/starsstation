@@ -1,81 +1,80 @@
 <template>
-    <div class="container">
-      <div class="privacy-policy">
-        <h1>{{ $t('privacy_policy_title') }}</h1>
-        <div class="section">
-          <h2>{{ $t('data_collection_title') }}</h2>
-          <p>{{ $t('data_collection_intro') }}</p>
-          <ul>
-            <li>{{ $t('data_collection_item_name') }}</li>
-            <li>{{ $t('data_collection_item_surname') }}</li>
-            <li>{{ $t('data_collection_item_phone') }}</li>
-            <li>{{ $t('data_collection_item_email') }}</li>
-            <li>{{ $t('data_collection_item_message') }}</li>
-            <li>{{ $t('data_collection_item_files') }}</li>
-          </ul>
-          <p>{{ $t('data_collection_note') }}</p>
-        </div>
-        <div class="section">
-          <h2>{{ $t('data_usage_title') }}</h2>
-          <p>{{ $t('data_usage_intro') }}</p>
-          <ul>
-            <li>{{ $t('data_usage_response') }}</li>
-            <li>{{ $t('data_usage_message_processing') }}</li>
-            <li>{{ $t('data_usage_service_improvement') }}</li>
-            <li>{{ $t('data_usage_security') }}</li>
-          </ul>
-        </div>
-        <div class="section">
-          <h2>{{ $t('data_sharing_title') }}</h2>
-          <p>{{ $t('data_sharing_intro') }}</p>
-          <ul>
-            <li>{{ $t('data_sharing_authorities') }}</li>
-            <li>{{ $t('data_sharing_security') }}</li>
-            <li>{{ $t('data_sharing_contractors') }}</li>
-          </ul>
-        </div>
-        <div class="section">
-          <h2>{{ $t('data_storage_title') }}</h2>
-          <p>{{ $t('data_storage_intro') }}</p>
-        </div>
-        <div class="section">
-          <h2>{{ $t('user_rights_title') }}</h2>
-          <p>{{ $t('user_rights_intro') }}</p>
-          <ul>
-            <li>{{ $t('user_rights_access') }}</li>
-            <li>{{ $t('user_rights_correction') }}</li>
-            <li>{{ $t('user_rights_deletion') }}</li>
-          </ul>
-          <p>{{ $t('user_rights_contact') }} support@starsstation.ch.</p>
-        </div>
-        <div class="section">
-          <h2>{{ $t('contact_info_title') }}</h2>
-          <p>{{ $t('contact_info_intro') }}</p>
-          <p>{{ $t('contact_info_email') }} support@starsstation.ch.</p>
-        </div>
-        <div class="section">
-          <h2>{{ $t('data_security_title') }}</h2>
-          <p>{{ $t('data_security_intro') }}</p>
-          <ul>
-            <li>{{ $t('data_security_access_control') }}</li>
-            <li>{{ $t('data_security_encryption') }}</li>
-            <li>{{ $t('data_security_monitoring') }}</li>
-          </ul>
-          <p>{{ $t('data_security_conclusion') }}</p>
-        </div>
+  <div class="container">
+    <div class="privacy-policy">
+      <h1>{{ $t('privacy_policy_title') }}</h1>
+      <div class="section">
+        <h2>{{ $t('data_collection_title') }}</h2>
+        <p>{{ $t('data_collection_intro') }}</p>
+        <ul>
+          <li>{{ $t('data_collection_item_name') }}</li>
+          <li>{{ $t('data_collection_item_surname') }}</li>
+          <li>{{ $t('data_collection_item_phone') }}</li>
+          <li>{{ $t('data_collection_item_email') }}</li>
+          <li>{{ $t('data_collection_item_message') }}</li>
+          <li>{{ $t('data_collection_item_files') }}</li>
+        </ul>
+        <p>{{ $t('data_collection_note') }}</p>
+      </div>
+      <div class="section">
+        <h2>{{ $t('data_usage_title') }}</h2>
+        <p>{{ $t('data_usage_intro') }}</p>
+        <ul>
+          <li>{{ $t('data_usage_response') }}</li>
+          <li>{{ $t('data_usage_message_processing') }}</li>
+          <li>{{ $t('data_usage_service_improvement') }}</li>
+          <li>{{ $t('data_usage_security') }}</li>
+        </ul>
+      </div>
+      <div class="section">
+        <h2>{{ $t('data_sharing_title') }}</h2>
+        <p>{{ $t('data_sharing_intro') }}</p>
+        <ul>
+          <li>{{ $t('data_sharing_authorities') }}</li>
+          <li>{{ $t('data_sharing_security') }}</li>
+          <li>{{ $t('data_sharing_contractors') }}</li>
+        </ul>
+      </div>
+      <div class="section">
+        <h2>{{ $t('data_storage_title') }}</h2>
+        <p>{{ $t('data_storage_intro') }}</p>
+      </div>
+      <div class="section">
+        <h2>{{ $t('user_rights_title') }}</h2>
+        <p>{{ $t('user_rights_intro') }}</p>
+        <ul>
+          <li>{{ $t('user_rights_access') }}</li>
+          <li>{{ $t('user_rights_correction') }}</li>
+          <li>{{ $t('user_rights_deletion') }}</li>
+        </ul>
+        <p>{{ $t('user_rights_contact') }} support@starsstation.ch.</p>
+      </div>
+      <div class="section">
+        <h2>{{ $t('contact_info_title') }}</h2>
+        <p>{{ $t('contact_info_intro') }}</p>
+        <p>{{ $t('contact_info_email') }} support@starsstation.ch.</p>
+      </div>
+      <div class="section">
+        <h2>{{ $t('data_security_title') }}</h2>
+        <p>{{ $t('data_security_intro') }}</p>
+        <ul>
+          <li>{{ $t('data_security_access_control') }}</li>
+          <li>{{ $t('data_security_encryption') }}</li>
+          <li>{{ $t('data_security_monitoring') }}</li>
+        </ul>
+        <p>{{ $t('data_security_conclusion') }}</p>
       </div>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    name: 'PrivacyPage'
-  };
-  </script>
-  
-  <style scoped>
-  
-  .container {
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'PrivacyPage'
+};
+</script>
+
+<style scoped>
+.container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -150,5 +149,4 @@
     font-size: 0.9em;
   }
 }
-  </style>
-  
+</style>

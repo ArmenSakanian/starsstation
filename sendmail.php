@@ -32,7 +32,67 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    // Определение языка
+    // Подключение к базе данных
+    $servername = "sq7p9v.myd.infomaniak.com";
+    $username = "sq7p9v_sakanian"; 
+    $password = "Armen7725"; 
+    $dbname = "sq7p9v_sakanian"; // Имя базы данных
+
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    if ($conn->connect_error) {
+        $response['status'] = 'error';
+        $response['message'] = 'Database connection failed';
+        echo json_encode($response);
+        exit();
+    }
+
+    // Подготовка данных для вставки в базу данных
+    $file_urls = [];
+    $uploadDir = 'file/';
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0777, true);
+    }
+    if (!empty($_FILES['files']['name'][0])) {
+        foreach ($_FILES['files']['name'] as $key => $value) {
+            if ($_FILES['files']['error'][$key] == UPLOAD_ERR_OK) {
+                $tmp_name = $_FILES['files']['tmp_name'][$key];
+                $fileName = basename($_FILES['files']['name'][$key]);
+                $uploadFilePath = $uploadDir . $fileName;
+                $fileUrl = 'https://starsstation.ch/file/' . $fileName;
+
+                if (move_uploaded_file($tmp_name, $uploadFilePath)) {
+                    $file_urls[] = $fileUrl;
+                } else {
+                    $response['status'] = 'error';
+                    $response['message'] = 'Failed to upload file';
+                    echo json_encode($response);
+                    exit();
+                }
+            }
+        }
+    }
+
+    $file_urls_string = implode(", ", $file_urls);
+
+    // SQL запрос для вставки данных в таблицу form_submissions
+    $stmt = $conn->prepare("INSERT INTO form_submissions (first_name, last_name, phone_number, email, message, file_url) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssss", $name, $surname, $tel, $email, $message, $file_urls_string);
+
+    if ($stmt->execute()) {
+        $response['status'] = 'success';
+        $response['message'] = 'Data saved successfully';
+    } else {
+        $response['status'] = 'error';
+        $response['message'] = 'Data saving failed';
+        echo json_encode($response);
+        exit();
+    }
+
+    $stmt->close();
+    $conn->close();
+
+    // Отправка письма
     $language = $_POST['language'] ?? 'en'; // Получаем язык из POST данных или используем 'en' по умолчанию
     $translations = [
         'en' => [
@@ -138,28 +198,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->isHTML(true);  // Устанавливаем формат письма в HTML
         $mail->Body = $bodyContent;
 
-        // Прикрепление файлов, если они есть
-        if (!empty($_FILES['files']['name'][0])) {
-            $uploadDir = 'file/';
-            if (!is_dir($uploadDir)) {
-                mkdir($uploadDir, 0777, true);
-            }
-            foreach ($_FILES['files']['name'] as $key => $value) {
-                if ($_FILES['files']['error'][$key] == UPLOAD_ERR_OK) {
-                    $tmp_name = $_FILES['files']['tmp_name'][$key];
-                    $fileName = basename($_FILES['files']['name'][$key]);
-                    $uploadFilePath = $uploadDir . $fileName;
-
-                    if (move_uploaded_file($tmp_name, $uploadFilePath)) {
-                        $mail->addAttachment($uploadFilePath, $fileName);
-                    } else {
-                        $response['status'] = 'error';
-                        $response['message'] = 'Failed to upload file: ' . $fileName;
-                        echo json_encode($response);
-                        exit();
-                    }
-                }
-            }
+        // Прикрепление файлов
+        foreach ($file_urls as $file_url) {
+            $mail->addAttachment($uploadDir . basename($file_url), basename($file_url));
         }
 
         // Отправка письма
@@ -221,7 +262,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <div class='content'>
                     <p>Dear {name},</p>
-                    <p>asdasdasdasdasdas.</p>
+                    <p>Thank you for your message. We have received it and will get back to you shortly.</p>
                     <p>Best regards,</p>
                     <p>Support Team</p>
                 </div>
@@ -237,7 +278,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $response['message'] = 'Mail Sent Successfully';
     } catch (Exception $e) {
         $response['status'] = 'error';
-        $response['message'] = 'Mail Sending Failed. Error: ' . $mail->ErrorInfo;
+        $response['message'] = 'Mail Sending Failed';
     }
     echo json_encode($response);
 } else {

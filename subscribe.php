@@ -1,8 +1,8 @@
 <?php
 $servername = "sq7p9v.myd.infomaniak.com";
-$username = "sq7p9v_sakanian"; // используйте имя пользователя базы данных
-$password = "Armen7725"; // используйте пароль пользователя базы данных
-$dbname = "sq7p9v_sakanian"; // используйте имя вашей базы данных
+$username = "sq7p9v_sakanian"; 
+$password = "Armen7725"; 
+$dbname = "sq7p9v_sakanian"; 
 
 // Создание подключения
 $conn = new mysqli($servername, $username, $password, $dbname);
