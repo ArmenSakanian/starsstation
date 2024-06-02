@@ -1,23 +1,21 @@
-
 <template>
   <footer>
     <div class="footer__container">
       <div class="footer__subscribe footer__item">
-        <h1>{{ $t('subscribe_title') }} Stars Station Studio</h1>
-
-          <div>
-            <form @submit.prevent="subscribe">
-              <div class="form-group">
-                <input type="email" v-model="email" placeholder="Email">
-                <button class="subscribe">{{ $t('send') }}</button>
-              </div>
-            </form>
-          </div>
-
+        <h1>{{ $t('newsletter') }}</h1>
+        <div>
+          <form @submit.prevent="subscribe">
+            <p>{{ $t('newsletter_text') }}</p>
+            <div class="form-group">
+              <input type="email" v-model="email" placeholder="Email">
+              <button class="subscribe">{{ $t('send') }}</button>
+            </div>
+          </form>
+        </div>
       </div>
       <div class="footer__links footer__item">
         <h1>{{ $t('link') }}</h1>
-        <div class="links ">
+        <div class="links">
           <nav>
             <ul>
               <li><router-link to="/">{{ $t('home') }}</router-link></li>
@@ -33,11 +31,11 @@
         <div class="service">
           <nav>
             <ul>
-              <li><router-link to="/Yourself">{{ $t('imagine yourself') }}</router-link></li>
-              <li><router-link to="/Advertising">{{ $t('advertising video') }}</router-link></li>
-              <li><router-link to="/Network">{{ $t('social network') }}</router-link></li>
-              <li><router-link to="/Montage">{{ $t('montage video') }}</router-link></li>
-              <li><router-link to="/Rap">{{ $t('rap clip') }}</router-link></li>
+              <li><router-link to="/Yourself">{{ $t('imagine_yourself') }}</router-link></li>
+              <li><router-link to="/Advertising">{{ $t('advertising_video') }}</router-link></li>
+              <li><router-link to="/Network">{{ $t('social_network') }}</router-link></li>
+              <li><router-link to="/Montage">{{ $t('montage_video') }}</router-link></li>
+              <li><router-link to="/Rap">{{ $t('rap_clip') }}</router-link></li>
             </ul>
           </nav>
         </div>
@@ -67,7 +65,6 @@
                   <i class="fab fa-youtube custom-icon youtube-icon"></i>
                 </a>
               </li>
-
             </ul>
           </nav>
         </div>
@@ -93,25 +90,25 @@ export default {
         const response = await axios.post('subscribe.php', new URLSearchParams({ email: this.email }));
         console.log(response.data); // Добавьте эту строку для отладки
         Swal.fire({
-          icon: 'success',
-          title: this.$t('success_title'),
-          text: this.$t(response.data.message_id), // Используем message_id для перевода
-          timer: 3000,
-          showConfirmButton: true,
-          timerProgressBar: true,
-          confirmButtonText: 'OK'
+  icon: 'success',
+  title: this.$t('success_title'),
+  text: this.$t(response.data.message_id), // Используем message_id для перевода
+  timer: 3000,
+  showConfirmButton: true,
+  timerProgressBar: true,
+  confirmButtonText: 'OK'
         });
         this.email = '';  // Очистить поле ввода
       } catch (error) {
         console.error(error);
         Swal.fire({
-          icon: 'error',
-          title: this.$t('error_title'),
-          text: this.$t('subscribe_error'),
-          timer: 3000,
-          showConfirmButton: true,
-          timerProgressBar: true,
-          confirmButtonText: 'OK'
+  icon: 'error',
+  title: this.$t('error_title'),
+  text: this.$t('subscribe_error'),
+  timer: 3000,
+  showConfirmButton: true,
+  timerProgressBar: true,
+  confirmButtonText: 'OK'
         });
       }
     }
@@ -122,18 +119,29 @@ export default {
 
 
 
+form {
+  margin-top: 20px;
+}
+form p {
+  margin-bottom: 20px;
+  text-align: start;
+}
 
 .subscribe {
   margin-top: 10px;
   padding: 10px 25px;
 }
+
+
+
 input {
   height: 50px;
   border: none;
-  border-bottom: 2px solid var(--text-color);
-  background-color: transparent;
+  border-radius: 5px;
+    background-color: white;
   font-size: 16px;
-  color: var(--text-color);
+  color: #000000;
+  padding-left: 10px;
   width: 300px;
   outline: none;
 }

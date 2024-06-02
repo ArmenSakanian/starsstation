@@ -1,6 +1,6 @@
 <template>
   <div class="portfolio">
-    <h1>{{ $t('our videos') }}</h1>
+    <h1>{{ $t('our_videos') }}</h1>
     <div class="videos">
       <div class="row" v-for="(row, rowIndex) in videoRows" :key="rowIndex">
         <div class="video" v-for="(video, videoIndex) in row" :key="videoIndex">

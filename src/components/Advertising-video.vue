@@ -1,16 +1,14 @@
 <template>
-    <div id="advertising-video" class="Services_container">
-      <div class="service_item" >
-        <h1 >{{ $t('advertising video') }}</h1>
-        <router-link to="/Advertising"><button  class="learn-more" aria-label="Learn more about Advertsing video">{{ $t('learn more') }}</button></router-link>
-        <div class="quotes">
-          <span v-for="(part, index) in splitText('advertising video-quotes')" :key="index" :class="part.class">{{ part.text }}</span>
-        </div>
-        
+  <div id="advertising-video" class="Services_container">
+    <div class="service_item">
+      <h1>{{ $t('advertising_video') }}</h1>
+      <router-link to="/Advertising"><button class="learn-more" aria-label="Learn more about Advertising video">{{ $t('learn_more') }}</button></router-link>
+      <div class="quotes">
+        <span v-for="(part, index) in splitText('advertising_video_quotes')" :key="index" :class="part.class">{{ part.text }}</span>
       </div>
-      
     </div>
-  </template>
+  </div>
+</template>
   
   <script>
   export default {

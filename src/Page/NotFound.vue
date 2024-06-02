@@ -3,7 +3,7 @@
     <div class="content">
       <img src="@/assets/notfound.png" alt="Page not found" class="error-image" />
       <h1>{{ $t('notfound') }}</h1>
-      <p>{{ $t('notfound-text') }}</p>
+      <p>{{ $t('notfound_text') }}</p>
     </div>
   </div>
 </template>
