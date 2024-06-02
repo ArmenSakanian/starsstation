@@ -19,15 +19,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Валидация данных
-    $name = filter_var(trim($_POST['name']), FILTER_SANITIZE_STRING);
-    $surname = filter_var(trim($_POST['surname']), FILTER_SANITIZE_STRING);
+    $name = filter_var(trim($_POST['name']), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $surname = filter_var(trim($_POST['surname']), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
-    $tel = filter_var(trim($_POST['tel']), FILTER_SANITIZE_STRING);
-    $message = filter_var(trim($_POST['message']), FILTER_SANITIZE_STRING);
+    $tel = filter_var(trim($_POST['tel']), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $message = filter_var(trim($_POST['message']), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $subscribe = isset($_POST['subscribe']) && $_POST['subscribe'] === 'true';
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $response['status'] = 'error';
         $response['message'] = 'Invalid email format';
+        error_log($response['message']); // Логирование ошибки
         echo json_encode($response);
         exit();
     }
@@ -36,13 +38,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $servername = "sq7p9v.myd.infomaniak.com";
     $username = "sq7p9v_sakanian"; 
     $password = "Armen7725"; 
-    $dbname = "sq7p9v_sakanian"; // Имя базы данных
+    $dbname = "sq7p9v_sakanian"; 
 
     $conn = new mysqli($servername, $username, $password, $dbname);
 
     if ($conn->connect_error) {
         $response['status'] = 'error';
-        $response['message'] = 'Database connection failed';
+        $response['message'] = 'Database connection failed: ' . $conn->connect_error;
+        error_log($response['message']); // Логирование ошибки
         echo json_encode($response);
         exit();
     }
@@ -65,7 +68,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $file_urls[] = $fileUrl;
                 } else {
                     $response['status'] = 'error';
-                    $response['message'] = 'Failed to upload file';
+                    $response['message'] = 'Failed to upload file: ' . $fileName;
+                    error_log($response['message']); // Логирование ошибки
                     echo json_encode($response);
                     exit();
                 }
@@ -77,16 +81,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // SQL запрос для вставки данных в таблицу form_submissions
     $stmt = $conn->prepare("INSERT INTO form_submissions (first_name, last_name, phone_number, email, message, file_url) VALUES (?, ?, ?, ?, ?, ?)");
+    if ($stmt === false) {
+        $response['status'] = 'error';
+        $response['message'] = 'Prepare statement failed: ' . $conn->error;
+        error_log($response['message']); // Логирование ошибки
+        echo json_encode($response);
+        exit();
+    }
+
     $stmt->bind_param("ssssss", $name, $surname, $tel, $email, $message, $file_urls_string);
 
     if ($stmt->execute()) {
         $response['status'] = 'success';
-        $response['message'] = 'Data saved successfully';
+        $response['message'] = 'Data saved successfully in form_submissions';
     } else {
         $response['status'] = 'error';
-        $response['message'] = 'Data saving failed';
+        $response['message'] = 'Data saving in form_submissions failed: ' . $stmt->error;
+        error_log($response['message']); // Логирование ошибки
         echo json_encode($response);
         exit();
+    }
+
+    // Если подписка выбрана, добавляем данные в таблицу sq7p9v_sakanian (предполагается, что это таблица подписчиков)
+    if ($subscribe) {
+        $stmt = $conn->prepare("INSERT INTO sq7p9v_sakanian (email) VALUES (?)");
+        if ($stmt === false) {
+            $response['status'] = 'error';
+            $response['message'] = 'Prepare statement for subscription failed: ' . $conn->error;
+            error_log($response['message']); // Логирование ошибки
+            echo json_encode($response);
+            exit();
+        }
+
+        $stmt->bind_param("s", $email);
+
+        if ($stmt->execute()) {
+            $response['status'] = 'success';
+            $response['message'] .= ' and in sq7p9v_sakanian';
+        } else {
+            $response['status'] = 'error';
+            $response['message'] = 'Data saving in sq7p9v_sakanian failed: ' . $stmt->error;
+            error_log($response['message']); // Логирование ошибки
+            echo json_encode($response);
+            exit();
+        }
     }
 
     $stmt->close();
@@ -275,10 +313,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $confirmationMail->send();
 
         $response['status'] = 'success';
-        $response['message'] = 'Mail Sent Successfully';
+        $response['message'] .= ' Mail Sent Successfully';
     } catch (Exception $e) {
         $response['status'] = 'error';
-        $response['message'] = 'Mail Sending Failed';
+        $response['message'] = 'Mail Sending Failed: ' . $mail->ErrorInfo;
     }
     echo json_encode($response);
 } else {

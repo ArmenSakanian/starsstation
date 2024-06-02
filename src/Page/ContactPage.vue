@@ -51,6 +51,7 @@
         <form @submit.prevent="submitForm" method="POST" action="sendmail.php" enctype="multipart/form-data" ref="form">
           <h1>{{ $t('feedback') }}</h1>
           <div class="feedback_container">
+            <!-- Существующие поля формы -->
             <div class="form-group">
               <label :class="{ 'active': activeInputs.name, 'inactive': !activeInputs.name }" for="name">{{ $t('name') }}</label>
               <input @focus="handleFocus('name')" @blur="handleBlur('name')" type="text" id="name" name="name" v-model="inputs.name" ref="name">
@@ -71,6 +72,15 @@
               <label :class="{ 'active': activeInputs.message, 'inactive': !activeInputs.message }" for="message">{{ $t('message') }}</label>
               <textarea @focus="handleFocus('message')" @blur="handleBlur('message')" name="message" id="message" rows="4" v-model="inputs.message" ref="message" @input="autoResize"></textarea>
             </div>
+            <!-- Новый чекбокс для подписки -->
+            <div class="consent">
+              <input type="checkbox" id="consent" v-model="consentGiven">
+              <p>{{ $t('agreement') }}<router-link to="/Privacy">{{ $t('privacy_policy_title') }}</router-link></p>
+            </div>
+            <div class="consent">
+              <input type="checkbox" id="subscribe" v-model="subscribe">
+              <p>{{ $t('subscribe') }}</p>
+            </div>
             <div class="form-controls">
               <div class="form-group file inline">
                 <div class="file-drop-area" @dragover.prevent @drop="handleDrop">
@@ -80,16 +90,13 @@
               </div>
               <input type="hidden" v-model="csrfToken" name="csrf_token">
               <input type="hidden" name="language" :value="currentLanguage">
+              <input type="hidden" name="subscribe" :value="subscribe">
               <div class="form-group form-button inline">
                 <button class="send" type="submit" :disabled="isSubmitting" aria-label="Send message">
                   <span>{{ isSubmitting ? $t('sending') : $t('send') }}</span>
                   <span v-if="isSubmitting" class="loader" aria-label="Loading..."></span>
                 </button>
               </div>
-            </div>
-            <div class="consent">
-              <input type="checkbox" id="consent" v-model="consentGiven">
-              <p>{{ $t('agreement') }}<router-link to="/Privacy">{{ $t('privacy_policy_title') }}</router-link></p>
             </div>
             <div class="file-list">
               <ul v-if="fileList.length > 0">
@@ -139,6 +146,8 @@ export default {
       csrfToken: '',
       isSubmitting: false,
       consentGiven: false,
+      subscribe: false, // Новый чекбокс для подписки
+      errorMessage: '', // Поле для сообщения об ошибке
       allowedTypes: [
         'image/png', 'image/jpeg', 'image/jpg', 'image/svg+xml',
         'application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -286,18 +295,25 @@ export default {
         });
         formData.append('csrf_token', this.csrfToken);
         formData.append('language', this.currentLanguage); // Добавляем текущий язык
+        formData.append('subscribe', this.subscribe); // Добавляем статус подписки
 
         axios.post('sendmail.php', formData)
-          .then(() => {
-            Swal.fire({
-              icon: 'success',
-              title: this.$t('success_message'),
-              timer: 3000,
-              showConfirmButton: false
-            });
-            this.resetForm(); // Очистить поля формы
+          .then(response => {
+            const data = response.data;
+            if (data.status === 'error') {
+              this.errorMessage = data.message;
+            } else {
+              Swal.fire({
+                icon: 'success',
+                title: this.$t('success_message'),
+                timer: 3000,
+                showConfirmButton: false
+              });
+              this.resetForm(); // Очистить поля формы
+            }
           })
           .catch(error => {
+            this.errorMessage = error.message;
             Swal.fire({
               icon: 'error',
               title: this.$t('error_message'),
@@ -329,6 +345,8 @@ export default {
       this.fileList = [];
       this.showFullFileList = false;
       this.consentGiven = false;
+      this.subscribe = false; // Сброс подписки
+      this.errorMessage = ''; // Очистить сообщение об ошибке
       this.$refs.form.reset(); // Сбросить форму
     },
     validateInputs() {
