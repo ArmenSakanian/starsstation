@@ -28,17 +28,23 @@
       </nav>
 
       <nav class="language-menu">
-        <ul>
-          <li class="language">
-            <a class="language-active" href="#" @click="handleActiveLanguageClick($event)">{{ $i18n.locale.toUpperCase() }}</a>
-            <ul class="language-inactive">
-              <li v-for="lang in filteredLanguages" :key="lang">
-                <a href="#" @click="changeLanguage($event, lang)">{{ lang.toUpperCase() }}</a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
+  <ul>
+    <li class="language">
+      <a class="language-active" href="#" @click="toggleLanguageMenu">
+        <img :src="getFlag($i18n.locale)" alt="Flag" class="flag-icon" />
+        <i class="fa-solid fa-angle-down" :class="{ rotated: languageMenuOpen }"> </i>
+      </a>
+      <ul class="language-inactive" :class="{ show: languageMenuOpen }">
+        <li v-for="lang in filteredLanguages" :key="lang">
+          <a href="#" @click="changeLanguage($event, lang)">
+            <img :src="getFlag(lang)" alt="Flag" class="flag-icon" />
+            <span>{{ getLanguageName(lang) }}</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
       <div class="icon" @click="toggleMenu">
         <svg :class="{ 'active': isMenuOpen }" width="30" height="30" viewBox="0 0 32 42" xmlns="http://www.w3.org/2000/svg">
           <g transform="matrix(1,0,0,1,-389.5,-264.004)">
@@ -58,15 +64,15 @@
   </header>
 </template>
 
-
 <script>
 export default {
   name: 'AppHeader',
   data() {
     return {
       availableLanguages: ['en', 'fr', 'de'],
-      menuPosition: '100%',  // Добавлено начальное значение для позиции меню
-      isMenuVisible: false
+      menuPosition: '100%',
+      isMenuVisible: false,
+      languageMenuOpen: false
     };
   },
   computed: {
@@ -74,7 +80,7 @@ export default {
       return this.availableLanguages.filter(lang => lang !== this.$i18n.locale);
     },
     isMenuOpen() {
-      return this.menuPosition === '0'; // возвращает true, если меню открыто
+      return this.menuPosition === '0';
     }
   },
   mounted() {
@@ -89,7 +95,6 @@ export default {
         }
       });
     }
-
     document.addEventListener('click', this.handleClickOutside);
   },
   beforeUnmount() {
@@ -99,48 +104,39 @@ export default {
     changeLanguage(event, lang) {
       event.preventDefault();
       this.$i18n.locale = lang;
-      localStorage.setItem('language', lang); // Сохраняем текущий язык в localStorage
+      localStorage.setItem('language', lang);
     },
-    handleActiveLanguageClick(event) {
+    toggleLanguageMenu(event) {
       event.preventDefault();
+      this.languageMenuOpen = !this.languageMenuOpen;
     },
     scrollToElement(event, id) {
-  event.preventDefault();
-  if (this.$route.name === 'Home') {
-    const element = document.getElementById(id);
-    if (element) {
-      const yOffset = -50;
-      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    }
-  } else {
-    this.$router.push({ name: 'Home', query: { scrollToId: id } });
-  }
-},
-    changeLanguage(event, lang) {
       event.preventDefault();
-      const scrollTop = window.pageYOffset;
-      this.$i18n.locale = lang;
-      localStorage.setItem('language', lang);
-
-      this.$nextTick(() => {
-        window.scrollTo(0, scrollTop);
-      });
+      if (this.$route.name === 'Home') {
+        const element = document.getElementById(id);
+        if (element) {
+          const yOffset = -50;
+          const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      } else {
+        this.$router.push({ name: 'Home', query: { scrollToId: id } });
+      }
     },
     toggleMenu() {
-    this.menuPosition = this.menuPosition === '100%' ? '0' : '100%';
-    if (this.isMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-  },
-  closeMenu() {
-    if (this.isMenuOpen) {
-      this.menuPosition = '100%';
-      document.body.style.overflow = '';
-    }
-  },
+      this.menuPosition = this.menuPosition === '100%' ? '0' : '100%';
+      if (this.isMenuOpen) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+    },
+    closeMenu() {
+      if (this.isMenuOpen) {
+        this.menuPosition = '100%';
+        document.body.style.overflow = '';
+      }
+    },
     handleMouseOver() {
       if (window.innerWidth >= 769) {
         this.isMenuVisible = true;
@@ -160,19 +156,42 @@ export default {
       this.isMenuVisible = false;
     },
     handleClickOutside(event) {
-      if (!this.$el.contains(event.target) && window.innerWidth < 769) {
-        this.closeMenu1();
+      if (!this.$el.contains(event.target)) {
+        this.languageMenuOpen = false;
+        if (window.innerWidth < 769) {
+          this.closeMenu1();
+        }
       }
-    } 
+    },
+    getFlag(lang) {
+      switch (lang) {
+        case 'en':
+          return require('@/assets/icon/en.svg');
+        case 'fr':
+          return require('@/assets/icon/fr.svg');
+        case 'de':
+          return require('@/assets/icon/de.svg');
+        default:
+          return '';
+      }
+    },
+    getLanguageName(lang) {
+      switch (lang) {
+        case 'en':
+          return 'English';
+        case 'fr':
+          return 'French';
+        case 'de':
+          return 'German';
+        default:
+          return '';
+      }
+    }
   }
 }
 </script>
 
-
 <style scoped>
-
-
-
 .header__bottom {
   position: absolute;
   width: 100%;
@@ -208,7 +227,6 @@ nav ul {
   display: flex;
 }
 
-
 .menu-ul > li {
   margin-right: 20px;
 }
@@ -226,8 +244,9 @@ nav ul li a:hover {
 }
 
 nav ul li .router-link-active {
-    color: var(--active-color);
-  }
+  color: var(--active-color);
+}
+
 .dropdown-content {
   display: block;
   position: absolute;
@@ -259,27 +278,72 @@ nav ul li .router-link-active {
   transition: background-color 0.8s, color 0.8s;
 }
 
-
-
-
-
 .language {
   display: flex;
   position: absolute;
-  right: 20px;
+  right: 90px;
 }
 
 .language a {
-  margin-right: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.language-active .fa-angle-down {
+  transition: transform 0.3s ease;
+  margin-left: 5px;
+}
+
+.language-active .fa-angle-down.rotated {
+  transform: rotate(180deg);
 }
 
 .language-active {
-  text-decoration: underline;
   color: var(--active-color);
 }
 
+.language-inactive {
+  display: block;
+  position: absolute;
+  top: 30px;
+  min-width: 110px;
+  background-color: var(--bg-secondary-color);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  opacity: 0;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.language-inactive.show {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+.language-inactive li {
+  margin: 0;
+}
+
+.language-inactive a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+.language-inactive a:hover {
+  background-color: var(--active-color);
+  color: black;
+}
+
+.flag-icon {
+  width: 20px;
+  height: 20px;
+}
+
 .icon {
-position: absolute;
+  position: absolute;
   display: none;
 }
 
@@ -321,15 +385,11 @@ svg.active #bottom {
   stroke-dashoffset: -60;
 }
 
-
 .rocket #top {
   stroke-dasharray: 30, 88;
 }
 
-
-
 @media screen and (max-width: 1024px) {
-
   .header__bottom {
     display: block;
   }
@@ -338,15 +398,11 @@ svg.active #bottom {
     justify-content: space-between;
   }
 
-
   .language {
     position: relative;
     right: 0;
   }
 
-  .language a {
-    margin-right: 20px;
-  }
 
   .icon {
     display: block;
@@ -372,15 +428,12 @@ svg.active #bottom {
     padding: 0 40px 0 40px;
   }
 
-
-
   .menu ul li {
     padding: 20px;
     margin-right: 20px;
     position: relative;
     border-bottom: 1px solid var(--br-color);
   }
-
 
   .dropdown-content {
     background-color: transparent;
@@ -391,8 +444,6 @@ svg.active #bottom {
     margin: 0 auto;
   }
 
-
-  
   .menu ul li {
     width: 100%;
   }
@@ -401,8 +452,5 @@ svg.active #bottom {
   nav li a {
     font-size: 18px;
   }
-
 }
-
-
 </style>

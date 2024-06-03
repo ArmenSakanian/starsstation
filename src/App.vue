@@ -231,27 +231,9 @@ h1 {
   color: var(--active-color);
 }
 
-.arrow {
-  position: absolute;
-top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 24px;
-  animation: blink 1.5s infinite;
-}
 
 
-@keyframes blink {
 
-  0%,
-  100% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0;
-  }
-}
 
 
 .custom-icon {

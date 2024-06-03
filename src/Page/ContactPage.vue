@@ -94,6 +94,7 @@
                     accept=".png, .jpeg, .jpg, .svg, .pdf, .docx, .txt, .odt, .xlsx, .ods, .gif, .bmp, .tiff, .pptx, .odp"
                     multiple @change="updateFileList">
                   <label for="attachment" class="btn-upload">{{ $t('attach') }}</label>
+                  
                 </div>
               </div>
               <input type="hidden" v-model="csrfToken" name="csrf_token">
@@ -241,24 +242,24 @@ export default {
     },
     getFileIcon(file) {
       if (!file || !file.type) {
-        return require('@/assets/default-icon.png'); // Используем default-icon.png по умолчанию
+        return require('@/assets/icon/default-icon.png'); // Используем default-icon.png по умолчанию
       }
 
       const fileType = file.type;
       if (fileType.includes('image')) {
-        return require('@/assets/image-icon.png');
+        return require('@/assets/icon/image-icon.png');
       } else if (fileType.includes('pdf')) {
-        return require('@/assets/pdf-icon.png');
+        return require('@/assets/icon/pdf-icon.png');
       } else if (fileType.includes('wordprocessingml.document')) {
-        return require('@/assets/docx-icon.png');
+        return require('@/assets/icon/docx-icon.png');
       } else if (fileType.includes('text')) {
-        return require('@/assets/text-icon.png');
+        return require('@/assets/icon/text-icon.png');
       } else if (fileType.includes('spreadsheetml.sheet')) {
-        return require('@/assets/xlsx-icon.png');
+        return require('@/assets/icon/xlsx-icon.png');
       } else if (fileType.includes('presentationml.presentation')) {
-        return require('@/assets/pptx-icon.png');
+        return require('@/assets/icon/pptx-icon.png');
       } else {
-        return require('@/assets/default-icon.png'); // Используем default-icon.png по умолчанию
+        return require('@/assets/icon/default-icon.png'); // Используем default-icon.png по умолчанию
       }
     },
     removeFile(index) {
