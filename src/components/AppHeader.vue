@@ -32,7 +32,8 @@
     <li class="language">
       <a class="language-active" href="#" @click="toggleLanguageMenu">
         <img :src="getFlag($i18n.locale)" alt="Flag" class="flag-icon" />
-        <i class="fa-solid fa-angle-down" :class="{ rotated: languageMenuOpen }"> </i>
+        <span class="active-lang">{{ $i18n.locale.toUpperCase() }}</span>
+        <i class="fas fa-angle-down" :class="{ rotated: languageMenuOpen }"></i>
       </a>
       <ul class="language-inactive" :class="{ show: languageMenuOpen }">
         <li v-for="lang in filteredLanguages" :key="lang">
@@ -239,9 +240,25 @@ nav li a {
   transition: 1s;
 }
 
-nav ul li a:hover {
-  color: var(--active-color);
+.menu ul li a::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 2px;
+  background: var(--active-color);
+  transition: width 0.3s ease-in-out;
 }
+
+.menu ul li a:hover::after {
+  width: 100%;
+}
+
+.menu ul li a.active::after {
+  width: 100%;
+}
+
+
+
 
 nav ul li .router-link-active {
   color: var(--active-color);
@@ -303,6 +320,12 @@ nav ul li .router-link-active {
   color: var(--active-color);
 }
 
+.active-lang {
+  margin-left: 10px;
+  color: white;
+  text-decoration: underline
+}
+
 .language-inactive {
   display: block;
   position: absolute;
@@ -326,20 +349,22 @@ nav ul li .router-link-active {
 }
 
 .language-inactive a {
-  display: block;
+  display: flex;
   padding: 10px;
   text-decoration: none;
   color: var(--text-color);
 }
 
 .language-inactive a:hover {
-  background-color: var(--active-color);
-  color: black;
+  background-color: var(--bg-main-color);
 }
 
 .flag-icon {
-  width: 20px;
-  height: 20px;
+  width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    background-color: #ffffff;
+    padding: 2px;
 }
 
 .icon {

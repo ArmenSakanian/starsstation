@@ -93,8 +93,7 @@
                   <input type="file" name="files[]" id="attachment"
                     accept=".png, .jpeg, .jpg, .svg, .pdf, .docx, .txt, .odt, .xlsx, .ods, .gif, .bmp, .tiff, .pptx, .odp"
                     multiple @change="updateFileList">
-                  <label for="attachment" class="btn-upload">{{ $t('attach') }}</label>
-                  
+                  <label for="attachment" class="btn-upload">{{ $t('attach') }}  <img src="@/assets/icon/upload.svg" alt=""></label>
                 </div>
               </div>
               <input type="hidden" v-model="csrfToken" name="csrf_token">
@@ -242,24 +241,24 @@ export default {
     },
     getFileIcon(file) {
       if (!file || !file.type) {
-        return require('@/assets/icon/default-icon.png'); // Используем default-icon.png по умолчанию
+        return require('@/assets/icon/default-icon.svg'); 
       }
 
       const fileType = file.type;
-      if (fileType.includes('image')) {
-        return require('@/assets/icon/image-icon.png');
+      if (fileType.includes('png')) {
+        return require('@/assets/icon/image-icon.svg');
       } else if (fileType.includes('pdf')) {
-        return require('@/assets/icon/pdf-icon.png');
+        return require('@/assets/icon/pdf-icon.svg');
       } else if (fileType.includes('wordprocessingml.document')) {
-        return require('@/assets/icon/docx-icon.png');
+        return require('@/assets/icon/docx-icon.svg');
       } else if (fileType.includes('text')) {
-        return require('@/assets/icon/text-icon.png');
+        return require('@/assets/icon/text-icon.svg');
       } else if (fileType.includes('spreadsheetml.sheet')) {
-        return require('@/assets/icon/xlsx-icon.png');
+        return require('@/assets/icon/xlsx-icon.svg');
       } else if (fileType.includes('presentationml.presentation')) {
-        return require('@/assets/icon/pptx-icon.png');
+        return require('@/assets/icon/pptx-icon.svg');
       } else {
-        return require('@/assets/icon/default-icon.png'); // Используем default-icon.png по умолчанию
+        return require('@/assets/icon/default-icon.svg'); 
       }
     },
     removeFile(index) {
@@ -549,6 +548,31 @@ line {
   margin-bottom: 50px;
 }
 
+.file label {
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.file label img {
+  width: 50px;
+    margin-top: 10px;
+    animation: upload 2s ease-in-out infinite;
+}
+
+@keyframes upload {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .5;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
 label {
   position: absolute;
   color: black;
@@ -669,6 +693,11 @@ input[type="file"] {
   color: black;
 }
 
+.file-list span a {
+  text-decoration: underline;
+  color: var(--text-color);
+}
+
 .remove-file {
   background: none;
   border: none;
@@ -690,7 +719,6 @@ input[type="file"] {
   height: 100%;
   background-color: rgba(0, 216, 47, 0.781);
   transition: width .5s;
-  /* Длительность анимации 0.5 секунды */
 }
 
 .consent {

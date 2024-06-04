@@ -21,6 +21,7 @@
               <li><router-link to="/">{{ $t('home') }}</router-link></li>
               <li><router-link to="/About">{{ $t('about') }}</router-link></li>
               <li><router-link to="/Contact">{{ $t('contact') }}</router-link></li>
+              <li><router-link to="/Portfolio" @click="closeMenu">{{ $t('our_videos') }}</router-link></li>
               <li><router-link to="/Privacy">{{ $t('privacy_policy_title') }}</router-link></li>
             </ul>
           </nav>
