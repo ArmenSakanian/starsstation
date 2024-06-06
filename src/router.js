@@ -13,17 +13,17 @@ const PortfolioPage = () => import('./Page/PortfolioPage.vue')
 const NotFound = () => import('./Page/NotFound.vue')
 
 const routes = [
-  { path: '/', component: HomePage, name: 'Home' },
-  { path: '/About', component: AboutPage, name: 'About' },
-  { path: '/Contact', component: ContactPage, name: 'Contact' },
-  { path: '/Yourself', component: YourselfPage, name: 'Yourself' },
-  { path: '/Advertising', component: AdvertisingPage, name: 'Advertising' },
-  { path: '/Network', component: NetworkPage, name: 'Network' },
-  { path: '/Montage', component: MontagePage, name: 'Montage' },
-  { path: '/Rap', component: RapPage, name: 'Rap' },
-  { path: '/Privacy', component: PrivacyPage, name: 'Privacy' },
-  { path: '/Portfolio', component: PortfolioPage, name: 'Portfolio' },
-  { path: '/:catchAll(.*)', component: NotFound, name: 'NotFound' }
+  { path: '/', component: HomePage, name: 'Home', meta: { title: 'Stars Station Studio' } },
+  { path: '/About', component: AboutPage, name: 'About', meta: { title: 'About' } },
+  { path: '/Contact', component: ContactPage, name: 'Contact', meta: { title: 'Contact' } },
+  { path: '/Yourself', component: YourselfPage, name: 'Yourself', meta: { title: 'Yourself' } },
+  { path: '/Advertising', component: AdvertisingPage, name: 'Advertising', meta: { title: 'Advertising' } },
+  { path: '/Network', component: NetworkPage, name: 'Network', meta: { title: 'Network' } },
+  { path: '/Montage', component: MontagePage, name: 'Montage', meta: { title: 'Montage' } },
+  { path: '/Rap', component: RapPage, name: 'Rap', meta: { title: 'Rap' } },
+  { path: '/Privacy', component: PrivacyPage, name: 'Privacy', meta: { title: 'Privacy' } },
+  { path: '/Portfolio', component: PortfolioPage, name: 'Portfolio', meta: { title: 'Portfolio' } },
+  { path: '/:catchAll(.*)', component: NotFound, name: 'NotFound', meta: { title: 'Not Found' } }
 ]
 
 const router = createRouter({
@@ -38,4 +38,10 @@ const router = createRouter({
   }
 })
 
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title || 'Default Title';
+  next();
+})
+
 export default router
+

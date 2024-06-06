@@ -15,7 +15,7 @@
               @mouseover="handleMouseOver"
               @mouseleave="handleMouseLeave"
               @click="handleMobileClick">
-            <a href="#services">{{ $t('service') }}</a>
+            <a href="#services">{{ $t('service') }}<i class="fas fa-angle-down" :class="{ rotated: languageMenuOpen }"></i></a>
             <ul class="dropdown-content dropdown-content-service" :class="{ show: isMenuVisible }">
               <li><a href="#" @click="scrollToElement($event, 'imagine-yourself'); closeMenu()">{{ $t('imagine_yourself') }}</a></li>
               <li><a href="#" @click="scrollToElement($event, 'advertising-video'); closeMenu()">{{ $t('advertising_video') }}</a></li>
@@ -274,6 +274,10 @@ nav ul li .router-link-active {
   transform: scaleY(0);
   transform-origin: top;
   transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.dropdown > a i {
+  margin-left: 5px;
 }
 
 .dropdown-content.show {

@@ -1,11 +1,9 @@
 <template>
-  <div id="app">
     <AppHeader />
     <main>
       <router-view />
     </main>
     <AppFooter />
-  </div>
 </template>
 
 <script>
@@ -53,7 +51,7 @@ export default {
   --text-secondary-color: #757575;
   --bg-secondary-color: #171717;
   --bg-main-color: #222222;
-  --active-color: #00ff40;
+  --active-color: #FF8D00;
   --active-dark-color: #ac5e00;
   --instagram-color: #cd486b;
   --facebook-color: #1877F2;
