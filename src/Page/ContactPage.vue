@@ -1,7 +1,7 @@
 <template>
   <div class="contact">
     <div class="contact__container">
-      <div class="contact__container-item info">
+      <div class="contact__container-item info" data-aos="fade-up">
         <h1>{{ $t('contact') }}</h1>
         <div class="contact-info">
           <div class="contact-group">
@@ -45,7 +45,7 @@
           </div>
         </div>
       </div>
-      <div class="contact__container-item feedback">
+      <div class="contact__container-item feedback" data-aos="fade-up">
         <form @submit.prevent="submitForm" method="POST" action="sendmail.php" enctype="multipart/form-data" ref="form">
           <h1>{{ $t('feedback') }}</h1>
           <div class="feedback_container">

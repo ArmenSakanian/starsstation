@@ -74,7 +74,28 @@ export default {
   border-radius: 10px;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box
+}
 
+html, body {
+  font-family: "Roboto Condensed", sans-serif;
+  font-style: normal;
+  font-weight: 300;
+
+}
+
+
+main {
+  margin-top: 80px;
+}
+
+h1 {
+  font-size: 48px;
+  font-weight: bold;
+}
 
 
 
@@ -99,40 +120,12 @@ export default {
 }
 
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box
-}
-
-body {
-  font-family: "Roboto Condensed", sans-serif;
-  font-style: normal;
-  font-weight: 300;
-
-}
-#app {
-  display: grid;
-  grid-template-rows: 80px 1fr auto;
-
-}
-
-main {
-    flex: 1;
-}
-
-h1 {
-  font-size: 48px;
-  font-weight: bold;
-}
-
-
-
 .learn-more, .send, .subscribe {
   border: 2px solid white;
   border-radius: 5px;
-  background: linear-gradient(to top, var(--active-color) 50%, transparent 50%);
-  background-size: 100% 200%;
+  background: linear-gradient(to right, var(--active-color) 50%, transparent 50%);
+  background-size: 200% 100%;
+  background-position: 100% 0;
   color: white;
   font-size: 20px;
   cursor: pointer;
@@ -141,7 +134,7 @@ h1 {
 
 .learn-more:hover, .send:hover, .subscribe:hover {
   border-radius: 0;
-  background-position: 0 100%;
+  background-position: 0 0;
   color: black;
   border: 2px solid var(--active-color);
 }
@@ -229,18 +222,9 @@ h1 {
   color: var(--active-color);
 }
 
-
-
-
-
-
 .custom-icon {
   font-size: 30px;
 }
-
-
-
-
 
 .instagram-icon:hover {
   color: var(--instagram-color);
@@ -276,11 +260,7 @@ h1 {
   font-size: 20px;
 }
 
-
-
 @media screen and (max-width: 1024px) {
-
-
   ::-webkit-scrollbar {
   width: 5px; 
 }
@@ -298,9 +278,4 @@ h1 {
 
 
 }
-
-
-
-
-
 </style>

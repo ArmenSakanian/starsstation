@@ -8,6 +8,7 @@
     "analyze": "source-map-explorer 'dist/js/*.js'"
   },
   "dependencies": {
+    "aos": "^2.3.4",
     "vue": "^3.2.13",
     "vue-i18n": "^9.13.1",
     "vue-router": "^4.3.2",

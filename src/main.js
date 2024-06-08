@@ -1,27 +1,24 @@
-// main.js
 import { createApp } from 'vue'
 import App from './App.vue'
 import { createI18n } from 'vue-i18n'
 import router from './router'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
-// Импорт переводов
 import en from './locales/en.json'
 import fr from './locales/fr.json'
 import de from './locales/de.json'
 
-// Получение сохранённого языка из localStorage
 const savedLanguage = localStorage.getItem('language') || 'en';
 
-// Поддерживаемые языки
 const supportedLanguages = ['en', 'fr', 'de'];
 
-// Определение языка браузера или использование сохранённого языка
 const browserLanguage = (navigator.language || navigator.userLanguage).split('-')[0];
 const defaultLanguage = supportedLanguages.includes(browserLanguage) ? browserLanguage : 'en';
 
 const i18n = createI18n({
-  locale: savedLanguage || defaultLanguage, // Использование сохранённого языка или языка браузера
-  fallbackLocale: 'en', // Язык, который будет использоваться, если не найден перевод
+  locale: savedLanguage || defaultLanguage, 
+  fallbackLocale: 'en', 
   messages: {
     en,
     fr,
@@ -32,5 +29,9 @@ const i18n = createI18n({
 const app = createApp(App)
 app.use(router)
 app.use(i18n)
+
+AOS.init({
+  duration: 1200, 
+});
 
 app.mount('#app')

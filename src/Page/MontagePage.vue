@@ -1,6 +1,6 @@
 <template>
   <div class="service__container-about all">
-    <div class="services-about">
+    <div class="services-about" data-aos="fade-up">
       <h1>
         <span v-for="(part, index) in splitText('montage_video_quotes')" :key="index" :class="part.class">{{ part.text }}</span>
       </h1>
