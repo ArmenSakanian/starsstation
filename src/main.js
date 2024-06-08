@@ -9,29 +9,65 @@ import en from './locales/en.json'
 import fr from './locales/fr.json'
 import de from './locales/de.json'
 
-const savedLanguage = localStorage.getItem('language') || 'en';
+// Функция для определения языка по местоположению
+async function getLanguageByLocation() {
+  try {
+    const response = await fetch('https://ipapi.co/json/');
+    const data = await response.json();
+    const countryCode = data.country_code;
 
-const supportedLanguages = ['en', 'fr', 'de'];
+    // Сопоставление страны с языком
+    const countryToLanguageMap = {
+      FR: 'fr',
+      DE: 'de',
+      US: 'en',
+      GB: 'en'
+      // добавьте больше сопоставлений по необходимости
+    };
 
-const browserLanguage = (navigator.language || navigator.userLanguage).split('-')[0];
-const defaultLanguage = supportedLanguages.includes(browserLanguage) ? browserLanguage : 'en';
-
-const i18n = createI18n({
-  locale: savedLanguage || defaultLanguage, 
-  fallbackLocale: 'en', 
-  messages: {
-    en,
-    fr,
-    de
+    return countryToLanguageMap[countryCode] || 'fr';
+  } catch (error) {
+    console.error('Error fetching location data:', error);
+    return 'fr'; // если не удаётся определить местоположение, используем французский по умолчанию
   }
-});
+}
 
-const app = createApp(App)
-app.use(router)
-app.use(i18n)
+async function determineLanguage() {
+  const savedLanguage = localStorage.getItem('language');
+  if (savedLanguage) {
+    return savedLanguage;
+  }
 
-AOS.init({
-  duration: 1200, 
-});
+  const supportedLanguages = ['en', 'fr', 'de'];
+  const browserLanguage = (navigator.language || navigator.userLanguage).split('-')[0];
+  if (supportedLanguages.includes(browserLanguage)) {
+    return browserLanguage;
+  }
 
-app.mount('#app')
+  const locationLanguage = await getLanguageByLocation();
+  return locationLanguage;
+}
+
+(async () => {
+  const locale = await determineLanguage();
+
+  const i18n = createI18n({
+    locale,
+    fallbackLocale: 'fr',
+    messages: {
+      en,
+      fr,
+      de
+    }
+  });
+
+  const app = createApp(App);
+  app.use(router);
+  app.use(i18n);
+
+  AOS.init({
+    duration: 1200,
+  });
+
+  app.mount('#app');
+})();

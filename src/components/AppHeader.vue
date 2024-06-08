@@ -1,6 +1,5 @@
 <template>
   <header>
-    <router-link></router-link>
     <div class="header-container">
       <router-link to="/"><img src="@/assets/logo/Logo-Full_white.svg" alt="Logo" class="logo" /></router-link>
       <nav class="menu" :style="{ left: menuPosition }">
@@ -203,16 +202,21 @@ export default {
   top: 3px;
 }
 
-.header-container {
+header {
   position: fixed;
   top: 0;
   z-index: 9998;
   width: 100%;
-  display: flex;
-  align-items: center;
   background-color: var(--bg-secondary-color);
   color: var(--text-color);
-  padding: 8px 10px;
+  padding: 10px;
+  height: 80px;
+  
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
 }
 
 .logo {

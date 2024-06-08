@@ -1,8 +1,7 @@
 <template>
-  <div class="contact">
-    <div class="contact__container">
+  <div class="contact__container">
+    <div class="contact_container">
       <div class="contact__container-item info" data-aos="fade-up">
-        <h1>{{ $t('contact') }}</h1>
         <div class="contact-info">
           <div class="contact-group">
             <button class="contact-button" aria-label="Call us at +41 77 944 17 43">
@@ -14,10 +13,77 @@
               <a href="mailto:support@starsstation.ch"><i class="fa-solid fa-envelope"></i>support@starsstation.ch</a>
             </button>
           </div>
-          <div class="contact-group logo">
-            <router-link to="/"><img src="@/assets/logo/Logo-text_white.svg" alt="Logo"></router-link>
+        </div>
+      </div>
+      <div class="contact__container-item feedback" data-aos="fade-up">
+        <form @submit.prevent="submitForm" method="POST" action="sendmail.php" enctype="multipart/form-data" ref="form">
+          <h1>{{ $t('feedback') }}</h1>
+          <div class="feedback_container">
+            <div class="form-group">
+              <label :class="{ 'active': activeInputs.name, 'inactive': !activeInputs.name }" for="name">{{ $t('name') }}</label>
+              <input @focus="handleFocus('name')" @blur="handleBlur('name')" type="text" id="name" name="name" v-model="inputs.name" ref="name">
+            </div>
+            <div class="form-group">
+              <label :class="{ 'active': activeInputs.surname, 'inactive': !activeInputs.surname }" for="surname">{{ $t('surname') }}</label>
+              <input @focus="handleFocus('surname')" @blur="handleBlur('surname')" type="text" id="surname" name="surname" v-model="inputs.surname" ref="surname">
+            </div>
+            <div class="form-group">
+              <label :class="{ 'active': activeInputs.email, 'inactive': !activeInputs.email }" for="email">{{ $t('email') }}</label>
+              <input @focus="handleFocus('email')" @blur="handleBlur('email')" type="email" id="email" name="email" v-model="inputs.email" ref="email">
+            </div>
+            <div class="form-group">
+              <label :class="{ 'active': activeInputs.tel, 'inactive': !activeInputs.tel }" for="tel">{{ $t('tel') }}</label>
+              <input @focus="handleFocus('tel')" @blur="handleBlur('tel')" type="tel" id="tel" name="tel" v-model="inputs.tel" ref="tel">
+            </div>
+            <div class="form-group">
+              <label :class="{ 'active': activeInputs.message, 'inactive': !activeInputs.message }" for="message">{{ $t('message') }}</label>
+              <textarea @focus="handleFocus('message')" @blur="handleBlur('message')" name="message" id="message" rows="4" v-model="inputs.message" ref="message" @input="autoResize"></textarea>
+              <div class="file-drop-area">
+                <input type="file" name="files[]" id="attachment" accept=".png, .jpeg, .jpg, .svg, .pdf, .docx, .txt, .odt, .xlsx, .ods, .gif, .bmp, .tiff, .pptx, .odp" multiple @change="updateFileList">
+                <label for="attachment" class="btn-upload"><img src="@/assets/icon/upload.svg" alt=""></label>
+              </div>
+            </div>
+            <div class="consent">
+              <input type="checkbox" id="consent" v-model="consentGiven">
+              <p>{{ $t('agreement') }}<router-link to="/Privacy">{{ $t('privacy_policy_title') }}</router-link></p>
+            </div>
+            <div class="consent">
+              <input type="checkbox" id="subscribe" v-model="subscribe">
+              <p>{{ $t('newsletter_text') }}</p>
+            </div>
+            <div class="form-controls">
+              <input type="hidden" v-model="csrfToken" name="csrf_token">
+              <input type="hidden" name="language" :value="currentLanguage">
+              <input type="hidden" name="subscribe" :value="subscribe">
+              <div class="form-group form-button inline">
+                <button class="send" type="submit" :disabled="isSubmitting" aria-label="Send message">
+                  <span>{{ isSubmitting ? $t('sending') : $t('send') }}</span>
+                  <span v-if="isSubmitting" class="loader" aria-label="Loading..."></span>
+                </button>
+              </div>
+            </div>
+            <div class="file-list">
+              <ul v-if="fileList.length > 0">
+                <li v-for="(file, index) in displayedFileList" :key="index" class="file-item">
+                  <img :src="getFileIcon(file)" alt="file icon" class="file-icon" />
+                  <span class="file-name">{{ file.name }}</span>
+                  <button @click.prevent="removeFile(index)" class="remove-file" aria-label="Remove file"><i class="fa-solid fa-x"></i></button>
+                  <div class="upload-progress">
+                    <div class="upload-progress-bar" :style="{ width: file.progress + '%' }"></div>
+                  </div>
+                </li>
+              </ul>
+              <span v-if="fileList.length > 3">
+                <a href="#" @click.prevent="toggleFileList">
+                  {{ showFullFileList ? $t('hide') : `${$t('and')} ${fileList.length - 3} ${$t('more')}` }}
+                </a>
+              </span>
+            </div>
           </div>
-          <div class="social">
+        </form>
+      </div>
+      <div class="contact__container-item info"> 
+ <div class="social">
             <nav>
               <ul>
                 <li>
@@ -42,90 +108,8 @@
                 </li>
               </ul>
             </nav>
-          </div>
-        </div>
-      </div>
-      <div class="contact__container-item feedback" data-aos="fade-up">
-        <form @submit.prevent="submitForm" method="POST" action="sendmail.php" enctype="multipart/form-data" ref="form">
-          <h1>{{ $t('feedback') }}</h1>
-          <div class="feedback_container">
-            <div class="form-group">
-              <label :class="{ 'active': activeInputs.name, 'inactive': !activeInputs.name }" for="name">{{ $t('name')
-                }}</label>
-              <input @focus="handleFocus('name')" @blur="handleBlur('name')" type="text" id="name" name="name"
-                v-model="inputs.name" ref="name">
-            </div>
-            <div class="form-group">
-              <label :class="{ 'active': activeInputs.surname, 'inactive': !activeInputs.surname }" for="surname">{{
-                $t('surname') }}</label>
-              <input @focus="handleFocus('surname')" @blur="handleBlur('surname')" type="text" id="surname"
-                name="surname" v-model="inputs.surname" ref="surname">
-            </div>
-            <div class="form-group">
-              <label :class="{ 'active': activeInputs.email, 'inactive': !activeInputs.email }" for="email">{{
-                $t('email') }}</label>
-              <input @focus="handleFocus('email')" @blur="handleBlur('email')" type="email" id="email" name="email"
-                v-model="inputs.email" ref="email">
-            </div>
-            <div class="form-group">
-              <label :class="{ 'active': activeInputs.tel, 'inactive': !activeInputs.tel }" for="tel">{{ $t('tel')
-                }}</label>
-              <input @focus="handleFocus('tel')" @blur="handleBlur('tel')" type="tel" id="tel" name="tel"
-                v-model="inputs.tel" ref="tel">
-            </div>
-            <div class="form-group">
-              <label :class="{ 'active': activeInputs.message, 'inactive': !activeInputs.message }" for="message">{{
-                $t('message') }}</label>
-              <textarea @focus="handleFocus('message')" @blur="handleBlur('message')" name="message" id="message"
-                rows="4" v-model="inputs.message" ref="message" @input="autoResize"></textarea>
-            </div>
-            <div class="consent">
-              <input type="checkbox" id="consent" v-model="consentGiven">
-              <p>{{ $t('agreement') }}<router-link to="/Privacy">{{ $t('privacy_policy_title') }}</router-link></p>
-            </div>
-            <div class="consent">
-              <input type="checkbox" id="subscribe" v-model="subscribe">
-              <p>{{ $t('subscribe') }}</p>
-            </div>
-            <div class="form-controls">
-              <div class="form-group file inline">
-                <div class="file-drop-area" @dragover.prevent @drop="handleDrop">
-                  <input type="file" name="files[]" id="attachment"
-                    accept=".png, .jpeg, .jpg, .svg, .pdf, .docx, .txt, .odt, .xlsx, .ods, .gif, .bmp, .tiff, .pptx, .odp"
-                    multiple @change="updateFileList">
-                  <label for="attachment" class="btn-upload">{{ $t('attach') }}  <img src="@/assets/icon/upload.svg" alt=""></label>
-                </div>
-              </div>
-              <input type="hidden" v-model="csrfToken" name="csrf_token">
-              <input type="hidden" name="language" :value="currentLanguage">
-              <input type="hidden" name="subscribe" :value="subscribe">
-              <div class="form-group form-button inline">
-                <button class="send" type="submit" :disabled="isSubmitting" aria-label="Send message">
-                  <span>{{ isSubmitting ? $t('sending') : $t('send') }}</span>
-                  <span v-if="isSubmitting" class="loader" aria-label="Loading..."></span>
-                </button>
-              </div>
-            </div>
-            <div class="file-list">
-              <ul v-if="fileList.length > 0">
-                <li v-for="(file, index) in displayedFileList" :key="index" class="file-item">
-                  <img :src="getFileIcon(file)" alt="file icon" class="file-icon" />
-                  <span class="file-name">{{ file.name }}</span>
-                  <button @click.prevent="removeFile(index)" class="remove-file" aria-label="Remove file"><i
-                      class="fa-solid fa-x"></i></button>
-                  <div class="upload-progress">
-                    <div class="upload-progress-bar" :style="{ width: file.progress + '%' }"></div>
-                  </div>
-                </li>
-              </ul>
-              <span v-if="fileList.length > 3">
-                <a href="#" @click.prevent="toggleFileList">
-                  {{ showFullFileList ? $t('hide') : `${$t('and')} ${fileList.length - 3} ${$t('more')}` }}
-                </a>
-              </span>
-            </div>
-          </div>
-        </form>
+          </div> 
+        
       </div>
     </div>
   </div>
@@ -408,18 +392,18 @@ h1 {
   font-size: 48px;
 }
 
-.contact {
+.contact__container {
   color: white;
   background-color: var(--bg-main-color);
-  background-size: cover;
-  background-attachment: fixed;
-  background-position: center;
-}
-
-.contact__container {
   padding-top: 50px;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+}
+
+.contact_container {
+  width: 70%;
+  margin: 0 auto;
 }
 
 .contact__container-item {
@@ -439,8 +423,9 @@ h1 {
 .contact-info {
   padding-top: 50px;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  gap: 30px;
 }
 
 .contact-group {
@@ -469,36 +454,10 @@ h1 {
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  position: relative;
-  overflow: hidden;
   z-index: 1;
   transition: 1s;
 }
 
-.contact-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: radial-gradient(circle, var(--bg-secondary-color), var(--bg-secondary-color));
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-}
-
-.contact-button:hover::before {
-  opacity: 1;
-}
-
-.contact-button:hover {
-  transform: scale(1.2);
-}
-
-.contact-button a:hover {
-  color: var(--active-color);
-}
 
 .logo {
   position: relative;
@@ -543,21 +502,30 @@ line {
 }
 
 .feedback_container>.form-group,
-.file label {
+.file-drop-area {
   position: relative;
   margin-bottom: 50px;
 }
 
-.file label {
+.file-drop-area {
   display: flex;
-    flex-direction: column;
-    align-items: center;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  bottom: 40px;
+  right: 20px;
 }
 
-.file label img {
-  width: 50px;
-    margin-top: 10px;
-    animation: upload 2s ease-in-out infinite;
+.file-drop-area label {
+  display: flex;
+  align-items: center;
+}
+
+.file-drop-area img {
+  width: 30px;
+  height: 30px;
+  margin-top: 10px;
+  animation: upload 2s ease-in-out infinite;
 }
 
 @keyframes upload {
@@ -567,10 +535,14 @@ line {
   50% {
     opacity: .5;
   }
-
   100% {
     opacity: 1;
   }
+}
+
+input[type="file"] {
+  position: absolute;
+  left: -9999px;
 }
 
 label {
@@ -611,7 +583,7 @@ textarea {
 label.active {
   top: -20px;
   font-size: 12px;
-  color: var(--text-secondary-color);
+  color: var(--text-color);
   animation: floatLabel 0.3s ease forwards;
 }
 
@@ -643,11 +615,6 @@ label.inactive {
   }
 }
 
-input[type="file"] {
-  position: absolute;
-  left: -9999px;
-}
-
 .btn-upload {
   display: inline-block;
   padding: 20px 10px;
@@ -655,14 +622,6 @@ input[type="file"] {
   border-radius: 4px;
   cursor: pointer;
   font-weight: bold;
-  border: 2px dashed var(--br-color);
-  transition: .5s ease;
-}
-
-.btn-upload:hover {
-  background-color: var(--active-color);
-  border: 2px dashed var(--active-color);
-  color: var(--bg-main-color);
 }
 
 .form-controls {
@@ -677,7 +636,7 @@ input[type="file"] {
   align-items: center;
   position: relative;
   padding: 10px;
-  margin-bottom: 10px;
+  margin-top: 15px;
   background-color: white;
   border-radius: 14px 15px 0 0;
 }
@@ -724,7 +683,7 @@ input[type="file"] {
 .consent {
   display: flex;
   align-items: center;
-  margin: 20px auto
+  margin: 20px auto;
 }
 
 .consent input[type="checkbox"] {
@@ -786,15 +745,17 @@ input[type="file"] {
   }
 }
 
-@media screen and (max-width: 1024px) {
-  .contact__container {
-    flex-direction: column;
-  }
-}
-
 @media screen and (max-width: 769px) {
   .feedback_container {
     padding: 20px 20px;
   }
+  .contact-info {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .contact_container {
+    width: 90%;
+  }
 }
+
 </style>

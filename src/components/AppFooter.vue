@@ -71,9 +71,6 @@
         </div>
       </div>
     </div>
-    <div class="copyright">
-      <p>©2024 Stars Station Studio</p>
-    </div>
   </footer>
 </template>
 
@@ -166,9 +163,13 @@ label.inactive {
   box-sizing: border-box;
 }
 
-.footer__container {
+footer {
   background-color: var(--bg-secondary-color);
   color: var(--text-color);
+  min-height: 400px;
+}
+
+.footer__container {
   padding: 20px 50px 0 50px;
   display: flex;
   flex-wrap: wrap;
@@ -206,13 +207,6 @@ label.inactive {
 
 
 
-.copyright {
-  background-color: var(--bg-main-color);
-  padding: 10px;
-  text-align: center;
-  color: var(--text-color);
-  font-size: 14px;
-}
 
 @media screen and (max-width: 1024px) {
   .footer__container a {
