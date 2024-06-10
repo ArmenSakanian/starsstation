@@ -1,9 +1,9 @@
 <template>
-    <AppHeader />
-    <main>
-      <router-view />
-    </main>
-    <AppFooter />
+  <AppHeader />
+  <main>
+    <router-view />
+  </main>
+  <AppFooter />
 </template>
 
 <script>
@@ -44,7 +44,6 @@ export default {
 </script>
 
 <style>
-
 :root {
   --text-color: #ffffff;
   --br-color: #757575;
@@ -61,7 +60,7 @@ export default {
 
 
 ::-webkit-scrollbar {
-  width: 12px; 
+  width: 12px;
 }
 
 
@@ -70,7 +69,7 @@ export default {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--br-color); 
+  background: var(--br-color);
   border-radius: 10px;
 }
 
@@ -80,10 +79,12 @@ export default {
   box-sizing: border-box
 }
 
-html, body {
+html,
+body {
   font-family: "Roboto Condensed", sans-serif;
   font-style: normal;
   font-weight: 300;
+  /* background-color: var(--bg-main-color); */
 
 }
 
@@ -97,6 +98,26 @@ h1 {
   font-weight: bold;
 }
 
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+
+
+main {
+  flex: 1 0 auto;
+  /* Main растягивается, чтобы занять оставшееся пространство */
+
+}
+
+main>div {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
 
 #imagine-yourself {
@@ -120,7 +141,9 @@ h1 {
 }
 
 
-.learn-more, .send, .subscribe {
+.learn-more,
+.send,
+.subscribe {
   border: 2px solid white;
   border-radius: 5px;
   background: linear-gradient(to right, var(--active-color) 50%, transparent 50%);
@@ -132,7 +155,9 @@ h1 {
   transition: .3s ease;
 }
 
-.learn-more:hover, .send:hover, .subscribe:hover {
+.learn-more:hover,
+.send:hover,
+.subscribe:hover {
   border-radius: 0;
   background-position: 0 0;
   color: black;
@@ -146,8 +171,8 @@ h1 {
   flex-direction: column;
   justify-content: center;
   background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+  background-position: center;
+  background-repeat: no-repeat;
   height: 100vh;
   width: 100%;
   color: white;
@@ -160,7 +185,7 @@ h1 {
 
 .Services_container:nth-child(even) {
   align-items: flex-start;
-  
+
 }
 
 .Services_container:nth-child(even) .service_item {
@@ -195,26 +220,26 @@ h1 {
 }
 
 .service__container-about {
-    background-color: #222222;
-    border-top: 1px solid #757575;
-    border-bottom: 1px solid #757575;
+  background-color: #222222;
+  border-top: 1px solid #757575;
+  border-bottom: 1px solid #757575;
 }
 
 .services-about {
-    padding: 150px 0 150px 0;
-    text-align: center;
-    color: white;
-    width: 100%;
+  padding: 150px 0 150px 0;
+  text-align: center;
+  color: white;
+  width: 100%;
 }
 
 .about__text {
-    color: #dddddd;
-    padding-top: 20px;
-    font-size: 28px;
-    line-height: 2;
-    width: 90%;
-    margin: 0 auto;
-    
+  color: #dddddd;
+  padding-top: 20px;
+  font-size: 28px;
+  line-height: 2;
+  width: 90%;
+  margin: 0 auto;
+
 }
 
 .color-bold {
@@ -231,15 +256,15 @@ h1 {
 }
 
 .facebook-icon:hover {
-  color: var(--facebook-color); 
+  color: var(--facebook-color);
 }
 
 .whatsapp-icon:hover {
-  color: var(--whatsapp-color); 
+  color: var(--whatsapp-color);
 }
 
 .youtube-icon:hover {
-  color: var(--youtube-color); 
+  color: var(--youtube-color);
 }
 
 .social li {
@@ -262,19 +287,19 @@ h1 {
 
 @media screen and (max-width: 1024px) {
   ::-webkit-scrollbar {
-  width: 5px; 
-}
+    width: 5px;
+  }
 
-.Services_container:nth-child(odd) .service_item,
-.Services_container:nth-child(even) .service_item {
-  margin: 0 auto;
-  text-align: center;
-  padding: 0 10px 0 10px;
-}
+  .Services_container:nth-child(odd) .service_item,
+  .Services_container:nth-child(even) .service_item {
+    margin: 0 auto;
+    text-align: center;
+    padding: 0 10px 0 10px;
+  }
 
   .about__text {
-        font-size: 16px;
-    }
+    font-size: 16px;
+  }
 
 
 }

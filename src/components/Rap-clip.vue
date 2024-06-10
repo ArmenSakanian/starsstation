@@ -2,26 +2,23 @@
   <div id="rap-clip" class="Services_container">
     <div class="service_item" data-aos="fade-up">
       <h1>{{ $t('rap_clip') }}</h1>
-      <router-link to="/Rap"><button class="learn-more" aria-label="Learn more about Rap Clip">{{ $t('learn_more') }}</button></router-link>
+      <router-link to="/Rap"><button class="learn-more" aria-label="Learn more about Rap Clip">{{ $t('learn_more')
+          }}</button></router-link>
     </div>
   </div>
 </template>
-  
-  <script>
-  export default {
-    name: 'RapClip',
-    inject: ['splitText'],
-  }
-  </script>
-  
-  <style scoped>
 
-
-
-  @media screen and (max-width: 1024px) {
-  #rap-clip{
-  background-image: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0.5)), url('@/assets/img-mobile/rap-clip-mobile.webp');
+<script>
+export default {
+  name: 'RapClip',
+  inject: ['splitText'],
 }
-  }
+</script>
 
-  </style>
+<style scoped>
+@media screen and (max-width: 1024px) {
+  #rap-clip {
+    background-image: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0.5)), url('@/assets/img-mobile/rap-clip-mobile.webp');
+  }
+}
+</style>

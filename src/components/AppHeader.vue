@@ -69,7 +69,7 @@ export default {
   name: 'AppHeader',
   data() {
     return {
-      availableLanguages: ['en', 'fr', 'de'],
+      availableLanguages: ['en', 'fr', 'de', 'it'],
       menuPosition: '100%',
       isMenuVisible: false,
       languageMenuOpen: false
@@ -171,6 +171,8 @@ export default {
           return require('@/assets/icon/fr.svg');
         case 'de':
           return require('@/assets/icon/de.svg');
+          case 'it':
+          return require('@/assets/icon/it.svg');
         default:
           return '';
       }
@@ -183,6 +185,8 @@ export default {
           return 'French';
         case 'de':
           return 'German';
+          case 'it':
+          return 'Italy';
         default:
           return '';
       }

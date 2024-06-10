@@ -166,7 +166,6 @@ label.inactive {
 footer {
   background-color: var(--bg-secondary-color);
   color: var(--text-color);
-  min-height: 400px;
 }
 
 .footer__container {

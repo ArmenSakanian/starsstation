@@ -78,9 +78,9 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; 
+  min-height: 100vh;
   padding: 20px;
-  background-color: var(--bg-main-color); 
+  background-color: var(--bg-main-color);
 }
 
 .privacy-policy {
@@ -88,9 +88,9 @@ export default {
   padding: 20px;
   border-radius: 8px;
   color: var(--text-color);
-  max-width: 800px; 
-  width: 100%; 
-  text-align: center; 
+  max-width: 800px;
+  width: 100%;
+  text-align: center;
 }
 
 .privacy-policy h1 {
@@ -107,12 +107,14 @@ export default {
   text-align: center;
 }
 
-.privacy-policy p, .privacy-policy ul, .privacy-policy li {
+.privacy-policy p,
+.privacy-policy ul,
+.privacy-policy li {
   color: var(--text-color);
   font-size: 1em;
   line-height: 1.6;
   margin: 10px 0;
-  text-align: center; 
+  text-align: center;
 }
 
 .privacy-policy ul {
@@ -121,11 +123,11 @@ export default {
 }
 
 .privacy-policy ul li::before {
-  content: '•'; 
+  content: '•';
   color: var(--text-color);
-  display: inline-block; 
-  width: 1em; 
-  margin-left: -1em; 
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
 }
 
 .section {
@@ -145,7 +147,9 @@ export default {
     font-size: 1.2em;
   }
 
-  .privacy-policy p, .privacy-policy ul, .privacy-policy li {
+  .privacy-policy p,
+  .privacy-policy ul,
+  .privacy-policy li {
     font-size: 0.9em;
   }
 }

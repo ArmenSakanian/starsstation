@@ -1,6 +1,6 @@
 <template>
-  <div class="contact__container">
-    <div class="contact_container">
+  <div class="contact">
+    <div class="contact__container">
       <div class="contact__container-item info" data-aos="fade-up">
         <div class="contact-info">
           <div class="contact-group">
@@ -19,28 +19,51 @@
         <form @submit.prevent="submitForm" method="POST" action="sendmail.php" enctype="multipart/form-data" ref="form">
           <h1>{{ $t('feedback') }}</h1>
           <div class="feedback_container">
-            <div class="form-group">
-              <label :class="{ 'active': activeInputs.name, 'inactive': !activeInputs.name }" for="name">{{ $t('name') }}</label>
-              <input @focus="handleFocus('name')" @blur="handleBlur('name')" type="text" id="name" name="name" v-model="inputs.name" ref="name">
+            <div class="form-group-container">
+              <div class="form-group">
+                <label
+                  :class="{ 'active': activeInputs.name || inputs.name, 'inactive': !activeInputs.name && !inputs.name }"
+                  for="name">{{ $t('name') }}</label>
+                <input @focus="handleFocus('name')" @blur="handleBlur('name')" type="text" id="name" name="name"
+                  v-model="inputs.name" ref="name">
+              </div>
+              <div class="form-group">
+                <label
+                  :class="{ 'active': activeInputs.surname || inputs.surname, 'inactive': !activeInputs.surname && !inputs.surname }"
+                  for="surname">{{ $t('surname') }}</label>
+                <input @focus="handleFocus('surname')" @blur="handleBlur('surname')" type="text" id="surname"
+                  name="surname" v-model="inputs.surname" ref="surname">
+              </div>
             </div>
-            <div class="form-group">
-              <label :class="{ 'active': activeInputs.surname, 'inactive': !activeInputs.surname }" for="surname">{{ $t('surname') }}</label>
-              <input @focus="handleFocus('surname')" @blur="handleBlur('surname')" type="text" id="surname" name="surname" v-model="inputs.surname" ref="surname">
+            <div class="form-group-container">
+              <div class="form-group">
+                <label
+                  :class="{ 'active': activeInputs.email || inputs.email, 'inactive': !activeInputs.email && !inputs.email }"
+                  for="email">{{ $t('email') }}</label>
+                <input @focus="handleFocus('email')" @blur="handleBlur('email')" type="email" id="email" name="email"
+                  v-model="inputs.email" ref="email">
+              </div>
+              <div class="form-group">
+                <label
+                  :class="{ 'active': activeInputs.tel || inputs.tel, 'inactive': !activeInputs.tel && !inputs.tel }"
+                  for="tel">{{ $t('tel') }}</label>
+                <input @focus="handleFocus('tel')" @blur="handleBlur('tel')" type="tel" id="tel" name="tel"
+                  v-model="inputs.tel" ref="tel">
+              </div>
             </div>
-            <div class="form-group">
-              <label :class="{ 'active': activeInputs.email, 'inactive': !activeInputs.email }" for="email">{{ $t('email') }}</label>
-              <input @focus="handleFocus('email')" @blur="handleBlur('email')" type="email" id="email" name="email" v-model="inputs.email" ref="email">
-            </div>
-            <div class="form-group">
-              <label :class="{ 'active': activeInputs.tel, 'inactive': !activeInputs.tel }" for="tel">{{ $t('tel') }}</label>
-              <input @focus="handleFocus('tel')" @blur="handleBlur('tel')" type="tel" id="tel" name="tel" v-model="inputs.tel" ref="tel">
-            </div>
-            <div class="form-group">
-              <label :class="{ 'active': activeInputs.message, 'inactive': !activeInputs.message }" for="message">{{ $t('message') }}</label>
-              <textarea @focus="handleFocus('message')" @blur="handleBlur('message')" name="message" id="message" rows="4" v-model="inputs.message" ref="message" @input="autoResize"></textarea>
-              <div class="file-drop-area">
-                <input type="file" name="files[]" id="attachment" accept=".png, .jpeg, .jpg, .svg, .pdf, .docx, .txt, .odt, .xlsx, .ods, .gif, .bmp, .tiff, .pptx, .odp" multiple @change="updateFileList">
-                <label for="attachment" class="btn-upload"><img src="@/assets/icon/upload.svg" alt=""></label>
+            <div class="form-group-container">
+              <div class="form-group">
+                <label
+                  :class="{ 'active': activeInputs.message || inputs.message, 'inactive': !activeInputs.message && !inputs.message }"
+                  for="message">{{ $t('message') }}</label>
+                <textarea @focus="handleFocus('message')" @blur="handleBlur('message')" name="message" id="message"
+                  rows="4" v-model="inputs.message" ref="message" @input="autoResize"></textarea>
+                <div class="file-drop-area">
+                  <input type="file" name="files[]" id="attachment"
+                    accept=".png, .jpeg, .jpg, .svg, .pdf, .docx, .txt, .odt, .xlsx, .ods, .gif, .bmp, .tiff, .pptx, .odp"
+                    multiple @change="updateFileList">
+                  <label for="attachment" class="btn-upload"><img src="@/assets/icon/upload.svg" alt=""></label>
+                </div>
               </div>
             </div>
             <div class="consent">
@@ -67,7 +90,8 @@
                 <li v-for="(file, index) in displayedFileList" :key="index" class="file-item">
                   <img :src="getFileIcon(file)" alt="file icon" class="file-icon" />
                   <span class="file-name">{{ file.name }}</span>
-                  <button @click.prevent="removeFile(index)" class="remove-file" aria-label="Remove file"><i class="fa-solid fa-x"></i></button>
+                  <button @click.prevent="removeFile(index)" class="remove-file" aria-label="Remove file"><i
+                      class="fa-solid fa-x"></i></button>
                   <div class="upload-progress">
                     <div class="upload-progress-bar" :style="{ width: file.progress + '%' }"></div>
                   </div>
@@ -82,34 +106,33 @@
           </div>
         </form>
       </div>
-      <div class="contact__container-item info"> 
- <div class="social">
-            <nav>
-              <ul>
-                <li>
-                  <a href="https://www.instagram.com/starsstationstudio?igsh=cDdmczIxc2ljMzJq" aria-label="Instagram">
-                    <i class="fab fa-instagram custom-icon instagram-icon"></i>
-                  </a>
-                </li>
-                <li>
-                  <a href="#" aria-label="Facebook">
-                    <i class="fab fa-facebook custom-icon facebook-icon"></i>
-                  </a>
-                </li>
-                <li>
-                  <a href="https://wa.me/41779441743" aria-label="WhatsApp">
-                    <i class="fab fa-whatsapp custom-icon whatsapp-icon"></i>
-                  </a>
-                </li>
-                <li>
-                  <a href="https://www.youtube.com/@StarsStationStudio" aria-label="YouTube">
-                    <i class="fab fa-youtube custom-icon youtube-icon"></i>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div> 
-        
+      <div class="contact__container-item info">
+        <div class="social">
+          <nav>
+            <ul>
+              <li>
+                <a href="https://www.instagram.com/starsstationstudio?igsh=cDdmczIxc2ljMzJq" aria-label="Instagram">
+                  <i class="fab fa-instagram custom-icon instagram-icon"></i>
+                </a>
+              </li>
+              <li>
+                <a href="#" aria-label="Facebook">
+                  <i class="fab fa-facebook custom-icon facebook-icon"></i>
+                </a>
+              </li>
+              <li>
+                <a href="https://wa.me/41779441743" aria-label="WhatsApp">
+                  <i class="fab fa-whatsapp custom-icon whatsapp-icon"></i>
+                </a>
+              </li>
+              <li>
+                <a href="https://www.youtube.com/@StarsStationStudio" aria-label="YouTube">
+                  <i class="fab fa-youtube custom-icon youtube-icon"></i>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
       </div>
     </div>
   </div>
@@ -139,8 +162,8 @@ export default {
       csrfToken: '',
       isSubmitting: false,
       consentGiven: false,
-      subscribe: false, // Новый чекбокс для подписки
-      errorMessage: '', // Поле для сообщения об ошибке
+      subscribe: false,
+      errorMessage: '',
       allowedTypes: [
         'image/png', 'image/jpeg', 'image/jpg', 'image/svg+xml',
         'application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -149,13 +172,13 @@ export default {
         'image/gif', 'image/bmp', 'image/tiff', 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
         'application/vnd.oasis.opendocument.presentation'
       ],
-      maxSize: 10 * 1024 * 1024, // 10 MB
+      maxSize: 10 * 1024 * 1024,
       currentUploadIndex: -1
     };
   },
   computed: {
     currentLanguage() {
-      return this.$i18n.locale; // Получаем текущий язык из i18n
+      return this.$i18n.locale;
     },
     displayedFileList() {
       if (this.showFullFileList) {
@@ -199,7 +222,7 @@ export default {
           this.showError(`${file.name} ${this.$t('is_too_large')}. ${this.$t('maximum_size_is')} 10 MB.`);
           return;
         }
-        this.fileList.push({ name: file.name, type: file.type, progress: 0, originalFile: file }); // Добавляем файл с начальным прогрессом 0
+        this.fileList.push({ name: file.name, type: file.type, progress: 0, originalFile: file });
       });
 
       this.showFullFileList = false;
@@ -221,11 +244,11 @@ export default {
           clearInterval(interval);
           this.startUploadProgress(index + 1);
         }
-      }, 200); // 200 ms для каждого шага прогресса (всего 2 секунды)
+      }, 200);
     },
     getFileIcon(file) {
       if (!file || !file.type) {
-        return require('@/assets/icon/default-icon.svg'); 
+        return require('@/assets/icon/default-icon.svg');
       }
 
       const fileType = file.type;
@@ -242,15 +265,15 @@ export default {
       } else if (fileType.includes('presentationml.presentation')) {
         return require('@/assets/icon/pptx-icon.svg');
       } else {
-        return require('@/assets/icon/default-icon.svg'); 
+        return require('@/assets/icon/default-icon.svg');
       }
     },
     removeFile(index) {
       this.fileList.splice(index, 1);
       if (this.currentUploadIndex === index) {
-        this.startUploadProgress(index); // Перезапуск прогресса при удалении файла
+        this.startUploadProgress(index);
       } else if (this.currentUploadIndex > index) {
-        this.currentUploadIndex--; // Корректировка индекса при удалении файла до текущего загружаемого
+        this.currentUploadIndex--;
       }
     },
     toggleFileList() {
@@ -272,25 +295,25 @@ export default {
           title: this.$t('required_consent'),
           text: this.$t('you_must_agree_to_the_processing_of_personal_data'),
           timer: 3000,
-            showConfirmButton: true,
-  timerProgressBar: true,
-  confirmButtonText: 'OK'
+          showConfirmButton: true,
+          timerProgressBar: true,
+          confirmButtonText: 'OK'
         });
         return;
       }
 
       if (this.validateInputs()) {
-        this.isSubmitting = true; // Показать индикатор загрузки
+        this.isSubmitting = true;
         const formData = new FormData();
         Object.keys(this.inputs).forEach(key => {
           formData.append(key, this.inputs[key]);
         });
         this.fileList.forEach(file => {
-          formData.append('files[]', file.originalFile, file.name); // Используем оригинальный файл
+          formData.append('files[]', file.originalFile, file.name);
         });
         formData.append('csrf_token', this.csrfToken);
-        formData.append('language', this.currentLanguage); // Добавляем текущий язык
-        formData.append('subscribe', this.subscribe); // Добавляем статус подписки
+        formData.append('language', this.currentLanguage);
+        formData.append('subscribe', this.subscribe);
 
         axios.post('sendmail.php', formData)
           .then(response => {
@@ -302,11 +325,11 @@ export default {
                 icon: 'success',
                 title: this.$t('success_message'),
                 timer: 3000,
-                  showConfirmButton: true,
-  timerProgressBar: true,
-  confirmButtonText: 'OK'
+                showConfirmButton: true,
+                timerProgressBar: true,
+                confirmButtonText: 'OK'
               });
-              this.resetForm(); // Очистить поля формы
+              this.resetForm();
             }
           })
           .catch(error => {
@@ -316,22 +339,22 @@ export default {
               title: this.$t('error_message'),
               text: error.message,
               timer: 3000,
-                showConfirmButton: true,
-  timerProgressBar: true,
-  confirmButtonText: 'OK'
+              showConfirmButton: true,
+              timerProgressBar: true,
+              confirmButtonText: 'OK'
             });
           })
           .finally(() => {
-            this.isSubmitting = false; // Скрыть индикатор загрузки
+            this.isSubmitting = false;
           });
       } else {
         Swal.fire({
           icon: 'warning',
           title: this.$t('fill_all_fields'),
           timer: 3000,
-            showConfirmButton: true,
-  timerProgressBar: true,
-  confirmButtonText: 'OK'
+          showConfirmButton: true,
+          timerProgressBar: true,
+          confirmButtonText: 'OK'
         });
       }
     },
@@ -346,9 +369,9 @@ export default {
       this.fileList = [];
       this.showFullFileList = false;
       this.consentGiven = false;
-      this.subscribe = false; // Сброс подписки
-      this.errorMessage = ''; // Очистить сообщение об ошибке
-      this.$refs.form.reset(); // Сбросить форму
+      this.subscribe = false;
+      this.errorMessage = '';
+      this.$refs.form.reset();
     },
     validateInputs() {
       for (const key in this.inputs) {
@@ -360,8 +383,8 @@ export default {
     },
     autoResize() {
       const textarea = this.$refs.message;
-      textarea.style.height = '50px'; // Устанавливаем высоту по умолчанию
-      textarea.style.height = textarea.scrollHeight + 'px'; // Устанавливаем новую высоту на основе содержимого
+      textarea.style.height = '150px';
+      textarea.style.height = textarea.scrollHeight + 'px';
     },
     showError(message) {
       Swal.fire({
@@ -369,9 +392,9 @@ export default {
         title: this.$t('file_upload_error'),
         text: message,
         timer: 3000,
-          showConfirmButton: true,
-  timerProgressBar: true,
-  confirmButtonText: 'OK'
+        showConfirmButton: true,
+        timerProgressBar: true,
+        confirmButtonText: 'OK'
       });
     }
   },
@@ -392,28 +415,30 @@ h1 {
   font-size: 48px;
 }
 
-.contact__container {
+.contact {
   color: white;
   background-color: var(--bg-main-color);
-  padding-top: 50px;
+  padding: 30px 10px 30px 10px;
   display: flex;
   justify-content: center;
   flex-direction: column;
 }
 
-.contact_container {
-  width: 70%;
+.contact__container {
+  min-width: 1000px;
   margin: 0 auto;
+  border-radius: 20px;
+  box-shadow: 0px 0px 2px 0px #ffffff;
 }
 
-.contact__container-item {
+/* .contact__container-item {
   width: 100%;
   margin: 0 auto;
   overflow: hidden;
-}
+} */
 
 .feedback_container {
-  padding: 50px 100px;
+  padding: 30px 20px;
 }
 
 .contact__container-item h1 {
@@ -421,7 +446,7 @@ h1 {
 }
 
 .contact-info {
-  padding-top: 50px;
+  padding-top: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -450,14 +475,13 @@ h1 {
   align-items: center;
   padding: 20px 30px;
   color: #fff;
-  background: radial-gradient(circle, var(--bg-secondary-color), var(--bg-main-color));
+  background-color: transparent;
   border: none;
   border-radius: 10px;
   cursor: pointer;
   z-index: 1;
   transition: 1s;
 }
-
 
 .logo {
   position: relative;
@@ -469,7 +493,7 @@ h1 {
 }
 
 .logo img:hover {
-  transform: scale(1.2)
+  transform: scale(1.2);
 }
 
 .icon svg {
@@ -501,10 +525,17 @@ line {
   justify-content: space-between;
 }
 
-.feedback_container>.form-group,
-.file-drop-area {
+.form-group-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.form-group {
+  width: 100%;
   position: relative;
-  margin-bottom: 50px;
 }
 
 .file-drop-area {
@@ -525,20 +556,8 @@ line {
   width: 30px;
   height: 30px;
   margin-top: 10px;
-  animation: upload 2s ease-in-out infinite;
 }
 
-@keyframes upload {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: .5;
-  }
-  100% {
-    opacity: 1;
-  }
-}
 
 input[type="file"] {
   position: absolute;
@@ -548,9 +567,10 @@ input[type="file"] {
 label {
   position: absolute;
   color: black;
-  top: 20px;
+  top: -25px;
   font-weight: bold;
   margin-left: 5px;
+  transition: all 0.3s ease;
 }
 
 input {
@@ -578,12 +598,12 @@ input[type="email"],
 input[type="tel"],
 textarea {
   padding-top: 20px;
+  padding-right: 30px;
 }
 
 label.active {
   top: -20px;
-  font-size: 12px;
-  color: var(--text-color);
+  color: var(--active-color);
   animation: floatLabel 0.3s ease forwards;
 }
 
@@ -598,15 +618,15 @@ label.inactive {
   }
 
   to {
-    top: -20px;
-    font-size: 12px;
+    top: -25px;
+    font-size: 20px;
   }
 }
 
 @keyframes sinkLabel {
   from {
-    top: -20px;
-    font-size: 12px;
+    top: -25px;
+    font-size: 20px;
   }
 
   to {
@@ -690,9 +710,8 @@ label.inactive {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  width: 20px;
-  height: 20px;
-  border: 2px solid var(--br-color);
+  width: 25px;
+  height: 25px;
   border-radius: 4px;
   outline: none;
   cursor: pointer;
@@ -708,10 +727,11 @@ label.inactive {
 .consent input[type="checkbox"]:checked::after {
   content: '✔';
   color: var(--text-color);
-  font-size: 16px;
+  font-size: 20px;
   position: absolute;
-  top: -5px;
-  left: 2px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .consent p {
@@ -745,17 +765,29 @@ label.inactive {
   }
 }
 
+
 @media screen and (max-width: 769px) {
-  .feedback_container {
-    padding: 20px 20px;
-  }
   .contact-info {
     flex-direction: column;
     gap: 10px;
   }
-  .contact_container {
-    width: 90%;
+
+  .contact__container {
+    min-width: 300px;
+  }
+
+  .form-group-container {
+    flex-direction: column;
   }
 }
 
+@media (min-width: 769px) and (max-width: 1024px) {
+  .contact__container[data-v-50e640b0] {
+    min-width: 500px;
+  }
+
+  .form-group-container {
+    flex-direction: column;
+  }
+}
 </style>

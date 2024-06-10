@@ -1,18 +1,20 @@
 <template>
+
   <head>
-  <title>Stars Station Studio</title>
-  <meta name="description" content="IMAGINE YOURSELF, EXPRESS YOUR ART IN VIDEO, SOCIAL NETWORK, MONTAGE VIDEO, RAP CLIP">
-</head>
-    <div>
-      <ImagineYourself/>
-      <AdvertisingVideo/>
-      <SocialNetwork/>
-      <MontageVideo/>
-      <RapClip/>
-    </div>
-  </template>
-  
-  <script>
+    <title>Stars Station Studio</title>
+    <meta name="description"
+      content="IMAGINE YOURSELF, EXPRESS YOUR ART IN VIDEO, SOCIAL NETWORK, MONTAGE VIDEO, RAP CLIP">
+  </head>
+  <div>
+    <ImagineYourself />
+    <AdvertisingVideo />
+    <SocialNetwork />
+    <MontageVideo />
+    <RapClip />
+  </div>
+</template>
+
+<script>
 import MontageVideo from '../components/Montage-video.vue';
 import SocialNetwork from '../components/Social-network.vue';
 import AdvertisingVideo from '../components/Advertising-video.vue';
@@ -20,7 +22,7 @@ import ImagineYourself from '../components/imagine-yourself.vue';
 import RapClip from '../components/Rap-clip.vue'
 
 
-  export default {
+export default {
   name: "HomePage",
   components: {
     ImagineYourself,
@@ -28,7 +30,7 @@ import RapClip from '../components/Rap-clip.vue'
     SocialNetwork,
     MontageVideo,
     RapClip
-    },
+  },
   mounted() {
     this.scrollToElementFromQuery();
   },
@@ -39,7 +41,7 @@ import RapClip from '../components/Rap-clip.vue'
         this.$nextTick(() => {
           const element = document.getElementById(scrollToId);
           if (element) {
-            const yOffset = -50; 
+            const yOffset = -50;
             const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
             window.scrollTo({ top: y, behavior: 'smooth' });
           } else {
@@ -50,11 +52,7 @@ import RapClip from '../components/Rap-clip.vue'
     }
   }
 };
-  </script>
+</script>
 
 
-<style scoped>
-
-</style>
-
-  
+<style scoped></style>

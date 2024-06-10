@@ -8,6 +8,7 @@ import 'aos/dist/aos.css'
 import en from './locales/en.json'
 import fr from './locales/fr.json'
 import de from './locales/de.json'
+import it from './locales/it.json'  // добавляем итальянский язык
 
 // Функция для определения языка по местоположению
 async function getLanguageByLocation() {
@@ -20,6 +21,7 @@ async function getLanguageByLocation() {
     const countryToLanguageMap = {
       FR: 'fr',
       DE: 'de',
+      IT: 'it',  // добавляем Италию
       US: 'en',
       GB: 'en'
       // добавьте больше сопоставлений по необходимости
@@ -38,7 +40,7 @@ async function determineLanguage() {
     return savedLanguage;
   }
 
-  const supportedLanguages = ['en', 'fr', 'de'];
+  const supportedLanguages = ['en', 'fr', 'de', 'it'];  // добавляем итальянский в поддерживаемые языки
   const browserLanguage = (navigator.language || navigator.userLanguage).split('-')[0];
   if (supportedLanguages.includes(browserLanguage)) {
     return browserLanguage;
@@ -57,7 +59,8 @@ async function determineLanguage() {
     messages: {
       en,
       fr,
-      de
+      de,
+      it  // добавляем итальянский язык
     }
   });
 

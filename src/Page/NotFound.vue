@@ -22,8 +22,8 @@ export default {
   height: 100vh;
   text-align: center;
   background-color: var(--bg-main-color);
-    border-top: 1px solid var(--br-color);
-    border-bottom: 1px solid var(--br-color);
+  border-top: 1px solid var(--br-color);
+  border-bottom: 1px solid var(--br-color);
 }
 
 .content {

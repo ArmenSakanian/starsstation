@@ -4,12 +4,9 @@
     <div class="videos">
       <div class="row" v-for="(row, rowIndex) in videoRows" :key="rowIndex">
         <div class="video" v-for="(video, videoIndex) in row" :key="videoIndex">
-          <iframe
-            :src="getVideoUrl(video.id)"
-            frameborder="0"
+          <iframe :src="getVideoUrl(video.id)" frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          ></iframe>
+            allowfullscreen></iframe>
           <p>{{ video.title }}</p>
         </div>
       </div>
@@ -98,12 +95,12 @@ iframe {
 
 .video p {
   text-align: center;
-    font-size: 16px;
-    margin-top: 10px;
-    color: #000000;
-    font-weight: bold;
-    background: white;
-    padding: 20px;
+  font-size: 16px;
+  margin-top: 10px;
+  color: #000000;
+  font-weight: bold;
+  background: white;
+  padding: 20px;
 }
 
 /* Медиа-запросы для адаптивного дизайна */
