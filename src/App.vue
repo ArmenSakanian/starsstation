@@ -226,7 +226,7 @@ main>div {
 }
 
 .services-about {
-  padding: 150px 0 150px 0;
+  padding: 50px 0 50px 0;
   text-align: center;
   color: white;
   width: 100%;

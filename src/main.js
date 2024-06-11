@@ -8,7 +8,7 @@ import 'aos/dist/aos.css'
 import en from './locales/en.json'
 import fr from './locales/fr.json'
 import de from './locales/de.json'
-import it from './locales/it.json'  // добавляем итальянский язык
+import it from './locales/it.json' 
 
 // Функция для определения языка по местоположению
 async function getLanguageByLocation() {

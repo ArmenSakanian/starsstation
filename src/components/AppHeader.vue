@@ -354,6 +354,7 @@ nav ul li .router-link-active {
 .language-inactive.show {
   opacity: 1;
   transform: scaleY(1);
+  z-index: 9999;
 }
 
 .language-inactive li {

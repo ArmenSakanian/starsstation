@@ -227,6 +227,7 @@ footer {
     flex-direction: row;
     padding: 0;
     margin: 0;
+    gap: 10px;
   }
 
   .footer__item div li {

@@ -707,6 +707,7 @@ label.inactive {
 }
 
 .consent input[type="checkbox"] {
+  position: absolute;
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -714,9 +715,7 @@ label.inactive {
   height: 25px;
   border-radius: 4px;
   outline: none;
-  cursor: pointer;
-  position: relative;
-  margin-right: 10px;
+  cursor: pointer;  
 }
 
 .consent input[type="checkbox"]:checked {
@@ -725,18 +724,20 @@ label.inactive {
 }
 
 .consent input[type="checkbox"]:checked::after {
-  content: '✔';
-  color: var(--text-color);
-  font-size: 20px;
+  content: url('@/assets/icon/checkmark.svg');
+  display: inline-block;
+  width: 20px;  /* Задайте ширину изображения */
+  height: 20px;  /* Задайте высоту изображения */
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
+
 .consent p {
   color: var(--text-color);
-  margin: 0;
+  margin-left: 30px;
 }
 
 .consent a {
