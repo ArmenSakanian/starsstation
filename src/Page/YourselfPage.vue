@@ -1,7 +1,11 @@
 <template>
   <div class="service__container-about all">
     <div class="services-about" data-aos="fade-up">
-      <h1>{{ $t('imagine_yourself') }}<h1>{{ $t('imagine_yourself_2') }}</h1>
+      <h1>
+        <template v-for="(part, index) in splitText('imagine_yourself_quotes')" :key="index">
+          <span v-if="part.class" :class="part.class">{{ part.text }}</span>
+          <template v-else>{{ part.text }}</template>
+        </template>
       </h1>
       <div class="about__text">
         <p>

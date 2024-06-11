@@ -1,7 +1,7 @@
 <template>
   <div class="contact">
     <div class="contact__container">
-      <div class="contact__container-item info" data-aos="fade-up">
+      <div class="contact__container-item info">
         <div class="contact-info">
           <div class="contact-group">
             <button class="contact-button" aria-label="Call us at +41 77 944 17 43">
@@ -15,7 +15,7 @@
           </div>
         </div>
       </div>
-      <div class="contact__container-item feedback" data-aos="fade-up">
+      <div class="contact__container-item feedback">
         <form @submit.prevent="submitForm" method="POST" action="sendmail.php" enctype="multipart/form-data" ref="form">
           <h1>{{ $t('feedback') }}</h1>
           <div class="feedback_container">
@@ -410,6 +410,7 @@ export default {
 </script>
 
 <style scoped>
+
 h1 {
   color: var(--text-color);
   font-size: 48px;
@@ -431,11 +432,6 @@ h1 {
   box-shadow: 0px 0px 2px 0px #ffffff;
 }
 
-/* .contact__container-item {
-  width: 100%;
-  margin: 0 auto;
-  overflow: hidden;
-} */
 
 .feedback_container {
   padding: 30px 20px;
@@ -445,13 +441,7 @@ h1 {
   text-align: center;
 }
 
-.contact-info {
-  padding-top: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 30px;
-}
+
 
 .contact-group {
   margin-bottom: 30px;
@@ -481,19 +471,6 @@ h1 {
   cursor: pointer;
   z-index: 1;
   transition: 1s;
-}
-
-.logo {
-  position: relative;
-}
-
-.logo img {
-  width: 200px;
-  transition: 1s;
-}
-
-.logo img:hover {
-  transform: scale(1.2);
 }
 
 .icon svg {
@@ -768,10 +745,7 @@ label.inactive {
 
 
 @media screen and (max-width: 769px) {
-  .contact-info {
-    flex-direction: column;
-    gap: 10px;
-  }
+
 
   .contact__container {
     min-width: 300px;

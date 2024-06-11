@@ -2,7 +2,7 @@
   <div class="service__container-about all">
     <div class="services-about" data-aos="fade-up">
       <h1>
-        <template v-for="(part, index) in splitText('social_network')" :key="index">
+        <template v-for="(part, index) in splitText('social_network_quotes')" :key="index">
           <span v-if="part.class" :class="part.class">{{ part.text }}</span>
           <template v-else>{{ part.text }}</template>
         </template>

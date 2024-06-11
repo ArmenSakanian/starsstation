@@ -199,7 +199,7 @@ main>div {
 }
 
 .service_item h1,
-.service_item span,
+.service_item p,
 .service_item button {
   text-transform: uppercase;
 }
@@ -215,18 +215,25 @@ main>div {
   margin-bottom: 50px;
 }
 
-.service_item span {
+.service_item p {
   letter-spacing: 3px;
 }
 
 .service__container-about {
-  background-color: #222222;
+  background-color: var(--bg-main-color);
   border-top: 1px solid #757575;
   border-bottom: 1px solid #757575;
+  padding: 10px;
 }
 
 .services-about {
-  padding: 50px 0 50px 0;
+  padding: 20px;
+  margin: 0 auto;
+  border-radius: 20px;
+  max-width: 1300px;
+  min-width: 280px;
+  background-color: var(--bg-secondary-color);
+  box-shadow: 0px 0px 10px 1px var(--bg-secondary-color);
   text-align: center;
   color: white;
   width: 100%;
@@ -237,8 +244,6 @@ main>div {
   padding-top: 20px;
   font-size: 28px;
   line-height: 2;
-  width: 90%;
-  margin: 0 auto;
 
 }
 

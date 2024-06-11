@@ -166,6 +166,8 @@ label.inactive {
 footer {
   background-color: var(--bg-secondary-color);
   color: var(--text-color);
+  position: relative;
+    z-index: 9999;
 }
 
 .footer__container {

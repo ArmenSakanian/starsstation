@@ -4,9 +4,11 @@
     <div class="videos">
       <div class="row" v-for="(row, rowIndex) in videoRows" :key="rowIndex">
         <div class="video" v-for="(video, videoIndex) in row" :key="videoIndex">
-          <iframe :src="getVideoUrl(video.id)" frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen></iframe>
+          <div class="video-wrapper">
+            <iframe :src="getVideoUrl(video.id)" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
+          </div>
           <p>{{ video.title }}</p>
         </div>
       </div>
@@ -26,12 +28,12 @@ export default {
   },
   computed: {
     videoRows() {
-      const rows = [];
       const rowSize = 3;
-      for (let i = 0; i < this.videos.length; i += rowSize) {
-        rows.push(this.videos.slice(i, i + rowSize));
-      }
-      return rows;
+      return this.videos.reduce((rows, video, index) => {
+        if (index % rowSize === 0) rows.push([]);
+        rows[rows.length - 1].push(video);
+        return rows;
+      }, []);
     }
   },
   methods: {
@@ -43,10 +45,23 @@ export default {
         const response = await axios.get(
           `https://www.googleapis.com/youtube/v3/search?key=${this.apiKey}&channelId=${this.channelId}&part=snippet,id&order=date&maxResults=10`
         );
-        this.videos = response.data.items.map(item => ({
-          id: item.id.videoId,
-          title: item.snippet.title
-        }));
+        const uniqueVideos = [];
+        const videoIds = new Set();
+
+        response.data.items.forEach(item => {
+          if (item.id.videoId && !videoIds.has(item.id.videoId)) {
+            videoIds.add(item.id.videoId);
+            uniqueVideos.push({
+              id: item.id.videoId,
+              title: item.snippet.title
+            });
+          } else {
+            console.warn(`Duplicate or invalid video ID found: ${item.id.videoId}`);
+          }
+        });
+
+        this.videos = uniqueVideos;
+        console.log('Fetched videos:', this.videos);
       } catch (error) {
         console.error('Error fetching videos:', error);
       }
@@ -73,6 +88,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  margin: 0 auto;
 }
 
 .row {
@@ -88,9 +104,16 @@ export default {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-iframe {
+.video-wrapper {
+  position: relative;
   width: 100%;
   height: 200px;
+}
+
+.video-wrapper iframe {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .video p {
