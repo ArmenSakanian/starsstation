@@ -441,7 +441,12 @@ h1 {
   text-align: center;
 }
 
-
+.contact-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
 
 .contact-group {
   margin-bottom: 30px;
@@ -745,12 +750,12 @@ label.inactive {
 
 
 @media screen and (max-width: 769px) {
-
-
   .contact__container {
     min-width: 300px;
   }
-
+  .contact-info {
+    flex-direction: column;
+  }
   .form-group-container {
     flex-direction: column;
   }

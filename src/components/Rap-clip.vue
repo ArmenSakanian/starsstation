@@ -22,11 +22,3 @@ export default {
   inject: ['splitText'],
 }
 </script>
-
-<style scoped>
-@media screen and (max-width: 1024px) {
-  #rap-clip {
-    background-image: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0.5)), url('@/assets/img-mobile/rap-clip-mobile.webp');
-  }
-}
-</style>

@@ -121,23 +121,23 @@ main>div {
 
 
 #imagine-yourself {
-  background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, 0.7)), url('@/assets/img/imagine-yourself.webp');
+  background-image: linear-gradient(rgba(0, 0, 0, .4), rgba(0, 0, 0, 0.4)), url('@/assets/img/imagine-yourself.webp');
 }
 
 #montage-video {
-  background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, 0.7)), url('@/assets/img/montage-video.webp');
+  background-image: linear-gradient(rgba(0, 0, 0, .4), rgba(0, 0, 0,  .4)), url('@/assets/img/montage-video.webp');
 }
 
 #social-network {
-  background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, 0.7)), url('@/assets/img/social-network.webp');
+  background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url('@/assets/img/social-network.webp');
 }
 
 #advertising-video {
-  background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, 0.7)), url('@/assets/img/advertising-video.webp');
+  background-image: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .5)), url('@/assets/img/advertising-video.webp');
 }
 
 #rap-clip {
-  background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, 0.7)), url('@/assets/img/rap-clip.webp');
+  background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url('@/assets/img/rap-clip.webp');
 }
 
 

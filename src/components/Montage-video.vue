@@ -22,13 +22,3 @@ export default {
 }
 </script>
 
-<style scoped>
-
-
-@media screen and (max-width: 1024px) {
-  #montage-video {
-  background-image: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0.5)), url('@/assets/img-mobile/montage-video-mobile.webp');
-}
-  }
-
-</style>
