@@ -5,7 +5,7 @@
         <div class="contact-info">
           <div class="contact-group">
             <button class="contact-button" aria-label="Call us at +41 77 944 17 43">
-              <a href="tel:++41779441743"><i class="fa-solid fa-phone"></i>+41 77 944 17 43</a>
+              <a href="tel:+41779441743"><i class="fa-solid fa-phone"></i>+41 77 944 17 43</a>
             </button>
           </div>
           <div class="contact-group">
@@ -411,11 +411,6 @@ export default {
 
 <style scoped>
 
-h1 {
-  color: var(--text-color);
-  font-size: 48px;
-}
-
 .contact {
   color: white;
   background-color: var(--bg-main-color);
@@ -441,12 +436,7 @@ h1 {
   text-align: center;
 }
 
-.contact-info {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-}
+
 
 .contact-group {
   margin-bottom: 30px;
@@ -454,28 +444,40 @@ h1 {
   align-items: center;
 }
 
-.contact-group a {
-  text-decoration: underline;
-  color: var(--text-color);
-  font-size: 20px;
-  transition: opacity 0.5s ease;
-}
 
-.contact-group a i {
-  margin-right: 10px;
+.contact-info {
+  display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  gap: 10px;
+  margin-top: 30px;
 }
 
 .contact-button {
   display: inline-flex;
   align-items: center;
-  padding: 20px 30px;
-  color: #fff;
-  background-color: transparent;
+  padding: 10px 10px;
+  background-color: white;
   border: none;
-  border-radius: 10px;
+  border-radius: 20px;
   cursor: pointer;
   z-index: 1;
   transition: 1s;
+}
+
+.contact-button:hover {
+  background-color: var(--active-color);
+}
+
+.contact-group a {
+  text-decoration: underline;
+  color: black;
+  font-size: 18px;
+  transition: opacity 0.5s ease;
+}
+
+.contact-group a i {
+  margin-right: 10px;
 }
 
 .icon svg {

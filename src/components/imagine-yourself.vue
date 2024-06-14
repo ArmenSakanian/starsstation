@@ -1,5 +1,5 @@
 <template>
-  <div id="imagine-yourself" class="Services_container">
+  <div id="imagine-yourself" class="services_container">
     <div class="service_item" data-aos="fade-up">
       <h1>{{ $t('imagine_yourself') }}<h1>{{ $t('imagine_yourself_2') }}</h1></h1>
       <router-link to="/Yourself">

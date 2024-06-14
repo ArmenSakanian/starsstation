@@ -1,7 +1,7 @@
 <template>
-  <div id="montage-video" class="Services_container">
+  <div id="montage-video" class="services_container">
     <div class="service_item" data-aos="fade-up">
-      <h1 >{{ $t('montage video') }}</h1>
+      <h1 >{{ $t('montage_video') }}</h1>
       <router-link  to="/Montage"><button  class="learn-more" aria-label="Learn more about Montage Video">{{ $t('learn more') }}</button></router-link>
       <div class="quotes">
         <p>

@@ -1,5 +1,5 @@
 <template>
-  <div id="advertising-video" class="Services_container">
+  <div id="advertising-video" class="services_container">
     <div class="service_item" data-aos="fade-up">
       <h1>{{ $t('advertising_video') }}</h1>
       <router-link to="/Advertising"><button class="learn-more" aria-label="Learn more about Advertising video">{{
@@ -23,10 +23,3 @@ export default {
 }
 </script>
 
-<style scoped>
-@media screen and (max-width: 1024px) {
-  #advertising-video {
-    background-image: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0.5)), url('@/assets/img-mobile/advertising-video-mobile.webp');
-  }
-}
-</style>

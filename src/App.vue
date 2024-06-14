@@ -1,20 +1,25 @@
 <template>
-  <AppHeader />
-  <main>
-    <router-view />
-  </main>
-  <AppFooter />
+
+    <AppHeader />
+    <main>
+      <router-view />
+    </main>
+    <AppFooter />
+    <ScrollToTop />
+
 </template>
 
 <script>
 import AppHeader from './components/AppHeader.vue';
 import AppFooter from './components/AppFooter.vue';
+import ScrollToTop from './components/ScrollToTop.vue';
 
 export default {
   name: 'App',
   components: {
     AppHeader,
-    AppFooter
+    AppFooter,
+    ScrollToTop,
   },
   methods: {
     splitText(key) {
@@ -44,6 +49,10 @@ export default {
 </script>
 
 <style>
+
+.hidden-header {
+  top: -100px;
+}
 :root {
   --text-color: #ffffff;
   --br-color: #757575;
@@ -84,7 +93,6 @@ body {
   font-family: "Roboto Condensed", sans-serif;
   font-style: normal;
   font-weight: 300;
-  /* background-color: var(--bg-main-color); */
 
 }
 
@@ -96,6 +104,7 @@ main {
 h1 {
   font-size: 48px;
   font-weight: bold;
+  color: var(--text-color);
 }
 
 #app {
@@ -108,7 +117,7 @@ h1 {
 
 main {
   flex: 1 0 auto;
-  /* Main растягивается, чтобы занять оставшееся пространство */
+
 
 }
 
@@ -121,11 +130,11 @@ main>div {
 
 
 #imagine-yourself {
-  background-image: linear-gradient(rgba(0, 0, 0, .4), rgba(0, 0, 0, 0.4)), url('@/assets/img/imagine-yourself.webp');
+  background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url('@/assets/img/imagine-yourself.webp');
 }
 
 #montage-video {
-  background-image: linear-gradient(rgba(0, 0, 0, .4), rgba(0, 0, 0,  .4)), url('@/assets/img/montage-video.webp');
+  background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0,  .7)), url('@/assets/img/montage-video.webp');
 }
 
 #social-network {
@@ -133,11 +142,14 @@ main>div {
 }
 
 #advertising-video {
-  background-image: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .5)), url('@/assets/img/advertising-video.webp');
+  background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url('@/assets/img/advertising-video.webp');
 }
 
 #rap-clip {
   background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url('@/assets/img/rap-clip.webp');
+}
+#about {
+  background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url('@/assets/img/about.webp');
 }
 
 
@@ -150,7 +162,8 @@ main>div {
   background-size: 200% 100%;
   background-position: 100% 0;
   color: white;
-  font-size: 20px;
+  font-size: 16px;
+  font-weight: bold;
   cursor: pointer;
   transition: .3s ease;
 }
@@ -166,34 +179,34 @@ main>div {
 
 
 
-.Services_container {
+.services_container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
   color: white;
 }
 
 
-.Services_container:nth-child(odd) {
+.services_container:nth-child(odd) {
   align-items: flex-end;
 }
 
-.Services_container:nth-child(even) {
+.services_container:nth-child(even) {
   align-items: flex-start;
 
 }
 
-.Services_container:nth-child(even) .service_item {
+.services_container:nth-child(even) .service_item {
   text-align: start;
   margin-left: 200px;
 }
 
-.Services_container:nth-child(odd) .service_item {
+.services_container:nth-child(odd) .service_item {
   text-align: end;
   margin-right: 200px;
 }
@@ -211,7 +224,7 @@ main>div {
 
 .service_item button {
   padding: 20px 20px;
-  font-style: italic;
+
   margin-bottom: 50px;
 }
 
@@ -220,9 +233,9 @@ main>div {
 }
 
 .service__container-about {
-  background-color: var(--bg-main-color);
+  /* background-color: var(--bg-main-color);
   border-top: 1px solid #757575;
-  border-bottom: 1px solid #757575;
+  border-bottom: 1px solid #757575; */
   padding: 10px;
 }
 
@@ -295,8 +308,8 @@ main>div {
     width: 5px;
   }
 
-  .Services_container:nth-child(odd) .service_item,
-  .Services_container:nth-child(even) .service_item {
+  .services_container:nth-child(odd) .service_item,
+  .services_container:nth-child(even) .service_item {
     margin: 0 auto;
     text-align: center;
     padding: 0 10px 0 10px;

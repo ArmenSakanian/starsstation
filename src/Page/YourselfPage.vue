@@ -1,5 +1,5 @@
 <template>
-  <div class="service__container-about all">
+  <div id="imagine-yourself" class="service__container-about services_container">
     <div class="services-about" data-aos="fade-up">
       <h1>
         <template v-for="(part, index) in splitText('imagine_yourself_quotes')" :key="index">
@@ -26,4 +26,9 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+  @media screen and (max-width: 1024px) {
+    #imagine-yourself {
+    background-image:linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0.5)), url('@/assets/img-mobile/imagine-yourself-mobile.webp');
+  }
+  }</style>

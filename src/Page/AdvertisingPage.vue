@@ -1,5 +1,5 @@
 <template>
-  <div class="service__container-about all">
+  <div id="advertising-video" class="service__container-about services_container">
     <div class="services-about" data-aos="fade-up">
       <h1>
         <template v-for="(part, index) in splitText('advertising_video_quotes')" :key="index">

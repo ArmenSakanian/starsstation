@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header :class="{ 'hidden-header': isHidden }">
     <div class="header-container">
       <router-link to="/"><img src="@/assets/logo/Logo-Full_white.svg" alt="Logo" class="logo" /></router-link>
       <nav class="menu" :style="{ left: menuPosition }">
@@ -10,16 +10,18 @@
           <li><router-link to="/Contact" @click="closeMenu">{{ $t('contact') }}</router-link></li>
           <li><router-link to="/Portfolio" @click="closeMenu">{{ $t('our_videos') }}</router-link></li>
 
-          <li class="dropdown"
-              @mouseover="handleMouseOver"
-              @mouseleave="handleMouseLeave"
-              @click="handleMobileClick">
-            <a href="#services">{{ $t('service') }}<i class="fas fa-angle-down" :class="{ rotated: languageMenuOpen }"></i></a>
+          <li class="dropdown" @mouseover="handleMouseOver" @mouseleave="handleMouseLeave" @click="handleMobileClick">
+            <a href="#services">{{ $t('service') }}<i class="fas fa-angle-down"
+                :class="{ rotated: languageMenuOpen }"></i></a>
             <ul class="dropdown-content dropdown-content-service" :class="{ show: isMenuVisible }">
-              <li><a href="#" @click="scrollToElement($event, 'imagine-yourself'); closeMenu()">{{ $t('imagine_yourself') }}</a></li>
-              <li><a href="#" @click="scrollToElement($event, 'advertising-video'); closeMenu()">{{ $t('advertising_video') }}</a></li>
-              <li><a href="#" @click="scrollToElement($event, 'social-network'); closeMenu()">{{ $t('social_network') }}</a></li>
-              <li><a href="#" @click="scrollToElement($event, 'montage-video'); closeMenu()">{{ $t('montage_video') }}</a></li>
+              <li><a href="#" @click="scrollToElement($event, 'imagine-yourself'); closeMenu()">{{
+                  $t('imagine_yourself') }}</a></li>
+              <li><a href="#" @click="scrollToElement($event, 'advertising-video'); closeMenu()">{{
+                  $t('advertising_video') }}</a></li>
+              <li><a href="#" @click="scrollToElement($event, 'social-network'); closeMenu()">{{ $t('social_network')
+                  }}</a></li>
+              <li><a href="#" @click="scrollToElement($event, 'montage-video'); closeMenu()">{{ $t('montage_video')
+                  }}</a></li>
               <li><a href="#" @click="scrollToElement($event, 'rap-clip'); closeMenu()">{{ $t('rap_clip') }}</a></li>
             </ul>
           </li>
@@ -27,33 +29,36 @@
       </nav>
 
       <nav class="language-menu">
-  <ul>
-    <li class="language">
-      <a class="language-active" href="#" @click="toggleLanguageMenu">
-        <img :src="getFlag($i18n.locale)" alt="Flag" class="flag-icon" />
-        <span class="active-lang">{{ $i18n.locale.toUpperCase() }}</span>
-        <i class="fas fa-angle-down" :class="{ rotated: languageMenuOpen }"></i>
-      </a>
-      <ul class="language-inactive" :class="{ show: languageMenuOpen }">
-        <li v-for="lang in filteredLanguages" :key="lang">
-          <a href="#" @click="changeLanguage($event, lang)">
-            <img :src="getFlag(lang)" alt="Flag" class="flag-icon" />
-            <span>{{ getLanguageName(lang) }}</span>
-          </a>
-        </li>
-      </ul>
-    </li>
-  </ul>
-</nav>
+        <ul>
+          <li class="language">
+            <a class="language-active" href="#" @click="toggleLanguageMenu">
+              <img :src="getFlag($i18n.locale)" alt="Flag" class="flag-icon" />
+              <span class="active-lang">{{ $i18n.locale.toUpperCase() }}</span>
+              <i class="fas fa-angle-down" :class="{ rotated: languageMenuOpen }"></i>
+            </a>
+            <ul class="language-inactive" :class="{ show: languageMenuOpen }">
+              <li v-for="lang in filteredLanguages" :key="lang">
+                <a href="#" @click="changeLanguage($event, lang)">
+                  <img :src="getFlag(lang)" alt="Flag" class="flag-icon" />
+                  <span>{{ getLanguageName(lang) }}</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
       <div class="icon" @click="toggleMenu">
-        <svg :class="{ 'active': isMenuOpen }" width="30" height="30" viewBox="0 0 32 42" xmlns="http://www.w3.org/2000/svg">
+        <svg :class="{ 'active': isMenuOpen }" width="30" height="30" viewBox="0 0 32 42"
+          xmlns="http://www.w3.org/2000/svg">
           <g transform="matrix(1,0,0,1,-389.5,-264.004)">
             <g id="arrow_left2">
               <g transform="matrix(1,0,0,1,0,5)">
-                <path id="top" d="M390,270L420,270L420,270C420,270 420.195,250.19 405,265C389.805,279.81 390,279.967 390,279.967" />
+                <path id="top"
+                  d="M390,270L420,270L420,270C420,270 420.195,250.19 405,265C389.805,279.81 390,279.967 390,279.967" />
               </g>
               <g transform="matrix(1,1.22465e-16,1.22465e-16,-1,0.00024296,564.935)">
-                <path id="bottom" d="M390,270L420,270L420,270C420,270 420.195,250.19 405,265C389.805,279.81 390,279.967 390,279.967" />
+                <path id="bottom"
+                  d="M390,270L420,270L420,270C420,270 420.195,250.19 405,265C389.805,279.81 390,279.967 390,279.967" />
               </g>
               <path id="middle" d="M390,284.967L420,284.967" />
             </g>
@@ -72,7 +77,9 @@ export default {
       availableLanguages: ['en', 'fr', 'de', 'it'],
       menuPosition: '100%',
       isMenuVisible: false,
-      languageMenuOpen: false
+      languageMenuOpen: false,
+      isHidden: false,
+      lastScrollTop: 0,
     };
   },
   computed: {
@@ -96,9 +103,11 @@ export default {
       });
     }
     document.addEventListener('click', this.handleClickOutside);
+    window.addEventListener('scroll', this.handleScroll);
   },
   beforeUnmount() {
     document.removeEventListener('click', this.handleClickOutside);
+    window.removeEventListener('scroll', this.handleScroll);
   },
   methods: {
     changeLanguage(event, lang) {
@@ -186,11 +195,20 @@ export default {
         case 'de':
           return 'German';
           case 'it':
-          return 'Italy';
+          return 'Italian';
         default:
           return '';
       }
+    },
+    handleScroll() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    if (scrollTop > this.lastScrollTop && scrollTop > 50) {
+      this.isHidden = true;
+    } else {
+      this.isHidden = false;
     }
+    this.lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+  },
   }
 }
 </script>
@@ -215,7 +233,7 @@ header {
   color: var(--text-color);
   padding: 10px;
   height: 80px;
-  
+  transition: top 0.5s ease-in-out, opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 
 .header-container {
@@ -264,9 +282,6 @@ nav li a {
 .menu ul li a.active::after {
   width: 100%;
 }
-
-
-
 
 nav ul li .router-link-active {
   color: var(--active-color);
@@ -374,10 +389,6 @@ nav ul li .router-link-active {
 
 .flag-icon {
   width: 30px;
-    height: 30px;
-    border-radius: 4px;
-    background-color: #ffffff;
-    padding: 2px;
 }
 
 .icon {
@@ -427,6 +438,12 @@ svg.active #bottom {
   stroke-dasharray: 30, 88;
 }
 
+.hidden-header {
+  top: -100px;
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
 @media screen and (max-width: 1024px) {
   .header__bottom {
     display: block;
@@ -440,7 +457,6 @@ svg.active #bottom {
     position: relative;
     right: 0;
   }
-
 
   .icon {
     display: block;
@@ -457,6 +473,7 @@ svg.active #bottom {
     top: 76px;
     transition: left 0.5s ease-in-out;
     overflow-y: scroll;
+    z-index: 9999;
   }
 
   .menu-ul {
