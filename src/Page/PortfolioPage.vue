@@ -95,7 +95,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   margin-bottom: 20px;
-  width: 80%;
+  width: 100%;
 }
 
 .video {

@@ -1,12 +1,12 @@
 <template>
-
+  <div>
     <AppHeader />
     <main>
       <router-view />
     </main>
     <AppFooter />
     <ScrollToTop />
-
+  </div>
 </template>
 
 <script>
@@ -19,7 +19,7 @@ export default {
   components: {
     AppHeader,
     AppFooter,
-    ScrollToTop,
+    ScrollToTop
   },
   methods: {
     splitText(key) {
@@ -78,7 +78,7 @@ export default {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--br-color);
+  background: var(--active-color);
   border-radius: 10px;
 }
 
@@ -93,6 +93,7 @@ body {
   font-family: "Roboto Condensed", sans-serif;
   font-style: normal;
   font-weight: 300;
+  background-color: var(--bg-secondary-color);
 
 }
 
@@ -186,7 +187,7 @@ main>div {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  min-height: 100vh;
+  height: 100vh;
   width: 100%;
   color: white;
 }
@@ -227,6 +228,7 @@ main>div {
 
   margin-bottom: 50px;
 }
+
 
 .service_item p {
   letter-spacing: 3px;
