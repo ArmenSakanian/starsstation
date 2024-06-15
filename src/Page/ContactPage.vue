@@ -1,5 +1,5 @@
 <template>
-  <div class="contact">
+  <div id="contact" class=" contact services_container">
     <div class="contact__container">
       <div class="contact__container-item info">
         <div class="contact-info">
@@ -411,20 +411,18 @@ export default {
 
 <style scoped>
 
-.contact {
-  color: white;
-  background-color: var(--bg-main-color);
-  padding: 30px 10px 30px 10px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-}
 
+
+
+.contact {
+  padding: 30px 10px 30px 10px;
+}
 .contact__container {
   min-width: 1000px;
   margin: 0 auto;
   border-radius: 20px;
-  box-shadow: 0px 0px 2px 0px #ffffff;
+  box-shadow: 0px 0px 7px 0px #ffffff;
+  background-color: #171717a8;
 }
 
 

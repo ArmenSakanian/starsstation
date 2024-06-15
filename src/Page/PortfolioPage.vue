@@ -1,15 +1,17 @@
 <template>
-  <div class="portfolio">
-    <h1>{{ $t('our_videos') }}</h1>
-    <div class="videos">
-      <div class="row" v-for="(row, rowIndex) in videoRows" :key="rowIndex">
-        <div class="video" v-for="(video, videoIndex) in row" :key="videoIndex">
-          <div class="video-wrapper">
-            <iframe :src="getVideoUrl(video.id)" frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen></iframe>
+  <div id="portfolio" class="portfolio services_container">
+    <div class="p">
+      <h1>{{ $t('our_videos') }}</h1>
+      <div class="videos">
+        <div class="row" v-for="(row, rowIndex) in videoRows" :key="rowIndex">
+          <div class="video" v-for="(video, videoIndex) in row" :key="videoIndex">
+            <div class="video-wrapper">
+              <iframe :src="getVideoUrl(video.id)" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+            </div>
+            <p>{{ video.title }}</p>
           </div>
-          <p>{{ video.title }}</p>
         </div>
       </div>
     </div>

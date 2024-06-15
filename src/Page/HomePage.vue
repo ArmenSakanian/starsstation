@@ -6,7 +6,7 @@
       content="IMAGINE YOURSELF, EXPRESS YOUR ART IN VIDEO, SOCIAL NETWORK, MONTAGE VIDEO, RAP CLIP">
   </head>
   <div>
-    <DroneComponent />
+
     <ImagineYourself />
     <AdvertisingVideo />
     <SocialNetwork />
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import DroneComponent from '../components/DroneComponent.vue';
+
 import MontageVideo from '../components/Montage-video.vue';
 import SocialNetwork from '../components/Social-network.vue';
 import AdvertisingVideo from '../components/Advertising-video.vue';
@@ -27,7 +27,7 @@ import RapClip from '../components/Rap-clip.vue'
 export default {
   name: "HomePage",
   components: {
-    DroneComponent,
+
     ImagineYourself,
     AdvertisingVideo,
     SocialNetwork,

@@ -153,6 +153,14 @@ main>div {
   background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url('@/assets/img/about.webp');
 }
 
+#contact {
+  background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url('@/assets/img/contact.webp');
+}
+
+#portfolio {
+  background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url('@/assets/img/portfolio.webp');
+
+}
 
 .learn-more,
 .send,
@@ -187,7 +195,7 @@ main>div {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
   color: white;
 }

@@ -1,6 +1,6 @@
 <template>
   <div id="rap-clip" class="services_container">
-    <div class="service_item" data-aos="fade-up">
+    <div class="service_item" data-aos="fade-left">
       <h1>{{ $t('rap_clip') }}</h1>
       <router-link to="/Rap"><button class="learn-more" aria-label="Learn more about Rap Clip">{{ $t('learn_more')
           }}</button></router-link>

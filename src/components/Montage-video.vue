@@ -1,6 +1,6 @@
 <template>
   <div id="montage-video" class="services_container">
-    <div class="service_item" data-aos="fade-up">
+    <div class="service_item" data-aos="fade-right">
       <h1 >{{ $t('montage_video') }}</h1>
       <router-link  to="/Montage"><button  class="learn-more" aria-label="Learn more about Montage Video">{{ $t('learn more') }}</button></router-link>
       <div class="quotes">

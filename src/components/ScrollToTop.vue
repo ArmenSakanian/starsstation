@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     handleScroll() {
-      this.visible = window.scrollY > (window.innerHeight * 0.9); // Меняем условие на 90% высоты окна
+      this.visible = window.scrollY > (window.innerHeight * 0.9);
     },
     scrollToTop() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -37,8 +37,8 @@ export default {
 <style scoped>
 .scroll-to-top {
   position: fixed;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   bottom: 20px;
   right: 20px;
   background-color: var(--active-color);
