@@ -39,6 +39,9 @@ export default {
         }
       });
     },
+    scrollTo(sectionId) {
+      document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+    }
   },
   provide() {
     return {
@@ -98,10 +101,6 @@ body {
 }
 
 
-main {
-  margin-top: 80px;
-}
-
 h1 {
   font-size: 48px;
   font-weight: bold;
@@ -117,7 +116,9 @@ h1 {
 
 
 main {
+  margin-top: 80px;
   flex: 1 0 auto;
+  overflow: hidden;
 
 
 }
@@ -154,7 +155,7 @@ main>div {
 }
 
 #contact {
-  background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url('@/assets/img/contact.webp');
+  background-image: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .5)), url('@/assets/img/contact.webp');
 }
 
 #portfolio {

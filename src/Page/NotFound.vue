@@ -27,7 +27,7 @@ export default {
 }
 
 .content {
-  max-width: 600px;
+  max-width: 400px;
   padding: 20px;
 }
 

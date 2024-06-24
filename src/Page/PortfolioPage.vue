@@ -1,6 +1,6 @@
 <template>
   <div id="portfolio" class="portfolio services_container">
-    <div class="p">
+    <div class="porfolio_container">
       <h1>{{ $t('our_videos') }}</h1>
       <div class="videos">
         <div class="row" v-for="(row, rowIndex) in videoRows" :key="rowIndex">
@@ -79,6 +79,10 @@ export default {
 .portfolio {
   background-color: var(--bg-main-color);
   padding: 20px;
+}
+
+.porfolio_container {
+  margin: 0 auto;
 }
 
 .portfolio h1 {

@@ -1,6 +1,6 @@
 <template>
   <div id="contact" class=" contact services_container">
-    <div class="contact__container">
+    <div class="contact__container " data-aos="zoom-in">
       <div class="contact__container-item info">
         <div class="contact-info">
           <div class="contact-group">
@@ -383,7 +383,7 @@ export default {
     },
     autoResize() {
       const textarea = this.$refs.message;
-      textarea.style.height = '150px';
+      textarea.style.height = '50px';
       textarea.style.height = textarea.scrollHeight + 'px';
     },
     showError(message) {
@@ -421,13 +421,12 @@ export default {
   min-width: 1000px;
   margin: 0 auto;
   border-radius: 20px;
-  box-shadow: 0px 0px 7px 0px #ffffff;
-  background-color: #171717a8;
+  box-shadow: 0px 0px 7px 0px #ffffff;  
 }
 
 
 .feedback_container {
-  padding: 30px 20px;
+  padding: 5px 20px;
 }
 
 .contact__container-item h1 {
@@ -457,7 +456,7 @@ export default {
   padding: 10px 10px;
   background-color: white;
   border: none;
-  border-radius: 20px;
+  border-radius: 5px;
   cursor: pointer;
   z-index: 1;
   transition: 1s;
@@ -735,7 +734,7 @@ label.inactive {
   display: inline-block;
   width: 20px;
   height: 20px;
-  border: 3px solid var(--br-color);
+  border: 3px solid white;
   border-radius: 50%;
   border-top-color: var(--active-color);
   animation: spin 1s ease-in-out infinite;

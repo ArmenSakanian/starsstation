@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "analyze": "source-map-explorer 'dist/js/*.js'"
+    "build": "vue-cli-service build"
   },
   "dependencies": {
     "aos": "^2.3.4",
@@ -15,8 +14,7 @@
     "vuex": "^4.0.2"
   },
   "devDependencies": {
-    "@vue/cli-service": "~5.0.0",
-    "source-map-explorer": "^2.5.3"
+    "@vue/cli-service": "~5.0.0"
   },
   "browserslist": [
     "> 1%",

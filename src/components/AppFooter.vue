@@ -171,9 +171,10 @@ footer {
 }
 
 .footer__container {
-  padding: 20px 50px 0 50px;
-  display: flex;
-  flex-wrap: wrap;
+  padding: 0 50px;
+    display: flex;
+    flex-wrap: wrap;
+    height: 380px;
 }
 
 .footer__container a {

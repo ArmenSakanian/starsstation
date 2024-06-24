@@ -275,6 +275,11 @@ nav li a {
   transition: width 0.3s ease-in-out;
 }
 
+.dropdown-content a::after {
+  top: 10px;
+  position: relative;
+}
+
 .menu ul li a:hover::after {
   width: 100%;
 }
