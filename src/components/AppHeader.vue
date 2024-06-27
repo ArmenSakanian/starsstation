@@ -229,8 +229,6 @@ header {
   top: 0;
   z-index: 9998;
   width: 100%;
-  background-color: var(--bg-secondary-color);
-  color: var(--text-color);
   padding: 10px;
   height: 80px;
   transition: top 0.5s ease-in-out, opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
@@ -239,6 +237,7 @@ header {
 .header-container {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .logo {
@@ -260,7 +259,7 @@ nav ul {
 
 nav ul li a,
 nav li a {
-  color: var(--text-color);
+  color: white;
   text-decoration: none;
   font-size: 20px;
   transition: 1s;
@@ -329,8 +328,6 @@ nav ul li .router-link-active {
 
 .language {
   display: flex;
-  position: absolute;
-  right: 90px;
 }
 
 .language a {
@@ -354,16 +351,17 @@ nav ul li .router-link-active {
 
 .active-lang {
   margin-left: 10px;
-  color: white;
+  color: var(--text-color);
   text-decoration: underline
 }
 
 .language-inactive {
   display: block;
   position: absolute;
-  top: 30px;
+  top: 55px;
+  right: 10px;
   min-width: 110px;
-  background-color: var(--bg-secondary-color);
+  background-color: white;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
   opacity: 0;
   transform: scaleY(0);

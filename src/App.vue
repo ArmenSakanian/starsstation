@@ -57,7 +57,7 @@ export default {
   top: -100px;
 }
 :root {
-  --text-color: #ffffff;
+  --text-color: #000000;
   --br-color: #757575;
   --text-secondary-color: #757575;
   --bg-secondary-color: #171717;
@@ -96,7 +96,7 @@ body {
   font-family: "Roboto Condensed", sans-serif;
   font-style: normal;
   font-weight: 300;
-  background-color: var(--bg-secondary-color);
+  background-color: white;
 
 }
 
@@ -113,15 +113,6 @@ h1 {
   height: 100vh;
 }
 
-
-
-main {
-  margin-top: 80px;
-  flex: 1 0 auto;
-  overflow: hidden;
-
-
-}
 
 main>div {
   height: 100%;
