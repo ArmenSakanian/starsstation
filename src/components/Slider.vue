@@ -34,7 +34,7 @@
     <swiper
       @swiper="setThumbsSwiper"
       :spaceBetween="10"
-      :slidesPerView="3"
+      :slidesPerView="2"
       :freeMode="true"
       :watchSlidesProgress="true"
       :modules="modules"
@@ -150,7 +150,7 @@
     height: 200px;
     box-sizing: border-box;
     position: absolute;
-    width: 70%;
+    width: 50%;
     right: 30px;
     bottom: 50px;
   }

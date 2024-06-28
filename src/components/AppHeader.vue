@@ -5,8 +5,7 @@
       <nav class="menu" :style="{ left: menuPosition }">
         <div class="header__bottom"></div>
         <ul class="menu-ul">
-          <li><router-link to="/" @click="closeMenu">{{ $t('home') }}</router-link></li>
-          <li><router-link to="/About" @click="closeMenu">{{ $t('about') }}</router-link></li>
+          <li><a to="/About" @click="scrollToElement($event, 'about-us'); closeMenu()">{{ $t('about') }}</a></li>
           <li><router-link to="/Contact" @click="closeMenu">{{ $t('contact') }}</router-link></li>
           <li><router-link to="/Portfolio" @click="closeMenu">{{ $t('our_videos') }}</router-link></li>
 

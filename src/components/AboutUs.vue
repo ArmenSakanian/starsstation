@@ -1,5 +1,5 @@
 <template>
-    <div class="about-section">
+    <div class="about-section" id="about-us">
       <img src="@/assets/img/rap-clip.webp" alt="Mountain view" class="image" />
       <div class="text-content">
         <h2>À propos</h2>
