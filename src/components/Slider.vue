@@ -8,6 +8,9 @@
       :navigation="true"
       :thumbs="{ swiper: thumbsSwiper }"
       :modules="modules"
+      :pagination="{ clickable: true, dynamicBullets: true }"
+      :autoplay="{ delay: 3000 }"
+      :effect="'fade'"
       class="mySwiper2"
     >
       <swiper-slide>
@@ -34,7 +37,7 @@
     <swiper
       @swiper="setThumbsSwiper"
       :spaceBetween="10"
-      :slidesPerView="2"
+      :slidesPerView="3"
       :freeMode="true"
       :watchSlidesProgress="true"
       :modules="modules"
@@ -85,7 +88,10 @@
   import 'swiper/css/free-mode';
   import 'swiper/css/navigation';
   import 'swiper/css/thumbs';
-  import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
+  import 'swiper/css/pagination';
+  import 'swiper/css/autoplay';
+  import 'swiper/css/effect-fade';
+  import { FreeMode, Navigation, Thumbs, Pagination, Autoplay, EffectFade } from 'swiper/modules';
   
   export default {
     components: {
@@ -102,7 +108,7 @@
       return {
         thumbsSwiper,
         setThumbsSwiper,
-        modules: [FreeMode, Navigation, Thumbs],
+        modules: [FreeMode, Navigation, Thumbs, Pagination, Autoplay, EffectFade],
       };
     },
   };
@@ -158,7 +164,7 @@
   .mySwiper .swiper-slide {
     width: 215px;
     height: 150px;
-    border-radius: 16px;
+    border-radius: 18px;
     position: relative;
   }
   
