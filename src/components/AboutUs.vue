@@ -2,9 +2,11 @@
     <div class="about-section" id="about-us">
       <img src="@/assets/img/rap-clip.webp" alt="Mountain view" class="image" />
       <div class="text-content">
-        <h2>À propos</h2>
+        <h2>{{ $t('about') }}</h2>
         <p>
-          {{ $t('about_about') }}
+          <span v-for="(part, index) in splitText('about_about')" :key="index" :class="part.class">
+            {{ part.text }}
+          </span>
         </p>
       </div>
     </div>
@@ -13,6 +15,7 @@
   <script>
   export default {
     name: 'AboutUs',
+    inject: ['splitText'],
   };
   </script>
   
@@ -26,7 +29,7 @@
   }
   
   .image {
-    max-width: 20%;
+    max-width: 50%;
     border-radius: 10px;
     margin-right: 20px;
   }
@@ -37,9 +40,14 @@
   
   .text-content h2 {
     margin-bottom: 10px;
+    font-size: 36px;
+    font-weight: bold;
   }
   
   .text-content p {
+    font-size: 20px;
+    font-weight: 300;
+    font-style: italic;
     line-height: 1.6;
   }
   </style>

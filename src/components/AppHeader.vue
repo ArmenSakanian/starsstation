@@ -350,7 +350,7 @@ nav ul li .router-link-active {
 
 .active-lang {
   margin-left: 10px;
-  color: var(--text-color);
+  color: white;
   text-decoration: underline
 }
 

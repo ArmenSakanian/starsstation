@@ -8,12 +8,14 @@
   <div>
   <Slider />
   <AboutUs />
+  <Subscribe />
   </div>
 </template>
 
 <script>
 import Slider from '../components/Slider.vue';
 import AboutUs from '../components/AboutUs.vue';
+import Subscribe from '../components/Subscribe.vue'
 
 
 
@@ -22,6 +24,7 @@ export default {
   components: {
     Slider,
     AboutUs,
+    Subscribe,
   },
 };
 </script>

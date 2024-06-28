@@ -4,7 +4,7 @@
     <main>
       <router-view />
     </main>
-    <AppFooter />
+    <!-- <AppFooter /> -->
     <ScrollToTop />
   </div>
 </template>
@@ -27,15 +27,9 @@ export default {
       const parts = text.split(/(<color-bold>.*?<\/color-bold>)/g).filter(Boolean);
       return parts.map(part => {
         if (part.startsWith('<color-bold>') && part.endsWith('</color-bold>')) {
-          return {
-            text: part.slice(12, -13), // Убираем теги более элегантно
-            class: 'color-bold'
-          };
+          return { text: part.slice(12, -13), class: 'color-bold' };
         } else {
-          return {
-            text: part,
-            class: ''
-          };
+          return { text: part, class: '' };
         }
       });
     },
@@ -93,15 +87,15 @@ export default {
 
 html,
 body {
-  font-family: "Roboto Condensed", sans-serif;
   font-style: normal;
-  font-weight: 300;
-  background-color: white;
 
 }
 
-
-h1 {
+p {
+  font-family: 'Montserrat', sans-serif;
+}
+h1, h2, h3, h4{
+  font-family: "Playfair Display", serif;
   font-size: 48px;
   font-weight: bold;
   color: var(--text-color);
