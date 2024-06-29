@@ -1,8 +1,8 @@
 <template>
     <div class="about-section" id="about-us">
-      <img src="@/assets/img/rap-clip.webp" alt="Mountain view" class="image" />
-      <div class="text-content">
-        <h2>{{ $t('about') }}</h2>
+      <div class="img-content about-content"><img src="@/assets/img/rap-clip.webp" alt="Mountain view" class="image" /></div>
+      <div class="text-content about-content">
+        <h1>{{ $t('about') }}</h1>
         <p>
           <span v-for="(part, index) in splitText('about_about')" :key="index" :class="part.class">
             {{ part.text }}
@@ -29,16 +29,17 @@
   }
   
   .image {
-    max-width: 50%;
+    max-width: 100%;
     border-radius: 10px;
     margin-right: 20px;
   }
+  
   
   .text-content {
     max-width: 50%;
   }
   
-  .text-content h2 {
+  .text-content h1 {
     margin-bottom: 10px;
     font-size: 36px;
     font-weight: bold;
@@ -48,7 +49,7 @@
     font-size: 20px;
     font-weight: 300;
     font-style: italic;
-    line-height: 1.6;
+    line-height: 2;
   }
   </style>
   

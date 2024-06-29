@@ -1,15 +1,11 @@
 <template>
     <div class="subscribe_section">
-        <div class="subscribe-image">
-            <img src="" alt="subscribe">
-        </div>
         <div class="subscribe-form">
             <div class="form-title">
-                <h1></h1>
+                <h1>{{ $t('newsletter_text') }}</h1>
             </div>
-            <div class="form container">
+            <div class="form-container">
                 <form @submit.prevent="subscribe">
-                    <p>{{ $t('newsletter_text') }}</p>
                     <div class="form-group">
                         <input type="email" v-model="email" placeholder="Email">
                         <button class="subscribe">{{ $t('send') }}</button>
@@ -61,17 +57,32 @@ export default {
 }
 </script>
   
-<style scoped>
-.subscribe_section {
+<style scoped>.subscribe_section {
+    position: relative;
     width: 100%;
-    height: 350px;
-    background-color: black;
+    height: 250px;
+    background-image: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)),url(@/assets/img/subscribe.webp);
+    background-position: center;
+    background-size: cover;
+}
+
+.subscribe-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-title h1 {
+    color: white;
+}
+.form-title, .form-container{
+    margin: 0 auto;
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: 15pxп;
+    gap: 15px;
 }
 .form-group input, .form-group button {
     width: 200px;
@@ -81,6 +92,12 @@ export default {
 .form-group input {
     border: 2px solid #CED8DF;
     background-color: transparent;
+    padding: 10px;
+    color: white;
+}
+
+.form-group input::placeholder {
+    color: white;
 }
 
 .form-group button {

@@ -170,6 +170,7 @@
   
   .mySwiper .swiper-slide img {
     border-radius: 16px;
+    box-shadow: 0 0 5px 0px black;
   }
   
   .thumbnail-container {
