@@ -4,7 +4,7 @@
     <main>
       <router-view />
     </main>
-    <!-- <AppFooter /> -->
+    <AppFooter />
     <ScrollToTop />
   </div>
 </template>

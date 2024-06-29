@@ -60,7 +60,7 @@ export default {
 <style scoped>.subscribe_section {
     position: relative;
     width: 100%;
-    height: 250px;
+    height: 500px;
     background-image: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)),url(@/assets/img/subscribe.webp);
     background-position: center;
     background-size: cover;
