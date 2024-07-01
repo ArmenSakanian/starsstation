@@ -4,7 +4,7 @@
     <main>
       <router-view />
     </main>
-    <!-- <AppFooter /> -->
+    <AppFooter />
     <ScrollToTop />
   </div>
 </template>
@@ -96,8 +96,6 @@ p {
 }
 h1{
   font-family: "Playfair Display", serif;
-  font-size: 48px;
-  font-weight: bold;
 }
 
 #app {

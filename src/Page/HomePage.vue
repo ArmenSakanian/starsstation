@@ -9,13 +9,15 @@
   <Slider />
   <AboutUs />
   <Subscribe />
+  <ServiceSlider />
   </div>
 </template>
 
 <script>
 import Slider from '../components/Slider.vue';
 import AboutUs from '../components/AboutUs.vue';
-import Subscribe from '../components/Subscribe.vue'
+import Subscribe from '../components/Subscribe.vue';
+import ServiceSlider from '@/components/ServiceSlider.vue';
 
 
 
@@ -25,6 +27,7 @@ export default {
     Slider,
     AboutUs,
     Subscribe,
+    ServiceSlider,
   },
 };
 </script>

@@ -12,10 +12,10 @@
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
 </template>
+
 <script>
 export default {
     name: 'Subscribe',
@@ -56,39 +56,57 @@ export default {
     }
 }
 </script>
-  
-<style scoped>.subscribe_section {
+
+<style scoped>
+.subscribe_section {
     position: relative;
     width: 100%;
     height: 250px;
-    background-image: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)),url(@/assets/img/subscribe.webp);
+    background-image: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)), url(@/assets/img/subscribe.webp);
     background-position: center;
     background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .subscribe-form {
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    width: 100%;
+    max-width: 600px;
+    position: absolute;
+    align-items: center;
+    right: 0;
+}
+
+.form-title {
+    text-align: center;
+    width: 100%;
+    color: white;
 }
 
 .form-title h1 {
-    color: white;
+    font-size: 36px;
 }
-.form-title, .form-container{
-    margin: 0 auto;
+
+.form-container {
+    width: 100%;
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    align-items: center;
 }
-.form-group input, .form-group button {
+
+.form-group input,
+.form-group button {
     width: 200px;
     height: 55px;
     border-radius: 38px;
 }
+
 .form-group input {
     border: 2px solid #CED8DF;
     background-color: transparent;
@@ -106,4 +124,3 @@ export default {
     color: black;
 }
 </style>
-  
