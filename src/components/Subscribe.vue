@@ -15,7 +15,7 @@
         </div>
     </div>
 </template>
-
+œ
 <script>
 export default {
     name: 'Subscribe',
@@ -39,7 +39,7 @@ export default {
                     timerProgressBar: true,
                     confirmButtonText: 'OK'
                 });
-                this.email = '';  // Очистить поле ввода
+                this.email = '';  
             } catch (error) {
                 console.error(error);
                 Swal.fire({
