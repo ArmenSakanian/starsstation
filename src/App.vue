@@ -27,15 +27,9 @@ export default {
       const parts = text.split(/(<color-bold>.*?<\/color-bold>)/g).filter(Boolean);
       return parts.map(part => {
         if (part.startsWith('<color-bold>') && part.endsWith('</color-bold>')) {
-          return {
-            text: part.slice(12, -13), // Убираем теги более элегантно
-            class: 'color-bold'
-          };
+          return { text: part.slice(12, -13), class: 'color-bold' };
         } else {
-          return {
-            text: part,
-            class: ''
-          };
+          return { text: part, class: '' };
         }
       });
     },
@@ -57,7 +51,7 @@ export default {
   top: -100px;
 }
 :root {
-  --text-color: #ffffff;
+  --text-color: #000000;
   --br-color: #757575;
   --text-secondary-color: #757575;
   --bg-secondary-color: #171717;
@@ -93,18 +87,17 @@ export default {
 
 html,
 body {
-  font-family: "Roboto Condensed", sans-serif;
   font-style: normal;
-  font-weight: 300;
-  background-color: var(--bg-secondary-color);
 
 }
 
-
-h1 {
+p {
+  font-family: 'Montserrat', sans-serif;
+}
+h1{
+  font-family: "Playfair Display", serif;
   font-size: 48px;
   font-weight: bold;
-  color: var(--text-color);
 }
 
 #app {
@@ -113,15 +106,6 @@ h1 {
   height: 100vh;
 }
 
-
-
-main {
-  margin-top: 80px;
-  flex: 1 0 auto;
-  overflow: hidden;
-
-
-}
 
 main>div {
   height: 100%;
