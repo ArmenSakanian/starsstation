@@ -6,10 +6,10 @@
         $t('learn_more') }}</button></router-link>
       <div class="quotes">
         <p>
-          <template v-for="(part, index) in splitText('advertising_video_quotes')" :key="index">
+          <!-- <template v-for="(part, index) in splitText('advertising_video_quotes')" :key="index">
             <span v-if="part.class" :class="part.class">{{ part.text }}</span>
             <template v-else>{{ part.text }}</template>
-          </template>
+          </template> -->
         </p>
       </div>
     </div>
