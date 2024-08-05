@@ -1,69 +1,37 @@
 <template>
-  <div id="contact" class=" contact services_container">
-    <div class="contact__container " data-aos="zoom-in">
-      <div class="contact__container-item info">
-        <div class="contact-info">
-          <div class="contact-group">
-            <button class="contact-button" aria-label="Call us at +41 77 944 17 43">
-              <a href="tel:+41779441743"><i class="fa-solid fa-phone"></i>+41 77 944 17 43</a>
-            </button>
-          </div>
-          <div class="contact-group">
-            <button class="contact-button" aria-label="Email us at support@starsstation.ch">
-              <a href="mailto:support@starsstation.ch"><i class="fa-solid fa-envelope"></i>support@starsstation.ch</a>
-            </button>
-          </div>
-        </div>
-      </div>
+  <div id="contact" class="contact">
+    <div class="title_section">
+      <h1>{{ $t('feedback') }}</h1>
+    </div>
+    <div class="contact__container">
       <div class="contact__container-item feedback">
         <form @submit.prevent="submitForm" method="POST" action="sendmail.php" enctype="multipart/form-data" ref="form">
-          <h1>{{ $t('feedback') }}</h1>
           <div class="feedback_container">
-            <div class="form-group-container">
-              <div class="form-group">
-                <label
-                  :class="{ 'active': activeInputs.name || inputs.name, 'inactive': !activeInputs.name && !inputs.name }"
-                  for="name">{{ $t('name') }}</label>
-                <input @focus="handleFocus('name')" @blur="handleBlur('name')" type="text" id="name" name="name"
-                  v-model="inputs.name" ref="name">
-              </div>
-              <div class="form-group">
-                <label
-                  :class="{ 'active': activeInputs.surname || inputs.surname, 'inactive': !activeInputs.surname && !inputs.surname }"
-                  for="surname">{{ $t('surname') }}</label>
-                <input @focus="handleFocus('surname')" @blur="handleBlur('surname')" type="text" id="surname"
-                  name="surname" v-model="inputs.surname" ref="surname">
-              </div>
+            <div class="form-group">
+              <label
+                :class="{ 'active': activeInputs.name || inputs.name, 'inactive': !activeInputs.name && !inputs.name }"
+                for="name">{{ $t('name') }}</label>
+              <input @focus="handleFocus('name')" @blur="handleBlur('name')" type="text" id="name" name="name"
+                v-model="inputs.name" ref="name">
             </div>
-            <div class="form-group-container">
-              <div class="form-group">
-                <label
-                  :class="{ 'active': activeInputs.email || inputs.email, 'inactive': !activeInputs.email && !inputs.email }"
-                  for="email">{{ $t('email') }}</label>
-                <input @focus="handleFocus('email')" @blur="handleBlur('email')" type="email" id="email" name="email"
-                  v-model="inputs.email" ref="email">
-              </div>
-              <div class="form-group">
-                <label
-                  :class="{ 'active': activeInputs.tel || inputs.tel, 'inactive': !activeInputs.tel && !inputs.tel }"
-                  for="tel">{{ $t('tel') }}</label>
-                <input @focus="handleFocus('tel')" @blur="handleBlur('tel')" type="tel" id="tel" name="tel"
-                  v-model="inputs.tel" ref="tel">
-              </div>
+            <div class="form-group">
+              <label
+                :class="{ 'active': activeInputs.email || inputs.email, 'inactive': !activeInputs.email && !inputs.email }"
+                for="email">{{ $t('email') }}</label>
+              <input @focus="handleFocus('email')" @blur="handleBlur('email')" type="email" id="email" name="email"
+                v-model="inputs.email" ref="email">
             </div>
-            <div class="form-group-container">
-              <div class="form-group">
-                <label
-                  :class="{ 'active': activeInputs.message || inputs.message, 'inactive': !activeInputs.message && !inputs.message }"
-                  for="message">{{ $t('message') }}</label>
-                <textarea @focus="handleFocus('message')" @blur="handleBlur('message')" name="message" id="message"
-                  rows="4" v-model="inputs.message" ref="message" @input="autoResize"></textarea>
-                <div class="file-drop-area">
-                  <input type="file" name="files[]" id="attachment"
-                    accept=".png, .jpeg, .jpg, .svg, .pdf, .docx, .txt, .odt, .xlsx, .ods, .gif, .bmp, .tiff, .pptx, .odp"
-                    multiple @change="updateFileList">
-                  <label for="attachment" class="btn-upload"><img src="@/assets/icon/upload.svg" alt=""></label>
-                </div>
+            <div class="form-group">
+              <label
+                :class="{ 'active': activeInputs.message || inputs.message, 'inactive': !activeInputs.message && !inputs.message }"
+                for="message">{{ $t('message') }}</label>
+              <textarea @focus="handleFocus('message')" @blur="handleBlur('message')" name="message" id="message"
+                rows="4" v-model="inputs.message" ref="message" @input="autoResize"></textarea>
+              <div class="file-drop-area">
+                <input type="file" name="files[]" id="attachment"
+                  accept=".png, .jpeg, .jpg, .svg, .pdf, .docx, .txt, .odt, .xlsx, .ods, .gif, .bmp, .tiff, .pptx, .odp"
+                  multiple @change="updateFileList">
+                <label for="attachment" class="btn-upload"><img src="@/assets/icon/upload.svg" alt=""></label>
               </div>
             </div>
             <div class="consent">
@@ -105,33 +73,8 @@
             </div>
           </div>
         </form>
-      </div>
-      <div class="contact__container-item info">
-        <div class="social">
-          <nav>
-            <ul>
-              <li>
-                <a href="https://www.instagram.com/starsstationstudio?igsh=cDdmczIxc2ljMzJq" aria-label="Instagram">
-                  <i class="fab fa-instagram custom-icon instagram-icon"></i>
-                </a>
-              </li>
-              <li>
-                <a href="#" aria-label="Facebook">
-                  <i class="fab fa-facebook custom-icon facebook-icon"></i>
-                </a>
-              </li>
-              <li>
-                <a href="https://wa.me/41779441743" aria-label="WhatsApp">
-                  <i class="fab fa-whatsapp custom-icon whatsapp-icon"></i>
-                </a>
-              </li>
-              <li>
-                <a href="https://www.youtube.com/@StarsStationStudio" aria-label="YouTube">
-                  <i class="fab fa-youtube custom-icon youtube-icon"></i>
-                </a>
-              </li>
-            </ul>
-          </nav>
+        <div class="slider__container">
+          <img src="@/assets/logo/Logomark White.svg" alt="">
         </div>
       </div>
     </div>
@@ -145,16 +88,12 @@ export default {
     return {
       inputs: {
         name: '',
-        surname: '',
         email: '',
-        tel: '',
         message: ''
       },
       activeInputs: {
         name: false,
-        surname: false,
         email: false,
-        tel: false,
         message: false
       },
       fileList: [],
@@ -361,9 +300,7 @@ export default {
     resetForm() {
       this.inputs = {
         name: '',
-        surname: '',
         email: '',
-        tel: '',
         message: ''
       };
       this.fileList = [];
@@ -381,11 +318,6 @@ export default {
       }
       return true;
     },
-    autoResize() {
-      const textarea = this.$refs.message;
-      textarea.style.height = '50px';
-      textarea.style.height = textarea.scrollHeight + 'px';
-    },
     showError(message) {
       Swal.fire({
         icon: 'warning',
@@ -397,104 +329,72 @@ export default {
         confirmButtonText: 'OK'
       });
     }
-  },
-  mounted() {
-    this.autoResize();
-  },
-  watch: {
-    'inputs.message': function () {
-      this.autoResize();
-    }
   }
 };
 </script>
 
+
 <style scoped>
-
-
-
-
-.contact {
-  padding: 30px 10px 30px 10px;
+.title_section {
+  background-color: var(--active-color);
+  padding: 7px;
+  margin-bottom: 80px;
+  border-radius: 7px;
+  display: inline-block;
 }
+
+.title_section h1 {
+  font-size: 40px;
+}
+
 .contact__container {
-  min-width: 1000px;
+  width: 1000px;
   margin: 0 auto;
   border-radius: 20px;
-  box-shadow: 0px 0px 7px 0px #ffffff;  
+  background-color: #F3F3F3;
 }
 
+.contact__container-item {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  overflow: hidden;
+}
+
+.contact__container-item form,
+.slider__container {
+  flex: 1;
+}
+
+.slider__container img {
+  rotate: -40deg;
+  position: relative;
+  left: 230px;
+  max-width: 100%;
+  height: auto; 
+  display: block;
+  margin: 0 auto; 
+}
 
 .feedback_container {
   padding: 5px 20px;
 }
 
-.contact__container-item h1 {
-  text-align: center;
-}
 
 
 
-.contact-group {
-  margin-bottom: 30px;
-  display: flex;
-  align-items: center;
-}
 
 
-.contact-info {
-  display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-  gap: 10px;
-  margin-top: 30px;
-}
 
-.contact-button {
-  display: inline-flex;
-  align-items: center;
-  padding: 10px 10px;
-  background-color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  z-index: 1;
-  transition: 1s;
-}
 
-.contact-button:hover {
-  background-color: var(--active-color);
-}
 
-.contact-group a {
-  text-decoration: underline;
-  color: black;
-  font-size: 18px;
-  transition: opacity 0.5s ease;
-}
 
-.contact-group a i {
-  margin-right: 10px;
-}
 
 .icon svg {
   width: 25px;
   height: 25px;
 }
 
-.social a {
-  color: var(--text-color);
-}
-
-.social nav ul {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.social li {
-  padding: 20px;
-}
 
 form {
   position: relative;
@@ -506,17 +406,11 @@ line {
   justify-content: space-between;
 }
 
-.form-group-container {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  gap: 40px;
-  margin-bottom: 40px;
-}
 
 .form-group {
   width: 100%;
   position: relative;
+  margin-top: 35px;
 }
 
 .file-drop-area {
@@ -549,23 +443,23 @@ label {
   position: absolute;
   color: black;
   top: -25px;
-  font-weight: bold;
   margin-left: 5px;
   transition: all 0.3s ease;
 }
 
 input {
-  height: 50px;
+  height: 60px;
 }
 
 textarea {
   resize: none;
+  height: 190px;
 }
 
 input,
 textarea {
-  border: none;
-  border-radius: 5px;
+  border: 1px solid black;
+  border-radius: 14px;
   background-color: white;
   font-size: 16px;
   color: #000000;
@@ -584,7 +478,6 @@ textarea {
 
 label.active {
   top: -20px;
-  color: var(--active-color);
   animation: floatLabel 0.3s ease forwards;
 }
 
@@ -595,12 +488,12 @@ label.inactive {
 @keyframes floatLabel {
   from {
     top: 20px;
-    font-size: 16px;
+    font-size: 18px;
   }
 
   to {
     top: -25px;
-    font-size: 20px;
+    font-size: 14px;
   }
 }
 
@@ -696,7 +589,7 @@ label.inactive {
   height: 25px;
   border-radius: 4px;
   outline: none;
-  cursor: pointer;  
+  cursor: pointer;
 }
 
 .consent input[type="checkbox"]:checked {
@@ -707,8 +600,10 @@ label.inactive {
 .consent input[type="checkbox"]:checked::after {
   content: url('@/assets/icon/checkmark.svg');
   display: inline-block;
-  width: 20px;  /* Задайте ширину изображения */
-  height: 20px;  /* Задайте высоту изображения */
+  width: 20px;
+  /* Задайте ширину изображения */
+  height: 20px;
+  /* Задайте высоту изображения */
   position: absolute;
   top: 50%;
   left: 50%;
@@ -741,6 +636,10 @@ label.inactive {
   margin-left: 8px;
 }
 
+
+
+
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -752,12 +651,8 @@ label.inactive {
   .contact__container {
     min-width: 300px;
   }
-  .contact-info {
-    flex-direction: column;
-  }
-  .form-group-container {
-    flex-direction: column;
-  }
+
+
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
@@ -765,8 +660,5 @@ label.inactive {
     min-width: 500px;
   }
 
-  .form-group-container {
-    flex-direction: column;
-  }
 }
 </style>

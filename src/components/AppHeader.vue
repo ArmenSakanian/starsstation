@@ -1,51 +1,52 @@
 <template>
   <header :class="{ 'hidden-header': isHidden }">
     <div class="header-container">
-      <router-link to="/"><img src="@/assets/logo/Logo-Full_white.svg" alt="Logo" class="logo" /></router-link>
-      <nav class="menu" :style="{ left: menuPosition }">
-        <div class="header__bottom"></div>
-        <ul class="menu-ul">
-          <li><a to="/About" @click="scrollToElement($event, 'about-us'); closeMenu()">{{ $t('about') }}</a></li>
-          <li><router-link to="/Contact" @click="closeMenu">{{ $t('contact') }}</router-link></li>
-          <li><router-link to="/Portfolio" @click="closeMenu">{{ $t('our_videos') }}</router-link></li>
-
-          <li class="dropdown" @mouseover="handleMouseOver" @mouseleave="handleMouseLeave" @click="handleMobileClick">
-            <a href="#services">{{ $t('service') }}<i class="fas fa-angle-down"
-                :class="{ rotated: languageMenuOpen }"></i></a>
-            <ul class="dropdown-content dropdown-content-service" :class="{ show: isMenuVisible }">
-              <li><a href="#" @click="scrollToElement($event, 'imagine-yourself'); closeMenu()">{{
-                  $t('imagine_yourself') }}</a></li>
-              <li><a href="#" @click="scrollToElement($event, 'advertising-video'); closeMenu()">{{
-                  $t('advertising_video') }}</a></li>
-              <li><a href="#" @click="scrollToElement($event, 'social-network'); closeMenu()">{{ $t('social_network')
-                  }}</a></li>
-              <li><a href="#" @click="scrollToElement($event, 'montage-video'); closeMenu()">{{ $t('montage_video')
-                  }}</a></li>
-              <li><a href="#" @click="scrollToElement($event, 'rap-clip'); closeMenu()">{{ $t('rap_clip') }}</a></li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
-
-      <nav class="language-menu">
-        <ul>
-          <li class="language">
-            <a class="language-active" href="#" @click="toggleLanguageMenu">
-              <img :src="getFlag($i18n.locale)" alt="Flag" class="flag-icon" />
-              <span class="active-lang">{{ $i18n.locale.toUpperCase() }}</span>
-              <i class="fas fa-angle-down" :class="{ rotated: languageMenuOpen }"></i>
-            </a>
-            <ul class="language-inactive" :class="{ show: languageMenuOpen }">
-              <li v-for="lang in filteredLanguages" :key="lang">
-                <a href="#" @click="changeLanguage($event, lang)">
-                  <img :src="getFlag(lang)" alt="Flag" class="flag-icon" />
-                  <span>{{ getLanguageName(lang) }}</span>
-                </a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
+      <router-link to="/"><img src="@/assets/logo/Logo-Full_black.svg" alt="Logo" class="logo" /></router-link>
+      <div class="menu_container">
+        <nav class="menu" :style="{ left: menuPosition }">
+          <div class="header__bottom"></div>
+          <ul class="menu-ul">
+            <li><a to="/About" @click="scrollToElement($event, 'about-us'); closeMenu()">{{ $t('about') }}</a></li>
+            <li><router-link to="/Contact" @click="closeMenu">{{ $t('service') }}</router-link></li>
+            <li><router-link to="/Contact" @click="closeMenu">{{ $t('contact') }}</router-link></li>
+  
+            <!-- <li class="dropdown" @mouseover="handleMouseOver" @mouseleave="handleMouseLeave" @click="handleMobileClick">
+              <a href="#services">{{ $t('service') }}<i class="fas fa-angle-down"
+                  :class="{ rotated: languageMenuOpen }"></i></a>
+              <ul class="dropdown-content dropdown-content-service" :class="{ show: isMenuVisible }">
+                <li><a href="#" @click="scrollToElement($event, 'imagine-yourself'); closeMenu()">{{
+                    $t('imagine_yourself') }}</a></li>
+                <li><a href="#" @click="scrollToElement($event, 'advertising-video'); closeMenu()">{{
+                    $t('advertising_video') }}</a></li>
+                <li><a href="#" @click="scrollToElement($event, 'social-network'); closeMenu()">{{ $t('social_network')
+                    }}</a></li>
+                <li><a href="#" @click="scrollToElement($event, 'montage-video'); closeMenu()">{{ $t('montage_video')
+                    }}</a></li>
+                <li><a href="#" @click="scrollToElement($event, 'rap-clip'); closeMenu()">{{ $t('rap_clip') }}</a></li>
+              </ul>
+            </li> -->
+          </ul>
+        </nav>
+        <nav class="language-menu">
+          <ul>
+            <li class="language">
+              <a class="language-active" href="#" @click="toggleLanguageMenu">
+                <img :src="getFlag($i18n.locale)" alt="Flag" class="flag-icon" />
+                <span class="active-lang">{{ $i18n.locale.toUpperCase() }}</span>
+                <i class="fas fa-angle-down" :class="{ rotated: languageMenuOpen }"></i>
+              </a>
+              <ul class="language-inactive" :class="{ show: languageMenuOpen }">
+                <li v-for="lang in filteredLanguages" :key="lang">
+                  <a href="#" @click="changeLanguage($event, lang)">
+                    <img :src="getFlag(lang)" alt="Flag" class="flag-icon" />
+                    <span>{{ getLanguageName(lang) }}</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </div>
       <div class="icon" @click="toggleMenu">
         <svg :class="{ 'active': isMenuOpen }" width="30" height="30" viewBox="0 0 32 42"
           xmlns="http://www.w3.org/2000/svg">
@@ -224,7 +225,7 @@ export default {
 }
 
 header {
-  position: fixed;
+  position: relative;
   top: 0;
   z-index: 9998;
   width: 100%;
@@ -237,12 +238,16 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
 }
 
 .logo {
-  width: 140px;
-  height: 60px;
-  margin-right: 30px;
+  width: 180px;
+}
+
+.menu_container {
+  display: flex;
+  align-items: center;
 }
 
 nav ul {
@@ -258,11 +263,12 @@ nav ul {
 
 nav ul li a,
 nav li a {
-  color: white;
+  color: rgb(0, 0, 0);
   text-decoration: none;
   font-size: 20px;
   transition: 1s;
 }
+
 
 .menu ul li a::after {
   content: '';
@@ -333,6 +339,10 @@ nav ul li .router-link-active {
   cursor: pointer;
   display: flex;
   align-items: center;
+    border-radius: 10px;
+    padding: 10px;
+    z-index: 9999;
+    background-color: white;
 }
 
 .language-active .fa-angle-down {
@@ -350,14 +360,15 @@ nav ul li .router-link-active {
 
 .active-lang {
   margin-left: 10px;
-  color: white;
+  color: rgb(0, 0, 0);
   text-decoration: underline
 }
 
 .language-inactive {
   display: block;
   position: absolute;
-  top: 55px;
+  border-radius: 10px;
+  padding-top: 50px;
   right: 10px;
   min-width: 110px;
   background-color: white;
@@ -371,7 +382,7 @@ nav ul li .router-link-active {
 .language-inactive.show {
   opacity: 1;
   transform: scaleY(1);
-  z-index: 9999;
+  z-index: 9998;
 }
 
 .language-inactive li {
@@ -386,7 +397,8 @@ nav ul li .router-link-active {
 }
 
 .language-inactive a:hover {
-  background-color: var(--bg-main-color);
+  background-color: rgb(227, 224, 224);
+
 }
 
 .flag-icon {
