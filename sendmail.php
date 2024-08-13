@@ -285,7 +285,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
                 .content {
                     margin-bottom: 20px;
-                }
+                 }
                 .footer {
                     text-align: center;
                     padding-top: 20px;

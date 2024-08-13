@@ -344,7 +344,7 @@ export default {
 }
 
 .title_section h1 {
-  font-size: 40px;
+  font-size: 32px;
 }
 
 .contact__container {

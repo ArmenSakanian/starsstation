@@ -39,8 +39,8 @@ export default {
 }
 
 .service {
-  width: 600px;
-  height: 290px;
+  width: 500px;
+  height: 240px;
   box-shadow: 0px 5px 0px 0px rgba(25, 26, 35, 1);
   display: flex;
   flex-direction: column;
@@ -85,10 +85,11 @@ color: black;}
 }
 
 .service-image {
-  width: 270px;
+  width: 230px;
   position: absolute;
   right: 0;
   margin-right: 35px;
+  bottom: 20px;
 }
 
 .learn-more-container {
