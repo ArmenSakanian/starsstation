@@ -3,7 +3,7 @@
     <main>
       <router-view />
     </main>
-    <!-- <AppFooter /> -->
+    <AppFooter />
     <ScrollToTop />
 
 </template>
@@ -86,7 +86,7 @@ export default {
 
 body {
   font-family: "Space Grotesk", sans-serif;
-  padding: 0 100px 0 100px;
+  /* padding: 0 100px 0 100px; */
 
 }
 
@@ -102,61 +102,20 @@ main>div {
 }
 
 
-#imagine-yourself {
-  background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url('@/assets/img/imagine-yourself.webp');
+
+
+
+.title_section {
+  background-color: var(--active-color);
+  padding: 7px;
+  border-radius: 7px;
+  display: inline-block;
+  margin-left: 100px;
 }
 
-#montage-video {
-  background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0,  .7)), url('@/assets/img/montage-video.webp');
+.title_section h1 {
+  font-size: 32px;
 }
-
-#social-network {
-  background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url('@/assets/img/social-network.webp');
-}
-
-#advertising-video {
-  background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url('@/assets/img/advertising-video.webp');
-}
-
-#rap-clip {
-  background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url('@/assets/img/rap-clip.webp');
-}
-#about {
-  background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url('@/assets/img/about.webp');
-}
-
-
-#portfolio {
-  background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url('@/assets/img/portfolio.webp');
-
-}
-
-.learn-more,
-.send,
-.subscribe {
-  border: 2px solid rgb(0, 0, 0);
-  border-radius: 5px;
-  background: linear-gradient(to right, var(--active-color) 50%, transparent 50%);
-  background-size: 200% 100%;
-  background-position: 100% 0;
-  color: rgb(0, 0, 0);
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: .3s ease;
-}
-
-.learn-more:hover,
-.send:hover,
-.subscribe:hover {
-  border-radius: 0;
-  background-position: 0 0;
-  color: rgb(255, 255, 255);
-  border: 2px solid var(--active-color);
-}
-
-
-
 
 .color-bold {
   font-weight: bold;

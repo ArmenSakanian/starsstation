@@ -1,74 +1,53 @@
 <template>
-  <footer>
-    <div class="footer__container">
-      <div class="footer__subscribe footer__item">
-        <h1>{{ $t('newsletter') }}</h1>
-        <div>
-          <form @submit.prevent="subscribe">
-            <p>{{ $t('newsletter_text') }}</p>
-            <div class="form-group">
-              <input type="email" v-model="email" placeholder="Email">
-              <button class="subscribe">{{ $t('send') }}</button>
-            </div>
-          </form>
-        </div>
+  <footer class="footer">
+    <div class="footer-container">
+      <!-- Логотип -->
+      <div class="footer-logo">
+        <img src="@/assets/logo/Logo-Full_white.svg" alt="Logo" class="logo" />
       </div>
-      <div class="footer__links footer__item">
-        <h1>{{ $t('link') }}</h1>
-        <div class="links">
-          <nav>
-            <ul>
-              <li><router-link to="/">{{ $t('home') }}</router-link></li>
-              <li><router-link to="/About">{{ $t('about') }}</router-link></li>
-              <li><router-link to="/Contact">{{ $t('contact') }}</router-link></li>
-              <li><router-link to="/Portfolio" @click="closeMenu">{{ $t('our_videos') }}</router-link></li>
-              <li><router-link to="/Privacy">{{ $t('privacy_policy_title') }}</router-link></li>
-            </ul>
-          </nav>
-        </div>
+      
+      <!-- Меню -->
+      <nav class="footer-menu">
+        <ul class="menu-ul">
+          <li><router-link to="/About">About Us</router-link></li>
+          <li><router-link to="/Services">Services</router-link></li>
+          <li><router-link to="/Contact">Contact</router-link></li>
+        </ul>
+      </nav>
+      
+      <!-- Социальные иконки -->
+      <div class="social-icons">
+        <img src="@/assets/icon/instagram.svg" alt="Instagram" class="icon" />
+        <img src="@/assets/icon/facebook.svg" alt="Facebook" class="icon" />
+        <img src="@/assets/icon/youtube.svg" alt="YouTube" class="icon" />
       </div>
-      <div class="footer__service footer__item">
-        <h1>{{ $t('service') }}</h1>
-        <div class="service">
-          <nav>
-            <ul>
-              <li><router-link to="/Yourself">{{ $t('imagine_yourself') }}</router-link></li>
-              <li><router-link to="/Advertising">{{ $t('advertising_video') }}</router-link></li>
-              <li><router-link to="/Network">{{ $t('social_network') }}</router-link></li>
-              <li><router-link to="/Montage">{{ $t('montage_video') }}</router-link></li>
-              <li><router-link to="/Rap">{{ $t('rap_clip') }}</router-link></li>
-            </ul>
-          </nav>
-        </div>
+    </div>
+    
+    <!-- Контактная информация -->
+    <div class="footer-lower">
+      <div class="contact-us">
+        <h3 class="contact-title">Contact Us</h3>
+        <p class="email">Email: suport@starsstation.ch</p>
+        <p class="phone">Phone: 555-567-9012</p>
       </div>
-      <div class="footer__social footer__item">
-        <h1>{{ $t('social') }}</h1>
-        <div class="social">
-          <nav>
-            <ul>
-              <li>
-                <a href="https://www.instagram.com/starsstationstudio?igsh=cDdmczIxc2ljMzJq" aria-label="Instagram">
-                  <i class="fab fa-instagram custom-icon instagram-icon"></i>
-                </a>
-              </li>
-              <li>
-                <a href="#" aria-label="Facebook">
-                  <i class="fab fa-facebook custom-icon facebook-icon"></i>
-                </a>
-              </li>
-              <li>
-                <a href="https://wa.me/41779441743" aria-label="WhatsApp">
-                  <i class="fab fa-whatsapp custom-icon whatsapp-icon"></i>
-                </a>
-              </li>
-              <li>
-                <a href="https://www.youtube.com/@StarsStationStudio" aria-label="YouTube">
-                  <i class="fab fa-youtube custom-icon youtube-icon"></i>
-                </a>
-              </li>
-            </ul>
-          </nav>
+      
+      <!-- Форма подписки -->
+      <div class="subscribe-form">
+        <div class="form-title">
+          <h3 class="subscribe-title">Subscribe</h3>
+          <p class="subscribe-description">Sign up for our newsletter to be the first to receive updates.</p>
         </div>
+        <input type="email" placeholder="Enter your email" class="email-input" />
+        <button class="subscribe-button">Subscribe</button>
+      </div>
+    </div>
+
+    <!-- Разделительная линия и текст -->
+    <div class="footer-bottom">
+      <hr class="divider" />
+      <div class="footer-bottom-text">
+        <p>© 2024 Stars Station Studio. All Rights Reserved.</p>
+        <router-link to="/privacy-policy">Privacy Policy</router-link>
       </div>
     </div>
   </footer>
@@ -76,166 +55,164 @@
 
 <script>
 export default {
-  name: 'AppFooter',
-  data() {
-    return {
-      email: ''
-    };
-  },
-  methods: {
-    async subscribe() {
-      try {
-        const response = await axios.post('subscribe.php', new URLSearchParams({ email: this.email }));
-        console.log(response.data); // Добавьте эту строку для отладки
-        Swal.fire({
-  icon: 'success',
-  title: this.$t('success_title'),
-  text: this.$t(response.data.message_id), // Используем message_id для перевода
-  timer: 3000,
-  showConfirmButton: true,
-  timerProgressBar: true,
-  confirmButtonText: 'OK'
-        });
-        this.email = '';  // Очистить поле ввода
-      } catch (error) {
-        console.error(error);
-        Swal.fire({
-  icon: 'error',
-  title: this.$t('error_title'),
-  text: this.$t('subscribe_error'),
-  timer: 3000,
-  showConfirmButton: true,
-  timerProgressBar: true,
-  confirmButtonText: 'OK'
-        });
-      }
-    }
-  }
+  name: 'AppFooter'
 }
 </script>
+
 <style scoped>
-
-
-
-form {
-  margin-top: 20px;
-}
-form p {
-  margin-bottom: 20px;
-  text-align: start;
+.footer {
+  width: 100%;
+  background-color: #191A23;
+  padding: 50px 0;
 }
 
-.subscribe {
-  margin-top: 10px;
-  padding: 10px 25px;
-}
-
-
-
-input {
-  height: 50px;
-  border: none;
-  border-radius: 5px;
-    background-color: white;
-  font-size: 16px;
-  color: #000000;
-  padding-left: 10px;
-  width: 300px;
-  outline: none;
-}
-
-label.active {
-  top: -15px;
-  font-size: 12px;
-  color: var(--text-secondary-color);
-  animation: floatLabel 0.3s ease forwards;
-}
-
-label.inactive {
-  animation: sinkLabel 0.3s ease forwards;
-}
-
-.footer__item {
-  margin-bottom: 15px;
-  flex: 1;
-  min-width: 200px;
-  padding: 10px;
-  box-sizing: border-box;
-}
-
-footer {
-  background-color: var(--bg-secondary-color);
-  color: var(--text-color);
-  position: relative;
-  z-index: 1;
-}
-
-.footer__container {
-  padding: 0 50px;
-    display: flex;
-    flex-wrap: wrap;
-    height: 380px;
-}
-
-.footer__container a {
-  color: var(--text-color);
-  text-decoration: none;
-}
-
-
-.footer__item > div {
+.footer-container {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  margin-top: 30px;
-  text-align: center;
+  padding: 0 50px;
 }
 
-.form-group {
+.footer-logo {
+  margin-top: 50px;
+  margin-left: 50px;
+}
+
+.footer-logo img {
+  width: 180px; /* Устанавливаем ширину логотипа */
+}
+
+.footer-menu {
+  display: flex;
+  gap: 40px;
+  margin-top: 50px;
+}
+
+.footer-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 40px;
+}
+
+.footer-menu ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.social-icons {
+  display: flex;
+  gap: 20px;
+  margin-top: 50px;
+  margin-right: 50px;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.footer-lower {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 60px 50px;
+}
+
+.contact-us {
+  color: white;
+  margin-left: 50px; /* Добавляем отступ слева */
+}
+
+.contact-title {
+  background-color: #FF9900; /* Применяем фон только к заголовку */
+  padding: 7px;
+  color: black;
+  font-size: 20px;
+  margin: 0 0 50px 0; /* Добавляем отступ снизу в 50px */
+}
+
+.contact-us p {
+  font-size: 18px;
+  margin: 0 0 30px 0; /* Добавляем отступ 30px между почтой и телефоном */
+}
+
+.subscribe-form {
+  display: flex;
+  align-items: flex-start;
+  background-color: #292A32;
+  padding: 55px 40px; /* Padding сверху и снизу 55px, слева и справа 40px */
+  border-radius: 14px; /* Скругляем углы контейнера */
+}
+
+.form-title {
   display: flex;
   flex-direction: column;
 }
 
-.footer__item h1 {
-  text-align: center;
-  font-size: 32px;
-  margin-bottom: 10px;
+.subscribe-title {
+  color: white;
+  font-size: 28px;
+  margin: 0 0 10px 0; /* Отступ между заголовком и описанием */
 }
 
+.subscribe-description {
+  color: white;
+  font-size: 16px;
+  margin: 0 0 30px 0; 
+  width: 380px;
+}
 
+.email-input {
+  width: 280px;
+  height: 70px;
+  border: 1px solid white;
+  padding: 10px;
+  color: white;
+  background-color: transparent;
+  border-radius: 14px; /* Скругляем углы input */
+  margin-bottom: 30px; /* Отступ между input и кнопкой */
+}
 
+.subscribe-button {
+  width: 250px;
+  height: 70px;
+  background-color: #FF9900;
+  margin-left: 50px;
+  color: black;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 14px; /* Скругляем углы кнопки */
+}
 
+.footer-bottom {
+  margin-top: 50px;
+  text-align: center;
+  padding: 20px 0;
+}
 
+.divider {
+  border: 0;
+  height: 1px;
+  background-color: white;
+  width: 100%;
+  margin-bottom: 20px;
+}
 
+.footer-bottom-text p {
+  color: white;
+  font-size: 16px;
+  margin: 0;
+}
 
-
-
-@media screen and (max-width: 1024px) {
-  .footer__container a {
-    text-decoration: underline;
-  }
-
-  .footer__container {
-    flex-wrap: wrap;
-  }
-
-  .footer__item {
-    min-width: 100%; /* Элементы занимают всю ширину контейнера */
-  }
-
-  .footer__item div nav ul {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    flex-direction: row;
-    padding: 0;
-    margin: 0;
-    gap: 10px;
-  }
-
-  .footer__item div li {
-    margin-right: 10px;
-    margin-bottom: 10px;
-  }
+.footer-bottom-text a {
+  color: white;
+  text-decoration: none;
+  margin-left: 10px;
+  font-size: 16px;
 }
 </style>

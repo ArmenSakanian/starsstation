@@ -335,17 +335,7 @@ export default {
 
 
 <style scoped>
-.title_section {
-  background-color: var(--active-color);
-  padding: 7px;
-  margin-bottom: 80px;
-  border-radius: 7px;
-  display: inline-block;
-}
 
-.title_section h1 {
-  font-size: 32px;
-}
 
 .contact__container {
   width: 1000px;

@@ -1,12 +1,14 @@
 <template>
-  <div class="services">
-    <div class="service" v-for="(service, index) in services" :key="index" :class="'service-' + (index + 1)">
-      <h3 :class="['service-title', { 'service-title-2': index === 1, 'service-title-3': index === 2, 'service-title-5': index === 4 }]">{{ service.title }}</h3>      <img :src="service.image" class="service-image" alt="service image">
-      <div class="learn-more-container">
-        <div class="circle">
-          <div class="arrow"></div>
+      <div class="title_section">
+      <h1>{{ $t('service') }}</h1>
+    </div>
+  <div class="rows-container">
+    <div v-for="(row, rowIndex) in serviceRows" :key="rowIndex" class="services-row">
+      <div v-for="(service, index) in row" :key="index" class="service-card" :style="{ backgroundImage: `url(${service.image})` }">
+        <div class="service-content">
+          <h3>{{ $t(service.name) }}</h3>
         </div>
-        <span class="learn-more">Learn more</span>
+        <button class="learn-more">{{ $t('learn_more') }} <i class="fa-solid fa-arrow-right"></i></button>
       </div>
     </div>
   </div>
@@ -14,119 +16,109 @@
 
 <script>
 export default {
-  name: 'Services',
+  name: 'Service',
   data() {
     return {
       services: [
-        { title: 'Услуга 1', image: require('@/assets/img/image1.png') },
-        { title: 'Услуга 2', image: require('@/assets/img/image1.png') },
-        { title: 'Услуга 3', image: require('@/assets/img/image1.png') },
-        { title: 'Услуга 4', image: require('@/assets/img/image1.png') },
-        { title: 'Услуга 5', image: require('@/assets/img/image1.png') },
-      ]
+        {
+          name: 'advertising_video',
+          image: require('@/assets/img/advertising-video.webp'),
+        },
+        {
+          name: 'montage_video',
+          image: require('@/assets/img/montage-video.webp'),
+        },
+        {
+          name: 'imagine_yourself',
+          image: require('@/assets/img/imagine-yourself.webp'),
+        },
+        {
+          name: 'rap_clip',
+          image: require('@/assets/img/rap-clip.webp'),
+        },
+        {
+          name: 'social_network',
+          image: require('@/assets/img/social-network.webp'),
+        },
+      ],
     };
-  }
+  },
+  computed: {
+    serviceRows() {
+      // Разделяем услуги на ряды по 3 элемента в каждом
+      const rows = [];
+      for (let i = 0; i < this.services.length; i += 3) {
+        rows.push(this.services.slice(i, i + 3));
+      }
+      return rows;
+    },
+  },
 };
 </script>
 
 <style scoped>
-.services {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 20px;
-  max-width: 1240px;
-  margin: 0 auto;
-}
-
-.service {
-  width: 500px;
-  height: 240px;
-  box-shadow: 0px 5px 0px 0px rgba(25, 26, 35, 1);
+.rows-container {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  gap: 50px; /* Отступы между рядами */
+}
+
+.services-row {
+  display: flex;
+  justify-content: center; /* Центрирование элементов в ряду */
+  gap: 50px; /* Отступы между карточками */
+  margin: 0 auto; /* Центрирование ряда */
+}
+
+.service-card {
+  width: 330px;
+  height: 430px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  text-align: left;
-  border-radius: 45px;
-  padding: 50px;
-  position: relative;
-}
-
-.service-title {
-  margin: 0;
-  padding: 8px;
-  background-color: #FF9900;
-  border-radius: 7px;
-}
-
-.service-title-2, .service-title-3, .service-title-5 {
-background-color: white;
-color: black;}
-
-.service-1 {
-  background-color: #F3F3F3;
-}
-
-.service-2 {
-  background-color: #FF9900;
-}
-
-.service-3 {
-  background-color: #191A23;
+  padding: 20px;
   color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.service-4 {
-  background-color: #F3F3F3;
+.service-content {
+  padding: 10px 0px;
+    text-align: center;
+    background-color: white;
+    color: black;
+    border-radius: 5px;
 }
 
-.service-5 {
-  background-color: #FF9900;
+.service-card h3 {
+  margin: 0;
+  font-size: 24px;
 }
 
-.service-image {
-  width: 230px;
-  position: absolute;
-  right: 0;
-  margin-right: 35px;
-  bottom: 20px;
-}
 
-.learn-more-container {
-  display: flex;
-  align-items: center;
-  position: absolute;
-  bottom: 50px;
-  left: 50px;
-}
-
-.circle {
-  width: 41px;
-  height: 41px;
-  background-color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 10px;
-}
-
-.arrow {
-  width: 0;
-  height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-top: 10px solid black;
-  transform: rotate(30deg);
-}
 
 .learn-more {
-  font-size: 16px;
-  color: black;
+    margin: 0 auto;
+    padding: 10px 20px;
+    width: 150px;
+    border: none;
+    border-radius: 5px;
+    background: #222222;
+    background-size: 200% 100%;
+    background-position: 100% 0;
+    color: rgb(255, 255, 255);
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .3s ease;
+    text-align: center;
 }
 
-h3 {
-  margin: 0;
-  padding: 0;
+.learn-more i {
+  margin-left: 10px;
+    color: #ff9900;
+    font-size: 20px;
 }
 </style>

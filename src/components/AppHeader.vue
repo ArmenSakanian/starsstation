@@ -1,7 +1,7 @@
 <template>
   <header :class="{ 'hidden-header': isHidden }">
     <div class="header-container">
-      <router-link to="/"><img src="@/assets/logo/Logo-Full_black.svg" alt="Logo" class="logo" /></router-link>
+      <router-link to="/"><img src="@/assets/logo/Logo-Full_white.svg" alt="Logo" class="logo" /></router-link>
       <div class="menu_container">
         <nav class="menu" :style="{ left: menuPosition }">
           <div class="header__bottom"></div>
@@ -225,19 +225,20 @@ export default {
 }
 
 header {
-  position: relative;
-  top: 0;
-  z-index: 9998;
-  width: 100%;
-  padding: 10px;
-  height: 80px;
-  transition: top 0.5s ease-in-out, opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  position: fixed;
+    top: 0;
+    z-index: 9998;
+    width: 100%;
+    height: 80px;
+    transition: top 0.5s ease-in-out, opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 
 .header-container {
+  padding: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background-color: #222222;
 
 }
 
@@ -263,7 +264,7 @@ nav ul {
 
 nav ul li a,
 nav li a {
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
   text-decoration: none;
   font-size: 20px;
   transition: 1s;
@@ -339,10 +340,7 @@ nav ul li .router-link-active {
   cursor: pointer;
   display: flex;
   align-items: center;
-    border-radius: 10px;
-    padding: 10px;
-    z-index: 9999;
-    background-color: white;
+   z-index: 9999;
 }
 
 .language-active .fa-angle-down {
@@ -356,11 +354,15 @@ nav ul li .router-link-active {
 
 .language-active {
   color: var(--active-color);
+    background-color: #222222;
+    padding: 10px 20px;
+    border-radius: 14px;
+    border: 1px solid rgb(240, 240, 240);
 }
 
 .active-lang {
   margin-left: 10px;
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
   text-decoration: underline
 }
 
@@ -371,7 +373,7 @@ nav ul li .router-link-active {
   padding-top: 50px;
   right: 10px;
   min-width: 110px;
-  background-color: white;
+  background-color: #222222;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
   opacity: 0;
   transform: scaleY(0);
@@ -393,7 +395,7 @@ nav ul li .router-link-active {
   display: flex;
   padding: 10px;
   text-decoration: none;
-  color: var(--text-color);
+  color: white;
 }
 
 .language-inactive a:hover {
@@ -411,6 +413,7 @@ nav ul li .router-link-active {
 }
 
 svg {
+  fill: white;
   fill-rule: evenodd;
   clip-rule: evenodd;
   stroke-linecap: round;
@@ -421,7 +424,7 @@ svg {
 
 svg path {
   fill: none;
-  stroke: var(--text-color);
+  stroke: white; /* Измените на белый цвет */
   stroke-width: 1px;
 }
 

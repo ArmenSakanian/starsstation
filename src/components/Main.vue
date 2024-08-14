@@ -28,6 +28,7 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
+    padding: 0 100px 0 100px;
 }
 
 .greetings_info, .greetings_photo {
