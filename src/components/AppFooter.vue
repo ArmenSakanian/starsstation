@@ -226,6 +226,18 @@ export default {
   .subscribe-form {
     flex-direction: column;
     align-items: center;
+    text-align: center;
+    padding: 55px 10px;
+  }
+  .subscribe-description {
+    width: 250px;
+  }
+  .email-input {
+    width: 90%;
+  }
+
+  .subscribe-button{ 
+    width: 80% ;
   }
   .footer-logo, .contact-us, .subscribe-button, .social-icons {
     margin: 0;
