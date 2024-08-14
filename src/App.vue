@@ -3,8 +3,8 @@
     <main>
       <router-view />
     </main>
-    <AppFooter />
-    <ScrollToTop />
+  <AppFooter />
+    <ScrollToTop /> 
 
 </template>
 
@@ -142,5 +142,21 @@ main>div {
   color: var(--youtube-color);
 }
 
+@media screen and (max-width: 769px) { 
 
+}
+
+@media screen and (max-width: 1024px) {
+  .title_section {
+    text-align: center;
+    max-width: 200px;
+    margin: 0 auto;
+  }
+
+  .service_container, .contact {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
 </style>

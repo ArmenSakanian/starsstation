@@ -215,4 +215,30 @@ export default {
   margin-left: 10px;
   font-size: 16px;
 }
+
+@media screen and (max-width: 1024px) {
+  .footer-container{
+    flex-direction: column;
+  }
+  .footer-lower {
+    flex-direction: column;
+  }
+  .subscribe-form {
+    flex-direction: column;
+    align-items: center;
+  }
+  .footer-logo, .contact-us, .subscribe-button, .social-icons {
+    margin: 0;
+  }
+
+  .contact-us {
+    text-align: center;
+  }
+
+  .footer-menu ul {
+    margin-bottom: 50px;
+  }
+
+}
+
 </style>

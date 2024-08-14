@@ -339,7 +339,7 @@ export default {
 
 .contact__container {
   width: 1000px;
-  margin: 0 auto;
+  margin: 50px auto;
   border-radius: 20px;
   background-color: #F3F3F3;
 }
@@ -354,6 +354,10 @@ export default {
 .contact__container-item form,
 .slider__container {
   flex: 1;
+}
+
+.slider__container {
+  display: none;
 }
 
 .slider__container img {
@@ -637,17 +641,9 @@ label.inactive {
 }
 
 
-@media screen and (max-width: 769px) {
+@media screen and (max-width: 1024px) {
   .contact__container {
-    min-width: 300px;
-  }
-
-
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
-  .contact__container[data-v-50e640b0] {
-    min-width: 500px;
+    width: 90%;
   }
 
 }
