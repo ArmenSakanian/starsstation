@@ -6,9 +6,12 @@
         <nav class="menu" :style="{ left: menuPosition }">
           <div class="header__bottom"></div>
           <ul class="menu-ul">
-            <li><a to="/About" @click="scrollToElement($event, 'about-us'); closeMenu()">{{ $t('about') }}</a></li>
-            <li><router-link to="/Contact" @click="closeMenu">{{ $t('service') }}</router-link></li>
-            <li><router-link to="/Contact" @click="closeMenu">{{ $t('contact') }}</router-link></li>
+            <li><router-link to="/About"><a @click="closeMenu()">{{ $t('about') }}</a></router-link></li>
+            <li><a to="service" @click="scrollToElement($event, 'service'); closeMenu()">{{ $t('service') }}</a></li>
+            <li><a @click.prevent="openModal">{{ $t('contact') }}</a></li>
+            <li><a to="/Contact" @click="scrollToElement($event, 'contact'); closeMenu()">{{ $t('feedback') }}</a></li>
+            <li><a to="" @click="scrollToElement($event, 'contact'); closeMenu()">{{ $t('our_videos') }}</a></li>
+            
   
             <!-- <li class="dropdown" @mouseover="handleMouseOver" @mouseleave="handleMouseLeave" @click="handleMobileClick">
               <a href="#services">{{ $t('service') }}<i class="fas fa-angle-down"
@@ -65,13 +68,20 @@
           </g>
         </svg>
       </div>
+      <ContactModal :isVisible="isModalOpen" @close="closeModal" />
     </div>
   </header>
 </template>
 
 <script>
+
+import ContactModal from './ContactModal.vue';
+
 export default {
   name: 'AppHeader',
+  components: {
+    ContactModal,
+  },
   data() {
     return {
       availableLanguages: ['en', 'fr', 'de', 'it'],
@@ -80,6 +90,7 @@ export default {
       languageMenuOpen: false,
       isHidden: false,
       lastScrollTop: 0,
+      isModalOpen: false,
     };
   },
   computed: {
@@ -110,6 +121,12 @@ export default {
     window.removeEventListener('scroll', this.handleScroll);
   },
   methods: {
+    openModal() {
+      this.isModalOpen = true;
+    },
+    closeModal() {
+      this.isModalOpen = false;
+    },
     changeLanguage(event, lang) {
       event.preventDefault();
       this.$i18n.locale = lang;
@@ -356,7 +373,7 @@ nav ul li .router-link-active {
   color: var(--active-color);
     background-color: #222222;
     padding: 10px 20px;
-    border-radius: 14px;
+    border-radius: 5px;
     border: 1px solid rgb(240, 240, 240);
 }
 
@@ -399,7 +416,8 @@ nav ul li .router-link-active {
 }
 
 .language-inactive a:hover {
-  background-color: rgb(227, 224, 224);
+  background-color: rgb(255, 255, 255);
+  color: black;
 
 }
 

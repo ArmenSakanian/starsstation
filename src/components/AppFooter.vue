@@ -9,9 +9,10 @@
       <!-- Меню -->
       <nav class="footer-menu">
         <ul class="menu-ul">
-          <li><router-link to="/About">About Us</router-link></li>
-          <li><router-link to="/Services">Services</router-link></li>
-          <li><router-link to="/Contact">Contact</router-link></li>
+          <li><router-link to="/About">{{ $t('about') }}</router-link></li>
+          <li><router-link to="/Services">{{ $t('service') }}</router-link></li>
+          <li><router-link to="/Contact">{{ $t('contact') }}</router-link></li>
+          <li><router-link to="/Contact">{{ $t('our_videos') }}</router-link></li>
         </ul>
       </nav>
       
@@ -63,7 +64,7 @@ export default {
 .footer {
   width: 100%;
   background-color: #191A23;
-  padding: 50px 0;
+
 }
 
 .footer-container {
@@ -90,16 +91,18 @@ export default {
 
 .footer-menu ul {
   list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  gap: 40px;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .footer-menu ul li a {
   color: white;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 20px;
 }
 
 .social-icons {
@@ -119,7 +122,8 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 60px 50px;
+  padding: 10px 50px;
+  gap: 50px;
 }
 
 .contact-us {
@@ -131,21 +135,22 @@ export default {
   background-color: #FF9900; /* Применяем фон только к заголовку */
   padding: 7px;
   color: black;
-  font-size: 20px;
+  font-size: 40px;
   margin: 0 0 50px 0; /* Добавляем отступ снизу в 50px */
 }
 
 .contact-us p {
-  font-size: 18px;
+  font-size: 20px;
   margin: 0 0 30px 0; /* Добавляем отступ 30px между почтой и телефоном */
 }
 
 .subscribe-form {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   background-color: #292A32;
-  padding: 55px 40px; /* Padding сверху и снизу 55px, слева и справа 40px */
-  border-radius: 14px; /* Скругляем углы контейнера */
+  padding: 55px 40px;
+  border-radius: 14px;
+  flex-direction: column;
 }
 
 .form-title {
@@ -155,19 +160,18 @@ export default {
 
 .subscribe-title {
   color: white;
-  font-size: 28px;
+  font-size: 40px;
   margin: 0 0 10px 0; /* Отступ между заголовком и описанием */
 }
 
 .subscribe-description {
   color: white;
-  font-size: 16px;
+  font-size: 20px;
   margin: 0 0 30px 0; 
-  width: 380px;
 }
 
 .email-input {
-  width: 280px;
+  width: 100%;
   height: 70px;
   border: 1px solid white;
   padding: 10px;
@@ -178,10 +182,9 @@ export default {
 }
 
 .subscribe-button {
-  width: 250px;
+  width: 70%;
   height: 70px;
   background-color: #FF9900;
-  margin-left: 50px;
   color: black;
   border: none;
   cursor: pointer;
@@ -190,7 +193,7 @@ export default {
 }
 
 .footer-bottom {
-  margin-top: 50px;
+
   text-align: center;
   padding: 20px 0;
 }
@@ -224,14 +227,13 @@ export default {
     flex-direction: column;
   }
   .subscribe-form {
+    width: 100%;
     flex-direction: column;
     align-items: center;
     text-align: center;
     padding: 55px 10px;
   }
-  .subscribe-description {
-    width: 250px;
-  }
+
   .email-input {
     width: 90%;
   }
@@ -251,6 +253,15 @@ export default {
     margin-bottom: 50px;
   }
 
+}
+
+@media screen and (max-width: 1024px) { 
+  .footer-menu ul li a, .subscribe-description, .contact-us p {
+    font-size: 16px;
+  }
+  .contact-title, .subscribe-title {
+    font-size: 25px;
+  }
 }
 
 </style>

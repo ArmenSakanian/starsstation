@@ -3,7 +3,7 @@
     <div class="title_section">
       <h1>{{ $t('service') }}</h1>
     </div>
-    <div class="rows-container">
+    <div class="rows-container" id="service">
       <div v-for="(row, rowIndex) in serviceRows" :key="rowIndex" class="services-row">
         <div v-for="(service, index) in row" :key="index" class="service-card"
           :style="{ backgroundImage: `url(${service.image})` }">

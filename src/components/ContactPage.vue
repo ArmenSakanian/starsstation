@@ -356,9 +356,6 @@ export default {
   flex: 1;
 }
 
-.slider__container {
-  display: none;
-}
 
 .slider__container img {
   rotate: -40deg;
@@ -645,6 +642,9 @@ label.inactive {
   .contact__container {
     width: 90%;
   }
+  .slider__container {
+  display: none;
+}
 
 }
 </style>
