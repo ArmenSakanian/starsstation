@@ -30,7 +30,8 @@
             </li> -->
           </ul>
         </nav>
-        <nav class="language-menu">
+      </div>
+      <nav class="language-menu">
           <ul>
             <li class="language">
               <a class="language-active" href="#" @click="toggleLanguageMenu">
@@ -49,7 +50,6 @@
             </li>
           </ul>
         </nav>
-      </div>
       <div class="icon" @click="toggleMenu">
         <svg :class="{ 'active': isMenuOpen }" width="30" height="30" viewBox="0 0 32 42"
           xmlns="http://www.w3.org/2000/svg">

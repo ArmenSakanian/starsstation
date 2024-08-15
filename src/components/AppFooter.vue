@@ -5,7 +5,7 @@
       <div class="footer-logo">
         <img src="@/assets/logo/Logo-Full_white.svg" alt="Logo" class="logo" />
       </div>
-      
+
       <!-- Меню -->
       <nav class="footer-menu">
         <ul class="menu-ul">
@@ -15,7 +15,7 @@
           <li><router-link to="/Contact">{{ $t('our_videos') }}</router-link></li>
         </ul>
       </nav>
-      
+
       <!-- Социальные иконки -->
       <div class="social-icons">
         <img src="@/assets/icon/instagram.svg" alt="Instagram" class="icon" />
@@ -23,24 +23,27 @@
         <img src="@/assets/icon/youtube.svg" alt="YouTube" class="icon" />
       </div>
     </div>
-    
+
     <!-- Контактная информация -->
     <div class="footer-lower">
       <div class="contact-us">
-        <h3 class="contact-title">Contact Us</h3>
-        <p class="email">Email: suport@starsstation.ch</p>
-        <p class="phone">Phone: 555-567-9012</p>
+        <h3 class="contact-title">{{ $t('contact') }}</h3>
+        <p class="email">{{ $t('email') }}: suport@starsstation.ch</p>
+        <p class="phone">{{ $t('tel') }}: 555-567-9012</p>
       </div>
-      
-      <!-- Форма подписки -->
-      <div class="subscribe-form">
+      <form @submit.prevent="subscribe">
+        <div class="subscribe-form">
         <div class="form-title">
           <h3 class="subscribe-title">Subscribe</h3>
           <p class="subscribe-description">Sign up for our newsletter to be the first to receive updates.</p>
         </div>
-        <input type="email" placeholder="Enter your email" class="email-input" />
-        <button class="subscribe-button">Subscribe</button>
+        <div class="form-group">
+          <input type="email" v-model="email" placeholder="Email">
+          <button class="subscribe">{{ $t('send') }}</button>
+        </div>
       </div>
+      </form>
+      <!-- Форма подписки -->
     </div>
 
     <!-- Разделительная линия и текст -->
@@ -56,7 +59,41 @@
 
 <script>
 export default {
-  name: 'AppFooter'
+  name: 'AppFooter',
+  data() {
+    return {
+      email: ''
+    };
+  },
+  methods: {
+    async subscribe() {
+      try {
+        const response = await axios.post('subscribe.php', new URLSearchParams({ email: this.email }));
+        console.log(response.data); // Добавьте эту строку для отладки
+        Swal.fire({
+          icon: 'success',
+          title: this.$t('success_title'),
+          text: this.$t(response.data.message_id), // Используем message_id для перевода
+          timer: 3000,
+          showConfirmButton: true,
+          timerProgressBar: true,
+          confirmButtonText: 'OK'
+        });
+        this.email = '';  // Очистить поле ввода
+      } catch (error) {
+        console.error(error);
+        Swal.fire({
+          icon: 'error',
+          title: this.$t('error_title'),
+          text: this.$t('subscribe_error'),
+          timer: 3000,
+          showConfirmButton: true,
+          timerProgressBar: true,
+          confirmButtonText: 'OK'
+        });
+      }
+    }
+  }
 }
 </script>
 
@@ -80,7 +117,8 @@ export default {
 }
 
 .footer-logo img {
-  width: 180px; /* Устанавливаем ширину логотипа */
+  width: 180px;
+  /* Устанавливаем ширину логотипа */
 }
 
 .footer-menu {
@@ -91,12 +129,12 @@ export default {
 
 .footer-menu ul {
   list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    gap: 30px;
-    flex-wrap: wrap;
-    justify-content: center;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .footer-menu ul li a {
@@ -128,27 +166,29 @@ export default {
 
 .contact-us {
   color: white;
-  margin-left: 50px; /* Добавляем отступ слева */
+  margin-left: 50px;
+  /* Добавляем отступ слева */
 }
 
 .contact-title {
-  background-color: #FF9900; /* Применяем фон только к заголовку */
+  background-color: #FF9900;
   padding: 7px;
   color: black;
   font-size: 40px;
-  margin: 0 0 50px 0; /* Добавляем отступ снизу в 50px */
+display: inline;
 }
 
 .contact-us p {
   font-size: 20px;
-  margin: 0 0 30px 0; /* Добавляем отступ 30px между почтой и телефоном */
+  margin: 30px 0 0 0;
+  /* Добавляем отступ 30px между почтой и телефоном */
 }
 
 .subscribe-form {
   display: flex;
   align-items: center;
   background-color: #292A32;
-  padding: 55px 40px;
+  padding: 30px 40px;
   border-radius: 14px;
   flex-direction: column;
 }
@@ -161,35 +201,45 @@ export default {
 .subscribe-title {
   color: white;
   font-size: 40px;
-  margin: 0 0 10px 0; /* Отступ между заголовком и описанием */
+  margin: 0 0 10px 0;
+  /* Отступ между заголовком и описанием */
 }
 
 .subscribe-description {
   color: white;
   font-size: 20px;
-  margin: 0 0 30px 0; 
+  margin: 0 0 30px 0;
 }
 
-.email-input {
+.form-group {
   width: 100%;
-  height: 70px;
+    display: flex;
+    gap: 20px;
+}
+
+.form-group input {
+  width: 100%;
+  height: 60px;
   border: 1px solid white;
   padding: 10px;
   color: white;
   background-color: transparent;
-  border-radius: 14px; /* Скругляем углы input */
-  margin-bottom: 30px; /* Отступ между input и кнопкой */
+  border-radius: 14px;
+  /* Скругляем углы input */
+  margin-bottom: 30px;
+  /* Отступ между input и кнопкой */
 }
 
-.subscribe-button {
+.subscribe {
   width: 70%;
-  height: 70px;
+  height: 60px;
   background-color: #FF9900;
   color: black;
   border: none;
   cursor: pointer;
   font-size: 18px;
-  border-radius: 14px; /* Скругляем углы кнопки */
+  border-radius: 14px;
+  /* Скругляем углы кнопки */
 }
 
 .footer-bottom {
@@ -220,12 +270,14 @@ export default {
 }
 
 @media screen and (max-width: 1024px) {
-  .footer-container{
+  .footer-container {
     flex-direction: column;
   }
+
   .footer-lower {
     flex-direction: column;
   }
+
   .subscribe-form {
     width: 100%;
     flex-direction: column;
@@ -234,14 +286,18 @@ export default {
     padding: 55px 10px;
   }
 
-  .email-input {
+  .form-group input {
     width: 90%;
   }
 
-  .subscribe-button{ 
-    width: 80% ;
+  .subscribe {
+    width: 80%;
   }
-  .footer-logo, .contact-us, .subscribe-button, .social-icons {
+
+  .footer-logo,
+  .contact-us,
+  .subscribe,
+  .social-icons {
     margin: 0;
   }
 
@@ -255,13 +311,17 @@ export default {
 
 }
 
-@media screen and (max-width: 1024px) { 
-  .footer-menu ul li a, .subscribe-description, .contact-us p {
+@media screen and (max-width: 1024px) {
+
+  .footer-menu ul li a,
+  .subscribe-description,
+  .contact-us p {
     font-size: 16px;
   }
-  .contact-title, .subscribe-title {
+
+  .contact-title,
+  .subscribe-title {
     font-size: 25px;
   }
 }
-
 </style>

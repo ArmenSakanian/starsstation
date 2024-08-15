@@ -2,12 +2,12 @@
   <div v-if="isVisible" class="modal-overlay" @click="close">
     <div class="modal-content" @click.stop>
       <div class="modal-header">
-        <h2>Контакты</h2>
+        <h2>{{ $t('contact') }}</h2>
         <button class="close-btn" @click="close">&times;</button>
       </div>
       <div class="modal-body">
-        <p><strong>Телефон:</strong> +1234567890</p>
-        <p><strong>Почта:</strong> example@example.com</p>
+        <p><strong>{{ $t('tel') }}:</strong> +1234567890</p>
+        <p><strong>{{ $t('email') }}:</strong> example@example.com</p>
       </div>
       <div class="modal-footer">
         <div class="social-icons">
@@ -35,10 +35,28 @@ export default {
       default: false
     }
   },
+  watch: {
+    isVisible(newValue) {
+      if (newValue) {
+        this.disableScroll();
+      } else {
+        this.enableScroll();
+      }
+    }
+  },
   methods: {
+    disableScroll() {
+      document.body.style.overflow = 'hidden';
+    },
+    enableScroll() {
+      document.body.style.overflow = '';
+    },
     close() {
       this.$emit('close');
     }
+  },
+  beforeDestroy() {
+    this.enableScroll();
   }
 };
 </script>
@@ -73,8 +91,6 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #FF9900;
-  padding: 7px;
   border-radius: 5px;
 }
 
@@ -82,6 +98,8 @@ export default {
   margin: 0;
   font-size: 40px;
   color: #ffffff;
+  background-color: #FF9900;
+  padding: 7px;
 }
 
 .close-btn {
