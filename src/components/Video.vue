@@ -1,8 +1,15 @@
 <template>
     <div class="video-container">
-      <h1 data-aos="fade-left" class="video-title">{{ title }}</h1>
-      <p data-aos="fade-left" class="video-description">{{ description }}</p>
-      <video data-aos="fade-right" ref="videoPlayer" class="video-player" autoplay muted loop>
+      <h1 class="video-title">{{ title }}</h1>
+      <p class="video-description">{{ description }}</p>
+      <video
+        ref="videoPlayer"
+        class="video-player"
+        autoplay
+        muted
+        loop
+        playsinline
+      >
         <source src="@/assets/video/intro.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
@@ -23,19 +30,16 @@
   
   <style scoped>
   .video-container {
+    text-align: center;
     padding: 20px;
-    max-width: 1220px;
-    margin: 0 auto;
   }
   
   .video-title {
     font-size: 48px;
     margin-bottom: 20px;
-    color: #191A23;
   }
   
   .video-description {
-    color: #474a57;
     font-size: 18px;
     margin-bottom: 20px;
   }

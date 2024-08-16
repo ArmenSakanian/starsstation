@@ -1,8 +1,10 @@
 <template>
 <test />
-<Video />
-  <Service />
-    <ContactPage /> 
+<section class="section_1">
+  <Video />
+    <Service />
+</section>
+    <section class="section_2"><ContactPage /> </section>
 </template>
 
 <script>
@@ -26,4 +28,9 @@ export default {
 </script>
 
 
-<style scoped></style>
+<style scoped>
+
+.section_2 {
+  background-color: #171a36;
+}
+</style>
