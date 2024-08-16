@@ -255,7 +255,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #222222;
+  background-color: #191A23;
 
 }
 
@@ -371,7 +371,7 @@ nav ul li .router-link-active {
 
 .language-active {
   color: var(--active-color);
-    background-color: #222222;
+    background-color: #191A23;
     padding: 10px 20px;
     border-radius: 5px;
     border: 1px solid rgb(240, 240, 240);
@@ -390,7 +390,7 @@ nav ul li .router-link-active {
   padding-top: 50px;
   right: 10px;
   min-width: 110px;
-  background-color: #222222;
+  background-color: #191A23;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
   opacity: 0;
   transform: scaleY(0);

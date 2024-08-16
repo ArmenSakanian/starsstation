@@ -1,17 +1,13 @@
 <template>
-
-  <head>
-    <title>Stars Station Studio</title>
-    <meta name="description"
-      content="IMAGINE YOURSELF, EXPRESS YOUR ART IN VIDEO, SOCIAL NETWORK, MONTAGE VIDEO, RAP CLIP">
-  </head> 
-
+<test />
+<Video />
   <Service />
     <ContactPage /> 
 </template>
 
 <script>
-
+import test from '../components/test.vue'
+import Video from '../components/Video.vue'
 import Service from '../components/Service.vue'
 import ContactPage from '../components/ContactPage.vue'
 
@@ -20,7 +16,9 @@ import ContactPage from '../components/ContactPage.vue'
 
 export default {
   name: "HomePage",
-  components: {   
+  components: {  
+    test, 
+    Video,
     Service,
     ContactPage,
   },

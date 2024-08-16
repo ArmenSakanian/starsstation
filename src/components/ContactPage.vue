@@ -1,9 +1,9 @@
 <template>
-  <div id="contact" class="contact">
-    <div class="title_section">
+  <div  id="contact" class="contact">
+    <div data-aos="fade-right" class="title_section">
       <h1>{{ $t('feedback') }}</h1>
     </div>
-    <div class="contact__container">
+    <div data-aos="fade-up" data-aos-anchor-placement="top-center"  class="contact__container">
       <div class="contact__container-item feedback">
         <form @submit.prevent="submitForm" method="POST" action="sendmail.php" enctype="multipart/form-data" ref="form">
           <div class="feedback_container">

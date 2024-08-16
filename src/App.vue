@@ -1,4 +1,9 @@
 <template>
+    <head>
+    <title>Stars Station Studio</title>
+    <meta name="description"
+      content="IMAGINE YOURSELF, EXPRESS YOUR ART IN VIDEO, SOCIAL NETWORK, MONTAGE VIDEO, RAP CLIP">
+  </head> 
     <AppHeader />
     <main>
       <router-view />
@@ -18,19 +23,11 @@ export default {
   components: {
     AppHeader,
     AppFooter,
-    ScrollToTop
+    ScrollToTop,
   },
   methods: {
-    splitText(key) {
-      const text = this.$t(key);
-      const parts = text.split(/(<color-bold>.*?<\/color-bold>)/g).filter(Boolean);
-      return parts.map(part => {
-        if (part.startsWith('<color-bold>') && part.endsWith('</color-bold>')) {
-          return { text: part.slice(12, -13), class: 'color-bold' };
-        } else {
-          return { text: part, class: '' };
-        }
-      });
+    formatText(key) {
+      return textFormatter.formatText(this.$i18n, key);
     },
     scrollTo(sectionId) {
       document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
@@ -97,8 +94,8 @@ body {
 }
 
 
-main>div {
-  margin-top: 50px;
+main > div:first-child {
+  margin-top: 100px;
 }
 
 

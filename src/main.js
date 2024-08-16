@@ -1,14 +1,14 @@
-import { createApp } from 'vue';
-import App from './App.vue';
-import { createI18n } from 'vue-i18n';
-import router from './router';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+import { createApp } from 'vue'
+import App from './App.vue'
+import { createI18n } from 'vue-i18n'
+import router from './router'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
-import en from './locales/en.json';
-import fr from './locales/fr.json';
-import de from './locales/de.json';
-import it from './locales/it.json';
+import en from './locales/en.json'
+import fr from './locales/fr.json'
+import de from './locales/de.json'
+import it from './locales/it.json' 
 
 // Функция для определения языка по местоположению
 async function getLanguageByLocation() {
@@ -23,7 +23,7 @@ async function getLanguageByLocation() {
       DE: 'de',
       IT: 'it',  // добавляем Италию
       US: 'en',
-      GB: 'en',
+      GB: 'en'
       // добавьте больше сопоставлений по необходимости
     };
 
@@ -60,7 +60,7 @@ async function determineLanguage() {
       en,
       fr,
       de,
-      it,  // добавляем итальянский язык
+      it  // добавляем итальянский язык
     }
   });
 
@@ -68,9 +68,8 @@ async function determineLanguage() {
   app.use(router);
   app.use(i18n);
 
-  // Инициализация AOS с параметром once: false для повторной анимации
   AOS.init({
-    once: false, // Анимации будут повторяться при каждом скролле вверх и вниз
+    duration: 1200,
   });
 
   app.mount('#app');

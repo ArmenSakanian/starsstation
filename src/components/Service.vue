@@ -1,101 +1,154 @@
 <template>
   <div class="services-container">
-    <div
-      v-for="(service, index) in services"
-      :key="index"
-      :class="['service-wrapper', { 'service-wrapper-reverse': index % 2 !== 0 }]"
-      :data-aos="index % 2 === 0 ? 'fade-right' : 'fade-left'"
-    >
-      <div
-        :class="['service-item', { 'service-item-right': index % 2 !== 0 }]"
-        :data-aos="index % 2 === 0 ? 'fade-left' : 'fade-right'"
-      >
-        <div class="service-title">{{ $t(service.title) }}</div>
-        <img :src="service.image" alt="service image" :class="['service-image', { 'service-image-right': index % 2 !== 0 }]" />
+    <h1 class="services-header">{{ $t('service') }}</h1>
+    <div data-aos="zoom-in-right" class="services-row first-row">
+      <div class="service" 
+           v-for="(service, index) in services.slice(0, 3)" 
+           :key="index" 
+           :class="{ 'full-span': index === 2 }">
+        <img :src="service.icon" alt="Icon" class="service-icon" />
+        <h3 class="service-title" v-html="formatText(service.title)"></h3>
+        <p class="service-description" v-html="formatText(service.description)"></p>
       </div>
-      <div
-        class="service-description"
-        :data-aos="index % 2 === 0 ? 'fade-left' : 'fade-right'"
-      >
-        <p>{{ $t(service.description) }}</p>
+    </div>
+    <div data-aos="zoom-in-left" class="services-row second-row">
+      <div class="service" v-for="(service, index) in services.slice(3)" :key="index">
+        <img :src="service.icon" alt="Icon" class="service-icon" />
+        <h3 class="service-title" v-html="formatText(service.title)"></h3>
+        <p class="service-description" v-html="formatText(service.description)"></p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+import handshakeIcon from '@/assets/icon/handshake.svg';
+import { formatText } from '@/utils/textFormatter';
 
 export default {
-  name: 'ServicesComponent',
-  mounted() {
-    AOS.init();
-  },
+  name: 'Service',
   data() {
     return {
       services: [
-        { title: 'montage_about', image: require('@/assets/img/montage-video.webp'), description: 'montage_about' },
-        { title: 'social_network', image: require('@/assets/img/social-network.webp'), description: 'network_about' },
-        { title: 'advertising_video', image: require('@/assets/img/advertising-video.webp'), description: 'advertising_about' },
-        { title: 'imagine_yourself', image: require('@/assets/img/imagine-yourself.webp'), description: 'yourself_about' },
-        { title: 'rap_clip', image: require('@/assets/img/rap-clip.webp'), description: 'rap_about' },
+        { 
+          icon: handshakeIcon, 
+          title: 'montage_video', 
+          description: 'montage_video_quotes' 
+        },
+        { 
+          icon: handshakeIcon, 
+          title: 'social_network', 
+          description: 'social_network_quotes' 
+        },
+        { 
+          icon: handshakeIcon, 
+          title: 'advertising_video', 
+          description: 'advertising_video_quotes' 
+        },
+        { 
+          icon: handshakeIcon, 
+          title: 'imagine_yourself', 
+          description: 'imagine_yourself_quotes' 
+        },
+        { 
+          icon: handshakeIcon, 
+          title: 'rap_clip', 
+          description: 'rap_clip_quotes' 
+        },
       ],
     };
   },
+  methods: {
+    formatText(key) {
+      return formatText(this.$i18n, key);
+    }
+  }
 };
 </script>
 
+
+
+
 <style scoped>
 .services-container {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.services-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.services-row {
+  display: grid;
+  grid-row-gap: 16px;
+  grid-column-gap: 16px;
+}
+
+.first-row {
+  grid-template-rows: auto;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin-top: 40px;
+}
+
+.second-row {
+  grid-template-rows: auto;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 24px;
+}
+
+.service {
+  background-color: white;
+  width: 100%;
+  height: 290px;
   display: flex;
   flex-direction: column;
-  overflow:hidden;
-  margin-top: 200px;
+  align-items: center;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
 
-.service-wrapper {
-  display: flex;
-  margin-bottom: 130px;
-  flex-direction: row;
-}
-
-.service-wrapper-reverse {
-  flex-direction: row-reverse;
-}
-
-.service-item {
-  width: 50%;
-  display: flex;
-  flex-direction: column;
+.service-icon {
+  width: 62px;
+  height: 62px;
+  margin-bottom: 15px;
 }
 
 .service-title {
-  background-color: #222222;
-  color: #ffffff;
-  text-align: center;
-  font-size: 40px;
-  height: 100px;
-  line-height: 100px;
-}
-
-.service-image {
-  width: calc(100% - 30px);
-  margin-top: 10px;
-  position: relative;
-  left: 30px;
-}
-
-.service-image-right {
-  left: auto;
-  right: 30px;
+  font-size: 24px;
+  margin-bottom: 10px;
 }
 
 .service-description {
-  width: 50%;
-  margin-top: 20px;
-  font-size: 20px;
-  text-align: justify;
-  padding: 0 30px 0 30px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.color-bold {
+  font-weight: bold;
+  color: red; /* Замените на нужный цвет */
+}
+
+@media (max-width: 1024px) {
+  .first-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .first-row .service.full-span {
+    grid-area: span 1 / span 2 / span 1 / span 2;
+  }
+}
+
+@media (max-width: 769px) {
+  .first-row, .second-row {
+    grid-template-columns: 1fr;
+  }
+
+  .first-row .service.full-span {
+    grid-area: auto;
+  }
 }
 </style>
