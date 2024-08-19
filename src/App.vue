@@ -97,9 +97,38 @@ body {
 main > div:first-child {
   margin-top: 100px;
 }
+section > div {
+  padding-top: 100px;
+}
 
+.video-container, .services-container, .contact, .partner-container {
+ overflow: hidden;
+}
+.button {
+  background: linear-gradient(90deg, #0059bc, #009aba);
+  color: white;
+  border: none;
+  padding: 10px 40px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  transition: background-position 0.5s ease; /* Плавный переход */
+  background-size: 200%; /* Увеличиваем размер фона, чтобы была возможность для движения */
+  background-position: left; /* Начальная позиция градиента */
+  transition: 1s;
+}
 
+.button:hover {
+  background-position: right;
+  transform: scale(1.2) /* При наведении градиент движется вправо */
+}
 
+.button:hover::before {
+  background-position: left;
+}
 
 
 .title_section {
@@ -108,6 +137,7 @@ main > div:first-child {
   border-radius: 7px;
   display: inline-block;
   margin-left: 100px;
+  margin-top: 50px;
 }
 
 .title_section h1 {

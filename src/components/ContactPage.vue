@@ -3,10 +3,10 @@
     <div data-aos="fade-right" class="title_section">
       <h1>{{ $t('feedback') }}</h1>
     </div>
-    <div data-aos="fade-up" data-aos-anchor-placement="top-center"  class="contact__container">
+    <div id="feedback"  data-aos-anchor-placement="top-center"  class="contact__container">
       <div class="contact__container-item feedback">
         <form @submit.prevent="submitForm" method="POST" action="sendmail.php" enctype="multipart/form-data" ref="form">
-          <div class="feedback_container">
+          <div data-aos="fade-right" class="feedback_container">
             <div class="form-group">
               <label
                 :class="{ 'active': activeInputs.name || inputs.name, 'inactive': !activeInputs.name && !inputs.name }"
@@ -47,7 +47,7 @@
               <input type="hidden" name="language" :value="currentLanguage">
               <input type="hidden" name="subscribe" :value="subscribe">
               <div class="form-group form-button inline">
-                <button class="send" type="submit" :disabled="isSubmitting" aria-label="Send message">
+                <button class="send button" type="submit" :disabled="isSubmitting" aria-label="Send message">
                   <span>{{ isSubmitting ? $t('sending') : $t('send') }}</span>
                   <span v-if="isSubmitting" class="loader" aria-label="Loading..."></span>
                 </button>
@@ -73,7 +73,7 @@
             </div>
           </div>
         </form>
-        <div class="slider__container">
+        <div data-aos="fade-left" class="slider__container">
           <img src="@/assets/logo/Logomark White.svg" alt="">
         </div>
       </div>
@@ -341,7 +341,7 @@ export default {
   width: 1000px;
   margin: 50px auto;
   border-radius: 20px;
-  background-color: #F3F3F3;
+  background-color: transparent;
 }
 
 .contact__container-item {
@@ -432,7 +432,7 @@ input[type="file"] {
 
 label {
   position: absolute;
-  color: black;
+  color: white;
   top: -25px;
   margin-left: 5px;
   transition: all 0.3s ease;
@@ -449,11 +449,11 @@ textarea {
 
 input,
 textarea {
-  border: 1px solid black;
+  border: 1px solid rgb(255, 255, 255);
   border-radius: 14px;
-  background-color: white;
+  background-color: transparent;
   font-size: 16px;
-  color: #000000;
+  color: white;
   width: 100%;
   padding-left: 10px;
   outline: none;
@@ -603,13 +603,13 @@ label.inactive {
 
 
 .consent p {
-  color: var(--text-color);
+  color: white;
   margin-left: 30px;
 }
 
 .consent a {
-  color: var(--text-color);
-  margin-left: 10px;
+  color: white;
+    margin-left: 10px;
 }
 
 .form-button button {

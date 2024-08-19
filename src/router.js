@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-const HomePage = () => import('./Page/HomePage.vue')
-const AboutPage = () => import('./Page/AboutPage.vue')
-const PrivacyPage = () => import('./Page/PrivacyPage.vue')
-const PortfolioPage = () => import('./Page/PortfolioPage.vue')
-const NotFound = () => import('./Page/NotFound.vue')
+const HomePage = () => import('./pages/HomePage.vue')
+const AboutPage = () => import('./pages/AboutPage.vue')
+const PrivacyPage = () => import('./pages/PrivacyPage.vue')
+const PortfolioPage = () => import('./pages/PortfolioPage.vue')
+const NotFound = () => import('./pages/NotFound.vue')
 
 const routes = [
   { path: '/', component: HomePage, name: 'Home', meta: { title: 'Stars Station Studio' } },

@@ -21,7 +21,7 @@
             <img src="@/assets/icon/youtube.svg" alt="YouTube" />
           </a>
         </div>
-        <button @click="close" class="modal-action-btn">Закрыть</button>
+        <button @click="close" class="modal-action-btn button">Закрыть</button>
       </div>
     </div>
   </div>
@@ -158,19 +158,8 @@ export default {
   transform: scale(1.1);
 }
 
-.modal-action-btn {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
 
-.modal-action-btn:hover {
-  background-color: #0056b3;
-}
+
 
 @keyframes modalEnter {
   from {

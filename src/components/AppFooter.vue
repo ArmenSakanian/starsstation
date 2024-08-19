@@ -270,6 +270,11 @@ display: inline;
 }
 
 @media screen and (max-width: 1024px) {
+
+  .form-group {
+    flex-direction: column;
+    align-items: center;
+  }
   .footer-container {
     flex-direction: column;
   }

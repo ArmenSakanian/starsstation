@@ -9,47 +9,28 @@
             <li><router-link to="/About"><a @click="closeMenu()">{{ $t('about') }}</a></router-link></li>
             <li><a to="service" @click="scrollToElement($event, 'service'); closeMenu()">{{ $t('service') }}</a></li>
             <li><a @click.prevent="openModal">{{ $t('contact') }}</a></li>
-            <li><a to="/Contact" @click="scrollToElement($event, 'contact'); closeMenu()">{{ $t('feedback') }}</a></li>
-            <li><a to="" @click="scrollToElement($event, 'contact'); closeMenu()">{{ $t('our_videos') }}</a></li>
-            
-  
-            <!-- <li class="dropdown" @mouseover="handleMouseOver" @mouseleave="handleMouseLeave" @click="handleMobileClick">
-              <a href="#services">{{ $t('service') }}<i class="fas fa-angle-down"
-                  :class="{ rotated: languageMenuOpen }"></i></a>
-              <ul class="dropdown-content dropdown-content-service" :class="{ show: isMenuVisible }">
-                <li><a href="#" @click="scrollToElement($event, 'imagine-yourself'); closeMenu()">{{
-                    $t('imagine_yourself') }}</a></li>
-                <li><a href="#" @click="scrollToElement($event, 'advertising-video'); closeMenu()">{{
-                    $t('advertising_video') }}</a></li>
-                <li><a href="#" @click="scrollToElement($event, 'social-network'); closeMenu()">{{ $t('social_network')
-                    }}</a></li>
-                <li><a href="#" @click="scrollToElement($event, 'montage-video'); closeMenu()">{{ $t('montage_video')
-                    }}</a></li>
-                <li><a href="#" @click="scrollToElement($event, 'rap-clip'); closeMenu()">{{ $t('rap_clip') }}</a></li>
-              </ul>
-            </li> -->
+            <li><a to="" @click="scrollToElement($event, 'feedback'); closeMenu()">{{ $t('feedback') }}</a></li>
+            <li><router-link to="/Portfolio"><a @click="closeMenu()">{{ $t('our_videos') }}</a></router-link></li>
           </ul>
         </nav>
       </div>
       <nav class="language-menu">
-          <ul>
-            <li class="language">
-              <a class="language-active" href="#" @click="toggleLanguageMenu">
-                <img :src="getFlag($i18n.locale)" alt="Flag" class="flag-icon" />
-                <span class="active-lang">{{ $i18n.locale.toUpperCase() }}</span>
-                <i class="fas fa-angle-down" :class="{ rotated: languageMenuOpen }"></i>
-              </a>
-              <ul class="language-inactive" :class="{ show: languageMenuOpen }">
-                <li v-for="lang in filteredLanguages" :key="lang">
-                  <a href="#" @click="changeLanguage($event, lang)">
-                    <img :src="getFlag(lang)" alt="Flag" class="flag-icon" />
-                    <span>{{ getLanguageName(lang) }}</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </nav>
+        <ul>
+          <li class="language">
+            <a class="language-active" href="#" @click="toggleLanguageMenu">
+              <span class="active-lang">{{ $i18n.locale.toUpperCase() }}</span>
+              <i class="fas fa-angle-down" :class="{ rotated: languageMenuOpen }"></i>
+            </a>
+            <ul class="language-inactive" :class="{ show: languageMenuOpen }">
+              <li v-for="lang in filteredLanguages" :key="lang">
+                <a href="#" @click="changeLanguage($event, lang)">
+                  <span>{{ getLanguageName(lang) }}</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
       <div class="icon" @click="toggleMenu">
         <svg :class="{ 'active': isMenuOpen }" width="30" height="30" viewBox="0 0 32 42"
           xmlns="http://www.w3.org/2000/svg">
@@ -74,7 +55,6 @@
 </template>
 
 <script>
-
 import ContactModal from './ContactModal.vue';
 
 export default {
@@ -189,20 +169,6 @@ export default {
         }
       }
     },
-    getFlag(lang) {
-      switch (lang) {
-        case 'en':
-          return require('@/assets/icon/en.svg');
-        case 'fr':
-          return require('@/assets/icon/fr.svg');
-        case 'de':
-          return require('@/assets/icon/de.svg');
-          case 'it':
-          return require('@/assets/icon/it.svg');
-        default:
-          return '';
-      }
-    },
     getLanguageName(lang) {
       switch (lang) {
         case 'en':
@@ -211,21 +177,21 @@ export default {
           return 'French';
         case 'de':
           return 'German';
-          case 'it':
+        case 'it':
           return 'Italian';
         default:
           return '';
       }
     },
     handleScroll() {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    if (scrollTop > this.lastScrollTop && scrollTop > 50) {
-      this.isHidden = true;
-    } else {
-      this.isHidden = false;
-    }
-    this.lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-  },
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      if (scrollTop > this.lastScrollTop && scrollTop > 50) {
+        this.isHidden = true;
+      } else {
+        this.isHidden = false;
+      }
+      this.lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+    },
   }
 }
 </script>
@@ -285,8 +251,8 @@ nav li a {
   text-decoration: none;
   font-size: 20px;
   transition: 1s;
+  cursor: pointer;
 }
-
 
 .menu ul li a::after {
   content: '';
@@ -351,6 +317,7 @@ nav ul li .router-link-active {
 
 .language {
   display: flex;
+  padding-right: 35px;
 }
 
 .language a {
@@ -371,27 +338,23 @@ nav ul li .router-link-active {
 
 .language-active {
   color: var(--active-color);
-    background-color: #191A23;
-    padding: 10px 20px;
-    border-radius: 5px;
-    border: 1px solid rgb(240, 240, 240);
+  background-color: #ffffff;
+  padding: 10px;
 }
 
 .active-lang {
   margin-left: 10px;
-  color: rgb(255, 255, 255);
+  color: black;
   text-decoration: underline
 }
 
 .language-inactive {
   display: block;
   position: absolute;
-  border-radius: 10px;
-  padding-top: 50px;
-  right: 10px;
+  top: 74px;
   min-width: 110px;
-  background-color: #191A23;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  background-color: #ffffff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   opacity: 0;
   transform: scaleY(0);
   transform-origin: top;
@@ -412,17 +375,13 @@ nav ul li .router-link-active {
   display: flex;
   padding: 10px;
   text-decoration: none;
-  color: white;
+  color: rgb(0, 0, 0);
 }
 
 .language-inactive a:hover {
-  background-color: rgb(255, 255, 255);
-  color: black;
+  background-color: #191A23;
+  color: white;
 
-}
-
-.flag-icon {
-  width: 30px;
 }
 
 .icon {
@@ -480,6 +439,7 @@ svg.active #bottom {
 }
 
 @media screen and (max-width: 1024px) {
+  
   .header__bottom {
     display: block;
   }
@@ -492,7 +452,9 @@ svg.active #bottom {
     position: relative;
     right: 0;
   }
-
+  .language-inactive {
+    top: 43px;
+  }
   .icon {
     display: block;
     cursor: pointer;

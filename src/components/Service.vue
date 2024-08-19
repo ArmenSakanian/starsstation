@@ -1,8 +1,8 @@
 <template>
   <div class="services-container">
     <h1 class="services-header">{{ $t('service') }}</h1>
-    <div data-aos="zoom-in-right" class="services-row first-row">
-      <div class="service" 
+    <div  class="services-row first-row">
+      <div class="service" data-aos="fade-right"
            v-for="(service, index) in services.slice(0, 3)" 
            :key="index" 
            :class="{ 'full-span': index === 2 }">
@@ -11,8 +11,8 @@
         <p class="service-description" v-html="formatText(service.description)"></p>
       </div>
     </div>
-    <div data-aos="zoom-in-left" class="services-row second-row">
-      <div class="service" v-for="(service, index) in services.slice(3)" :key="index">
+    <div  class="services-row second-row">
+      <div class="service" data-aos="fade-left" v-for="(service, index) in services.slice(3)" :key="index">
         <img :src="service.icon" alt="Icon" class="service-icon" />
         <h3 class="service-title" v-html="formatText(service.title)"></h3>
         <p class="service-description" v-html="formatText(service.description)"></p>
@@ -32,13 +32,8 @@ export default {
       services: [
         { 
           icon: handshakeIcon, 
-          title: 'montage_video', 
-          description: 'montage_video_quotes' 
-        },
-        { 
-          icon: handshakeIcon, 
-          title: 'social_network', 
-          description: 'social_network_quotes' 
+          title: 'imagine_yourself', 
+          description: 'imagine_yourself_quotes' 
         },
         { 
           icon: handshakeIcon, 
@@ -47,8 +42,13 @@ export default {
         },
         { 
           icon: handshakeIcon, 
-          title: 'imagine_yourself', 
-          description: 'imagine_yourself_quotes' 
+          title: 'social_network', 
+          description: 'social_network_quotes' 
+        },
+        { 
+          icon: handshakeIcon, 
+          title: 'montage_video', 
+          description: 'montage_video_quotes' 
         },
         { 
           icon: handshakeIcon, 
@@ -66,9 +66,6 @@ export default {
 };
 </script>
 
-
-
-
 <style scoped>
 .services-container {
   max-width: 1220px;
@@ -79,12 +76,13 @@ export default {
 .services-header {
   text-align: center;
   margin-bottom: 20px;
+  font-size: 48px;
 }
 
 .services-row {
   display: grid;
   grid-row-gap: 16px;
-  grid-column-gap: 16px;
+  grid-column-gap: 50px;
 }
 
 .first-row {
@@ -96,7 +94,8 @@ export default {
 .second-row {
   grid-template-rows: auto;
   grid-template-columns: 1fr 1fr;
-  margin-top: 24px;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 .service {
@@ -109,6 +108,11 @@ export default {
   padding: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
+  transition: transform 0.3s ease; /* Плавный переход трансформации */
+}
+
+.service:hover {
+  transform: scale(1.2); /* Увеличение размера на 5% при наведении */
 }
 
 .service-icon {

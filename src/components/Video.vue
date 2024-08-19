@@ -1,8 +1,8 @@
 <template>
     <div class="video-container">
-      <h1 class="video-title">{{ title }}</h1>
-      <p class="video-description">{{ description }}</p>
-      <video
+      <h1 data-aos="fade-right" class="video-title">{{ title }}</h1>
+      <p data-aos="fade-right" class="video-description">{{ description }}</p>
+      <video data-aos="fade-left"
         ref="videoPlayer"
         class="video-player"
         autoplay
@@ -30,7 +30,8 @@
   
   <style scoped>
   .video-container {
-    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
     padding: 20px;
   }
   
