@@ -6,7 +6,7 @@
         <nav class="menu" :style="{ left: menuPosition }">
           <div class="header__bottom"></div>
           <ul class="menu-ul">
-            <li><router-link to="/About"><a @click="closeMenu()">{{ $t('about') }}</a></router-link></li>
+            <li><router-link to="/about"><a @click="closeMenu()">{{ $t('about') }}</a></router-link></li>
             <li><a to="service" @click="scrollToElement($event, 'service'); closeMenu()">{{ $t('service') }}</a></li>
             <li><a @click.prevent="openModal">{{ $t('contact') }}</a></li>
             <li><a to="" @click="scrollToElement($event, 'feedback'); closeMenu()">{{ $t('feedback') }}</a></li>
@@ -84,14 +84,7 @@ export default {
   mounted() {
     const scrollToId = this.$route.query.scrollToId;
     if (scrollToId) {
-      this.$nextTick(() => {
-        const element = document.getElementById(scrollToId);
-        if (element) {
-          const yOffset = -50;
-          const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-          window.scrollTo({ top: y, behavior: 'smooth' });
-        }
-      });
+      this.scrollToElementById(scrollToId);
     }
     document.addEventListener('click', this.handleClickOutside);
     window.addEventListener('scroll', this.handleScroll);
@@ -117,17 +110,18 @@ export default {
       this.languageMenuOpen = !this.languageMenuOpen;
     },
     scrollToElement(event, id) {
-      event.preventDefault();
-      if (this.$route.name === 'Home') {
+    event.preventDefault();
+    this.$router.push({ name: 'Home', query: { scrollToId: id } });
+  },
+    scrollToElementById(id) {
+      this.$nextTick(() => {
         const element = document.getElementById(id);
         if (element) {
           const yOffset = -50;
           const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
           window.scrollTo({ top: y, behavior: 'smooth' });
         }
-      } else {
-        this.$router.push({ name: 'Home', query: { scrollToId: id } });
-      }
+      });
     },
     toggleMenu() {
       this.menuPosition = this.menuPosition === '100%' ? '0' : '100%';
@@ -195,6 +189,7 @@ export default {
   }
 }
 </script>
+
 
 <style scoped>
 .header__bottom {
@@ -276,7 +271,7 @@ nav li a {
   width: 100%;
 }
 
-nav ul li .router-link-active {
+nav ul li .router-link-active a {
   color: var(--active-color);
 }
 

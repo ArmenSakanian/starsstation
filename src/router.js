@@ -31,5 +31,23 @@ router.beforeEach((to, from, next) => {
   next();
 })
 
-export default router
+router.afterEach((to) => {
+  if (to.name === 'Home' && to.query.scrollToId) {
+    const scrollToId = to.query.scrollToId;
+    setTimeout(() => {
+      const element = document.getElementById(scrollToId);
+      if (element) {
+        const yOffset = -50;
+        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
 
+        // Удаляем параметр scrollToId из URL
+        const url = new URL(window.location);
+        url.searchParams.delete('scrollToId');
+        window.history.replaceState({}, '', url);
+      }
+    }, 300); // Задержка для уверенности в полной загрузке страницы
+  }
+});
+
+export default router

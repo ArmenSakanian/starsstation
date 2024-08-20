@@ -67,11 +67,11 @@ export default {
 
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-main-color);
+  background: #191A23;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--active-color);
+  background: linear-gradient(90deg, #0059bc, #009aba);
   border-radius: 10px;
 }
 
@@ -99,6 +99,12 @@ main > div:first-child {
 }
 section > div {
   padding-top: 100px;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 50px;
+  font-size: 48px;
 }
 
 .video-container, .services-container, .contact, .partner-container {

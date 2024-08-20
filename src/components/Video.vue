@@ -1,7 +1,7 @@
 <template>
     <div class="video-container">
-      <h1 data-aos="fade-right" class="video-title">{{ title }}</h1>
-      <p data-aos="fade-right" class="video-description">{{ description }}</p>
+      <h1 data-aos="fade-right" class="video-title" v-html="formatText(title)"></h1>
+      <p data-aos="fade-right" class="video-description"  v-html="formatText(description)"></p>
       <video data-aos="fade-left"
         ref="videoPlayer"
         class="video-player"
@@ -17,14 +17,20 @@
   </template>
   
   <script>
+  import { formatText } from '@/utils/textFormatter';
   export default {
     name: 'InteractiveVideo',
     data() {
       return {
-        title: 'Заголовок Видео',
-        description: 'Это описание видео, которое будет отображаться под заголовком.'
+        title: 'video_title',
+        description: 'video_description'
       };
+    },
+    methods: {
+    formatText(key) {
+      return formatText(this.$i18n, key);
     }
+  }
   };
   </script>
   
@@ -40,6 +46,8 @@
     margin-bottom: 20px;
   }
   
+
+
   .video-description {
     font-size: 18px;
     margin-bottom: 20px;

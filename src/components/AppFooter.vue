@@ -112,7 +112,6 @@ export default {
 }
 
 .footer-logo {
-  margin-top: 50px;
   margin-left: 50px;
 }
 
@@ -121,10 +120,17 @@ export default {
   /* Устанавливаем ширину логотипа */
 }
 
+.footer-logo,
+.footer-menu,
+.social-icons,
+.contact-us,
+.subscribe {
+  margin-top: 50px;
+}
+
 .footer-menu {
   display: flex;
   gap: 40px;
-  margin-top: 50px;
 }
 
 .footer-menu ul {
@@ -146,7 +152,6 @@ export default {
 .social-icons {
   display: flex;
   gap: 20px;
-  margin-top: 50px;
   margin-right: 50px;
 }
 
@@ -279,6 +284,7 @@ display: inline;
     flex-direction: column;
   }
 
+  
   .footer-lower {
     flex-direction: column;
   }
@@ -303,7 +309,8 @@ display: inline;
   .contact-us,
   .subscribe,
   .social-icons {
-    margin: 0;
+    margin-right: 0;
+    margin-left: 0;
   }
 
   .contact-us {

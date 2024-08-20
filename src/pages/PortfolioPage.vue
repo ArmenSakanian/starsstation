@@ -1,71 +1,75 @@
 <template>
-  <div class="video-grid">
-    <div class="row" v-for="(row, index) in videoRows" :key="index">
-      <div class="video-wrapper" v-for="(video, idx) in row" :key="idx">
+  <div class="video-grid-container">
+    <h1 class="services-header title">{{ $t('our_videos') }}</h1>
+    <div class="video-grid">
+      <div class="video-wrapper" v-for="(video, index) in videos" :key="index">
         <div class="video-thumbnail" @click="openVideo(video)">
+          <p class="video-title" @click="openVideo(video)">
+            {{ video.title }}
+          </p>
           <img :src="getThumbnailSrc(video.thumbnail)" :alt="video.title" />
           <div class="play-button-overlay">
             <i class="fas fa-play"></i>
           </div>
         </div>
-        <p class="video-title">{{ video.title }}</p>
+        <!-- Обновляем элемент с названием видео -->
       </div>
-    </div>
-
-    <!-- Модальное окно для видео -->
-    <div v-if="selectedVideo" class="video-modal">
-      <div class="video-modal-content">
-        <button class="close-button" @click="closeVideo">
-          <i class="fas fa-times"></i>
-        </button>
-        <video
-          ref="videoPlayer"
-          :src="selectedVideo.src"
-          :controls="false"
-          autoplay
-          @timeupdate="updateProgress"
-          @loadedmetadata="initializeProgress"
-        ></video>
-        <div class="custom-controls">
-          <button @click="togglePlayPause">
-            <i :class="isPlaying ? 'fas fa-pause' : 'fas fa-play'"></i>
+  
+      <!-- Модальное окно для видео -->
+      <div v-if="selectedVideo" class="video-modal">
+        <div class="video-modal-content">
+          <button class="close-button" @click="closeVideo">
+            <i class="fas fa-times"></i>
           </button>
-          <div class="progress-container">
+          <video
+            ref="videoPlayer"
+            :src="selectedVideo.src"
+            :controls="false"
+            autoplay
+            @timeupdate="updateProgress"
+            @loadedmetadata="initializeProgress"
+            @click="handleVideoClick"
+          ></video>
+          <div class="custom-controls">
+            <button @click="togglePlayPause">
+              <i :class="isPlaying ? 'fas fa-pause' : 'fas fa-play'"></i>
+            </button>
+            <div class="progress-container">
+              <input
+                type="range"
+                ref="progressBar"
+                min="0"
+                :max="videoDuration"
+                step="0.1"
+                v-model="currentTime"
+                @input="onRangeInput"
+                class="progress-bar"
+                @change="updateRangeBackground"
+              />
+            </div>
+            <span class="time-display">{{ formattedCurrentTime }} / {{ formattedDuration }}</span>
+            <button @click="toggleMute">
+              <i :class="isMuted || volume === 0 ? 'fas fa-volume-mute' : (volume > 0.5 ? 'fas fa-volume-up' : 'fas fa-volume-down')"></i>
+            </button>
             <input
               type="range"
-              ref="progressBar"
               min="0"
-              :max="videoDuration"
-              step="0.1"
-              v-model="currentTime"
-              @input="onRangeInput"
-              class="progress-bar"
-              @change="updateRangeBackground"
+              max="1"
+              step="0.01"
+              v-model="volume"
+              @input="setVolume"
+              class="volume-slider"
             />
+            <button @click="toggleFullscreen">
+              <i class="fas fa-expand"></i>
+            </button>
           </div>
-          <span class="time-display">{{ formattedCurrentTime }} / {{ formattedDuration }}</span>
-          <button @click="toggleMute">
-            <i :class="isMuted || volume === 0 ? 'fas fa-volume-mute' : (volume > 0.5 ? 'fas fa-volume-up' : 'fas fa-volume-down')"></i>
-          </button>
-          <input
-            type="range"
-            min="0"
-            max="1"
-            step="0.01"
-            v-model="volume"
-            @input="setVolume"
-            class="volume-slider"
-          />
-          <button @click="toggleFullscreen">
-            <i class="fas fa-expand"></i>
-          </button>
         </div>
       </div>
-      
-      
     </div>
   </div>
 </template>
+
 
 <script>
 export default {
@@ -74,48 +78,36 @@ export default {
     return {
       videos: [
         {
-          src: require('@/assets/video/intro.mp4'),
-          thumbnail: require('@/assets/thumbnails/intro.png'),
-          title: 'Intro Video',
+          src: require('@/assets/video/Barber Dodo.mp4'),
+          thumbnail: require('@/assets/thumbnails/Barber Dodo.png'),
+          title: 'Barber Dodo',
         },
         {
-          src: require('@/assets/video/intro.mp4'),
-          thumbnail: require('@/assets/thumbnails/intro.png'),
-          title: 'Intro Video',
+          src: require('@/assets/video/KFC - Conthey.mp4'),
+          thumbnail: require('@/assets/thumbnails/KFC - Conthey.png'),
+          title: 'KFC - Conthey',
         },
         {
-          src: require('@/assets/video/intro.mp4'),
-          thumbnail: require('@/assets/thumbnails/intro.png'),
-          title: 'Intro Video',
+          src: require('@/assets/video/Restaurant Best Food Faryab.mp4'),
+          thumbnail: require('@/assets/thumbnails/Restaurant Best Food Faryab.png'),
+          title: 'Restaurant Best Food Faryab',
         },
         {
-          src: require('@/assets/video/intro.mp4'),
-          thumbnail: require('@/assets/thumbnails/intro.png'),
-          title: 'Intro Video',
+          src: require('@/assets/video/Restaurant Il Pulcinella.mp4'),
+          thumbnail: require('@/assets/thumbnails/Restaurant Il Pulcinella.png'),
+          title: 'Restaurant Il Pulcinella',
         },
         {
-          src: require('@/assets/video/intro.mp4'),
-          thumbnail: require('@/assets/thumbnails/intro.png'),
-          title: 'Intro Video',
+          src: require('@/assets/video/Restaurant Pizzeria de Valère.mp4'),
+          thumbnail: require('@/assets/thumbnails/Restaurant Pizzeria de Valère.png'),
+          title: 'Restaurant Pizzeria de Valère',
         },
         {
-          src: require('@/assets/video/intro.mp4'),
-          thumbnail: require('@/assets/thumbnails/intro.png'),
-          title: 'Intro Video',
-        },
-        {
-          src: require('@/assets/video/Tennis Club de Valère.mp4'),
-          thumbnail: require('@/assets/thumbnails/tennis.png'),
-          title: 'Tennis Club de Valère',
-        },
-        {
-          src: require('@/assets/video/KFC Conthey.mp4'),
-          thumbnail: require('@/assets/thumbnails/kfc.png'),
-          title: 'KFC Conthey',
+          src: require('@/assets/video/Tennis Club de Valère.mp4'),
+          thumbnail: require('@/assets/thumbnails/Tennis Club de Valère.png'),
+          title: 'Tennis Club de Valère',
         },
       ],
-      width: '320',
-      height: '180',
       selectedVideo: null,
       isPlaying: true,
       isMuted: false,
@@ -137,19 +129,6 @@ export default {
     formattedDuration() {
       return this.formatTime(this.videoDuration);
     },
-    videoRows() {
-      if (!Array.isArray(this.videos)) {
-        return [];
-      }
-
-      return this.videos.reduce((rows, video, index) => {
-        if (index % 3 === 0) {
-          rows.push([]);
-        }
-        rows[rows.length - 1].push(video);
-        return rows;
-      }, []);
-    },
   },
   methods: {
     formatTime(timeInSeconds) {
@@ -161,21 +140,36 @@ export default {
       return thumbnailPath;
     },
     openVideo(video) {
-    this.selectedVideo = video;
-    this.isPlaying = true;
-    document.body.classList.add('no-scroll'); // Блокируем прокрутку
-    setTimeout(() => {
-      this.$refs.videoPlayer.play();
-      this.updateRangeBackground();
-    }, 100);
-  },
-  closeVideo() {
-    if (this.$refs.videoPlayer) {
-      this.$refs.videoPlayer.pause();
-    }
-    this.selectedVideo = null;
-    document.body.classList.remove('no-scroll'); // Разблокируем прокрутку
-  },  
+      this.selectedVideo = video;
+      this.isPlaying = true;
+
+      // Блокируем прокрутку
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+
+      // Добавляем обработчик для клавиш
+      window.addEventListener('keydown', this.handleKeydown);
+
+      setTimeout(() => {
+        this.$refs.videoPlayer.play();
+        this.updateRangeBackground();
+      }, 100);
+    },
+    closeVideo() {
+      if (this.$refs.videoPlayer) {
+        this.$refs.videoPlayer.pause();
+      }
+      this.selectedVideo = null;
+
+      // Разблокируем прокрутку
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+
+      // Удаляем обработчик для клавиш
+      window.removeEventListener('keydown', this.handleKeydown);
+    },
     togglePlayPause() {
       const videoElement = this.$refs.videoPlayer;
       if (videoElement.paused) {
@@ -206,12 +200,12 @@ export default {
       }
     },
     updateProgress() {
-    const videoElement = this.$refs.videoPlayer;
-    if (videoElement) {  // Проверяем, существует ли элемент videoPlayer
-      this.currentTime = videoElement.currentTime;
-      this.updateRangeBackground();
-    }
-  },
+      const videoElement = this.$refs.videoPlayer;
+      if (videoElement) {  // Проверяем, существует ли элемент videoPlayer
+        this.currentTime = videoElement.currentTime;
+        this.updateRangeBackground();
+      }
+    },
     initializeProgress() {
       this.videoDuration = this.$refs.videoPlayer.duration;
       this.updateRangeBackground();
@@ -230,47 +224,49 @@ export default {
     onRangeInput(event) {
       this.seek(event);
       this.updateRangeBackground();
-    }
+    },
+    handleKeydown(event) {
+      if (event.code === 'Space') {
+        event.preventDefault(); // предотвращаем прокрутку страницы при нажатии на пробел
+        this.togglePlayPause();
+      } else if (event.code === 'Escape') {
+        this.closeVideo();
+      }
+    },
+    handleVideoClick() {
+      this.togglePlayPause();
+    },
   },
 };
 </script>
 
 <style scoped>
+.video-grid-container {
+  padding-top: 50px;
+}
+
 .video-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 колонки в ряду */
-  gap: 20px;
-  padding: 50px
-}
-
-/* Медиа-запрос для экранов шириной менее 1024px */
-@media (max-width: 1024px) {
-  .video-grid {
-    grid-template-columns: repeat(2, 1fr); /* 2 колонки в ряду */
-    padding: 0;
-  }
-}
-
-/* Медиа-запрос для экранов шириной менее 769px */
-@media (max-width: 769px) {
-  .video-grid {
-    grid-template-columns: 1fr; /* 1 колонка в ряду */
-  }
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start; 
+  min-height: 100vh; 
+  padding: 0 50px 0 50px;
 }
 
 .video-wrapper {
+  flex: 1 0 33%; /* По умолчанию 3 видеоролика в колонке */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 50px;
 }
 
 .video-thumbnail {
   position: relative;
   cursor: pointer;
   transition: transform 0.3s ease;
-  max-width: 390px;
-  min-width: 340px;
+  width: 100%;
   height: 300px;
   display: flex;
   justify-content: center;
@@ -278,11 +274,10 @@ export default {
 }
 
 .video-thumbnail img {
-  width: 100%;
+  width: auto;
   height: 100%;
-  border-radius: 8px;
+  border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  display: block; /* Убирает возможные пробелы снизу изображения */
 }
 
 .video-thumbnail:hover {
@@ -305,11 +300,43 @@ export default {
 }
 
 .video-title {
-  margin-top: 10px;
+  cursor: pointer;
   font-size: 16px;
+  bottom: 0;
+  position: absolute;
+  width: 50%;
   text-align: center;
+  font-weight: bold;
+  background-color: white;
+  color: black;
+  padding: 20px 10px;
+  box-shadow: 0 4px 6px rgb(0 0 0 / 39%);
+  border-radius: 5px;
+  margin: 15px;
+  text-transform: uppercase;
 }
 
+/* Медиа-запросы для изменения количества видео в колонке */
+@media (max-width: 1024px) {
+  .video-wrapper {
+    flex: 1 0 50%; /* Два видео в колонке */
+  }
+}
+
+@media (max-width: 768px) {
+  .video-wrapper {
+    flex: 1 0 100%; /* Одно видео в колонке */
+  }
+  .video-grid {
+    padding: 0 10px 0 10px;
+  }
+  .video-thumbnail img {
+    width: 100%;
+    object-fit: cover;
+  }
+}
+
+/* Остальные стили остаются без изменений */
 .video-modal {
   position: fixed;
   top: 0;
@@ -458,5 +485,4 @@ export default {
 .no-scroll {
   overflow: hidden;
 }
-
 </style>

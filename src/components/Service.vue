@@ -1,7 +1,7 @@
 <template>
   <div class="services-container">
-    <h1 class="services-header">{{ $t('service') }}</h1>
-    <div  class="services-row first-row">
+    <h1 class="services-header title">{{ $t('service') }}</h1>
+    <div  id="service" class="services-row first-row">
       <div class="service" data-aos="fade-right"
            v-for="(service, index) in services.slice(0, 3)" 
            :key="index" 
@@ -22,7 +22,11 @@
 </template>
 
 <script>
-import handshakeIcon from '@/assets/icon/handshake.svg';
+import montage from '@/assets/icon/montage.png';
+import network from '@/assets/icon/network.png';
+import adversting from '@/assets/icon/adversting.png';
+import yourself from '@/assets/icon/yourself.png';
+import clip from '@/assets/icon/clip.png';
 import { formatText } from '@/utils/textFormatter';
 
 export default {
@@ -31,27 +35,27 @@ export default {
     return {
       services: [
         { 
-          icon: handshakeIcon, 
+          icon: yourself, 
           title: 'imagine_yourself', 
           description: 'imagine_yourself_quotes' 
         },
         { 
-          icon: handshakeIcon, 
+          icon: adversting, 
           title: 'advertising_video', 
           description: 'advertising_video_quotes' 
         },
         { 
-          icon: handshakeIcon, 
+          icon: network, 
           title: 'social_network', 
           description: 'social_network_quotes' 
         },
         { 
-          icon: handshakeIcon, 
+          icon: montage, 
           title: 'montage_video', 
           description: 'montage_video_quotes' 
         },
         { 
-          icon: handshakeIcon, 
+          icon: clip, 
           title: 'rap_clip', 
           description: 'rap_clip_quotes' 
         },
@@ -73,11 +77,6 @@ export default {
   padding: 20px;
 }
 
-.services-header {
-  text-align: center;
-  margin-bottom: 20px;
-  font-size: 48px;
-}
 
 .services-row {
   display: grid;
@@ -112,7 +111,7 @@ export default {
 }
 
 .service:hover {
-  transform: scale(1.2); /* Увеличение размера на 5% при наведении */
+  transform: scale(1.1); /* Увеличение размера на 5% при наведении */
 }
 
 .service-icon {

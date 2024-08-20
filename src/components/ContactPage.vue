@@ -1,5 +1,5 @@
 <template>
-  <div  id="contact" class="contact">
+  <div  class="contact">
     <div data-aos="fade-right" class="title_section">
       <h1>{{ $t('feedback') }}</h1>
     </div>
