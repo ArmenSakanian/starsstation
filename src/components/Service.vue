@@ -1,18 +1,11 @@
 <template>
   <div class="services-container">
     <h1 class="services-header title">{{ $t('service') }}</h1>
-    <div  id="service" class="services-row first-row">
-      <div class="service" data-aos="fade-right"
-           v-for="(service, index) in services.slice(0, 3)" 
+    <div class="services-row" v-for="(row, rowIndex) in serviceRows" :key="rowIndex">
+      <div class="service" 
+           v-for="(service, index) in row" 
            :key="index" 
-           :class="{ 'full-span': index === 2 }">
-        <img :src="service.icon" alt="Icon" class="service-icon" />
-        <h3 class="service-title" v-html="formatText(service.title)"></h3>
-        <p class="service-description" v-html="formatText(service.description)"></p>
-      </div>
-    </div>
-    <div  class="services-row second-row">
-      <div class="service" data-aos="fade-left" v-for="(service, index) in services.slice(3)" :key="index">
+           data-aos="fade-up">
         <img :src="service.icon" alt="Icon" class="service-icon" />
         <h3 class="service-title" v-html="formatText(service.title)"></h3>
         <p class="service-description" v-html="formatText(service.description)"></p>
@@ -34,37 +27,34 @@ export default {
   data() {
     return {
       services: [
-        { 
-          icon: yourself, 
-          title: 'imagine_yourself', 
-          description: 'imagine_yourself_quotes' 
-        },
-        { 
-          icon: adversting, 
-          title: 'advertising_video', 
-          description: 'advertising_video_quotes' 
-        },
-        { 
-          icon: network, 
-          title: 'social_network', 
-          description: 'social_network_quotes' 
-        },
-        { 
-          icon: montage, 
-          title: 'montage_video', 
-          description: 'montage_video_quotes' 
-        },
-        { 
-          icon: clip, 
-          title: 'rap_clip', 
-          description: 'rap_clip_quotes' 
-        },
+        { icon: yourself, title: 'imagine_yourself', description: 'imagine_yourself_quotes' },
+        { icon: adversting, title: 'advertising_video', description: 'advertising_video_quotes' },
+        { icon: network, title: 'social_network', description: 'social_network_quotes' },
+        { icon: montage, title: 'montage_video', description: 'montage_video_quotes' },
+        { icon: clip, title: 'rap_clip', description: 'rap_clip_quotes' },
+        
       ],
     };
+  },
+  computed: {
+    serviceRows() {
+      const itemsPerRow = this.getItemsPerRow();
+      const rows = [];
+      for (let i = 0; i < this.services.length; i += itemsPerRow) {
+        rows.push(this.services.slice(i, i + itemsPerRow));
+      }
+      return rows;
+    }
   },
   methods: {
     formatText(key) {
       return formatText(this.$i18n, key);
+    },
+    getItemsPerRow() {
+      const width = window.innerWidth;
+      if (width > 1024) return 3;
+      if (width > 769) return 2;
+      return 1;
     }
   }
 };
@@ -77,24 +67,11 @@ export default {
   padding: 20px;
 }
 
-
 .services-row {
-  display: grid;
-  grid-row-gap: 16px;
-  grid-column-gap: 50px;
-}
-
-.first-row {
-  grid-template-rows: auto;
-  grid-template-columns: 1fr 1fr 1fr;
+  display: flex;
+  justify-content: center;
   margin-top: 40px;
-}
-
-.second-row {
-  grid-template-rows: auto;
-  grid-template-columns: 1fr 1fr;
-  margin-top: 50px;
-  margin-bottom: 50px;
+  gap: 50px;
 }
 
 .service {
@@ -107,11 +84,11 @@ export default {
   padding: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  transition: transform 0.3s ease; /* Плавный переход трансформации */
+  transition: transform 0.3s ease;
 }
 
 .service:hover {
-  transform: scale(1.1); /* Увеличение размера на 5% при наведении */
+  transform: scale(1.1);
 }
 
 .service-icon {
@@ -130,28 +107,16 @@ export default {
   text-align: center;
 }
 
-.color-bold {
-  font-weight: bold;
-  color: red; /* Замените на нужный цвет */
-}
-
 @media (max-width: 1024px) {
-  .first-row {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .first-row .service.full-span {
-    grid-area: span 1 / span 2 / span 1 / span 2;
+  .services-row {
+    justify-content: space-between;
   }
 }
 
 @media (max-width: 769px) {
-  .first-row, .second-row {
-    grid-template-columns: 1fr;
-  }
-
-  .first-row .service.full-span {
-    grid-area: auto;
+  .services-row {
+    flex-direction: column;
+    align-items: center;
   }
 }
 </style>

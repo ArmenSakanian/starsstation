@@ -1,9 +1,9 @@
 <template>
-  <div  class="contact">
+  <div id="feedback"  class="contact">
     <div data-aos="fade-right" class="title_section">
       <h1>{{ $t('feedback') }}</h1>
     </div>
-    <div id="feedback"  data-aos-anchor-placement="top-center"  class="contact__container">
+    <div   data-aos-anchor-placement="top-center"  class="contact__container">
       <div class="contact__container-item feedback">
         <form @submit.prevent="submitForm" method="POST" action="sendmail.php" enctype="multipart/form-data" ref="form">
           <div data-aos="fade-right" class="feedback_container">
@@ -336,6 +336,10 @@ export default {
 
 <style scoped>
 
+.contact {
+  min-height: 100vh;
+  margin-top: 100px;
+}
 
 .contact__container {
   width: 1000px;
@@ -350,6 +354,7 @@ export default {
   width: 100%;
   overflow: hidden;
 }
+
 
 .contact__container-item form,
 .slider__container {
@@ -421,7 +426,7 @@ line {
 .file-drop-area img {
   width: 30px;
   height: 30px;
-  margin-top: 10px;
+  margin: 0 10px 10px 0;
 }
 
 
@@ -443,22 +448,44 @@ input {
 }
 
 textarea {
+  border: 1px solid white;
+  border-radius: 5px;
   resize: none;
   height: 190px;
 }
 
-input,
-textarea {
-  border: 1px solid rgb(255, 255, 255);
-  border-radius: 14px;
-  background-color: transparent;
+.form-group input {
+  border: none; /* Убираем все границы */
+  border-bottom: 1px solid white; /* Добавляем нижнюю границу белого цвета */
+}
+
+.form-group input,
+.form-group textarea {
+    background-color: transparent; /* Убираем фоновый цвет, если нужно */
   font-size: 16px;
   color: white;
   width: 100%;
   padding-left: 10px;
   outline: none;
 }
+/* Сбрасываем стиль автозаполнения для Chrome */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+    box-shadow: 0 0 0 1000px transparent inset !important;
+    -webkit-text-fill-color: white !important; /* Цвет текста */
+    transition: background-color 5000s ease-in-out 0s;
+}
 
+/* Для других браузеров можно попытаться сбросить фон */
+input:-internal-autofill-selected {
+    background-color: transparent !important;
+    -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+    box-shadow: 0 0 0 1000px transparent inset !important;
+    -webkit-text-fill-color: white !important;
+}
 input[type="text"],
 input[type="email"],
 input[type="tel"],
@@ -539,7 +566,7 @@ label.inactive {
 
 .file-list span a {
   text-decoration: underline;
-  color: var(--text-color);
+  color: white;
 }
 
 .remove-file {
@@ -576,6 +603,7 @@ label.inactive {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
+  border: 1px solid white;
   width: 25px;
   height: 25px;
   border-radius: 4px;

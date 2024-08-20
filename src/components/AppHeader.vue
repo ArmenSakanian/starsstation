@@ -10,7 +10,7 @@
             <li><a to="service" @click="scrollToElement($event, 'service'); closeMenu()">{{ $t('service') }}</a></li>
             <li><a @click.prevent="openModal">{{ $t('contact') }}</a></li>
             <li><a to="" @click="scrollToElement($event, 'feedback'); closeMenu()">{{ $t('feedback') }}</a></li>
-            <li><router-link to="/Portfolio"><a @click="closeMenu()">{{ $t('our_videos') }}</a></router-link></li>
+            <li><router-link to="/Yourself"><a @click="closeMenu()">{{ $t('our_videos') }}</a></router-link></li>
           </ul>
         </nav>
       </div>

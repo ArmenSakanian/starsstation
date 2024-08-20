@@ -97,7 +97,7 @@ body {
 main > div:first-child {
   margin-top: 100px;
 }
-section > div {
+section > div:first-child {
   padding-top: 100px;
 }
 
@@ -107,7 +107,7 @@ section > div {
   font-size: 48px;
 }
 
-.video-container, .services-container, .contact, .partner-container {
+.video-container, .services-container, .contact, .partner-container, .footer-container, .footer-lower {
  overflow: hidden;
 }
 .button {
@@ -129,7 +129,6 @@ section > div {
 
 .button:hover {
   background-position: right;
-  transform: scale(1.2) /* При наведении градиент движется вправо */
 }
 
 .button:hover::before {

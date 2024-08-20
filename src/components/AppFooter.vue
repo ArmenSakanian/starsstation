@@ -2,12 +2,12 @@
   <footer class="footer">
     <div class="footer-container">
       <!-- Логотип -->
-      <div class="footer-logo">
+      <div data-aos="fade-right" class="footer-logo">
         <img src="@/assets/logo/Logo-Full_white.svg" alt="Logo" class="logo" />
       </div>
 
       <!-- Меню -->
-      <nav class="footer-menu">
+      <nav data-aos="fade-down" class="footer-menu">
         <ul class="menu-ul">
           <li><router-link to="/About">{{ $t('about') }}</router-link></li>
           <li><router-link to="/Services">{{ $t('service') }}</router-link></li>
@@ -17,7 +17,7 @@
       </nav>
 
       <!-- Социальные иконки -->
-      <div class="social-icons">
+      <div data-aos="fade-left" class="social-icons">
         <img src="@/assets/icon/instagram.svg" alt="Instagram" class="icon" />
         <img src="@/assets/icon/facebook.svg" alt="Facebook" class="icon" />
         <img src="@/assets/icon/youtube.svg" alt="YouTube" class="icon" />
@@ -26,13 +26,13 @@
 
     <!-- Контактная информация -->
     <div class="footer-lower">
-      <div class="contact-us">
+      <div data-aos="fade-right" class="contact-us">
         <h3 class="contact-title">{{ $t('contact') }}</h3>
         <p class="email">{{ $t('email') }}: suport@starsstation.ch</p>
         <p class="phone">{{ $t('tel') }}: 555-567-9012</p>
       </div>
       <form @submit.prevent="subscribe">
-        <div class="subscribe-form">
+        <div data-aos="fade-left" class="subscribe-form">
         <div class="form-title">
           <h3 class="subscribe-title">Subscribe</h3>
           <p class="subscribe-description">Sign up for our newsletter to be the first to receive updates.</p>
@@ -47,7 +47,7 @@
     </div>
 
     <!-- Разделительная линия и текст -->
-    <div class="footer-bottom">
+    <div  class="footer-bottom">
       <hr class="divider" />
       <div class="footer-bottom-text">
         <p>© 2024 Stars Station Studio. All Rights Reserved.</p>
@@ -105,6 +105,7 @@ export default {
 }
 
 .footer-container {
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -112,7 +113,10 @@ export default {
 }
 
 .footer-logo {
+  background-color: #191A23;
   margin-left: 50px;
+  position: relative;
+  z-index: 2;
 }
 
 .footer-logo img {
@@ -248,7 +252,6 @@ display: inline;
 }
 
 .footer-bottom {
-
   text-align: center;
   padding: 20px 0;
 }
