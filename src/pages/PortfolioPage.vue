@@ -12,10 +12,8 @@
             <i class="fas fa-play"></i>
           </div>
         </div>
-        <!-- Обновляем элемент с названием видео -->
       </div>
-  
-      <!-- Модальное окно для видео -->
+
       <div v-if="selectedVideo" class="video-modal">
         <div class="video-modal-content">
           <button class="close-button" @click="closeVideo">
@@ -69,7 +67,6 @@
     </div>
   </div>
 </template>
-
 
 <script>
 export default {
@@ -242,101 +239,81 @@ export default {
 
 <style scoped>
 .video-grid-container {
-  padding-top: 50px;
+  padding-top: 150px;
 }
 
 .video-grid {
-  display: flex;
-  flex-wrap: wrap;
-  align-content: flex-start; 
-  min-height: 100vh; 
-  padding: 0 50px 0 50px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* По умолчанию 3 колонки */
+  gap: 15px; /* Расстояние между элементами */
+  padding: 0 20px;
 }
 
 .video-wrapper {
-  flex: 1 0 33%; /* По умолчанию 3 видеоролика в колонке */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 50px;
+  position: relative;
+  max-width: 400px; /* Ограничиваем максимальную ширину */
+  width: 100%; /* Устанавливаем ширину на 100% внутри колонки */
+  margin: 0 auto 500px auto; /* Центрируем элементы, если они не занимают всю ширину */
 }
 
 .video-thumbnail {
-  position: relative;
+  position: absolute;
+  width: 100%;
   cursor: pointer;
   transition: transform 0.3s ease;
-  width: 100%;
-  height: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.video-thumbnail img {
-  width: auto;
-  height: 100%;
-  border-radius: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: .8s;
 }
 
 .video-thumbnail:hover {
   transform: scale(1.05);
 }
 
-.play-button-overlay {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 48px;
-  color: white;
-  opacity: 0.8;
-  transition: opacity 0.3s ease;
-}
-
-.video-thumbnail:hover .play-button-overlay {
-  opacity: 1;
+.video-thumbnail img {
+  width: 100%;
+  object-fit: cover; /* Изображение адаптируется под размеры контейнера, сохраняя пропорции */
+  border-radius: 10px; /* Немного уменьшаем радиус закругления */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .video-title {
   cursor: pointer;
-  font-size: 16px;
+  font-size: 18px; /* Уменьшаем размер текста */
   bottom: 0;
   position: absolute;
-  width: 50%;
+  width: 100%;
   text-align: center;
   font-weight: bold;
-  background-color: white;
-  color: black;
-  padding: 20px 10px;
-  box-shadow: 0 4px 6px rgb(0 0 0 / 39%);
-  border-radius: 5px;
-  margin: 15px;
+  border-radius: 0 0 10px 10px;
+  background-color: rgba(0, 0, 0, 0.7); /* Полупрозрачный фон */
+  color: white;
+  padding: 8px 5px; /* Уменьшаем padding */
   text-transform: uppercase;
+  box-sizing: border-box;
 }
-
-/* Медиа-запросы для изменения количества видео в колонке */
+.play-button-overlay {
+  font-size: 50px;
+    position: absolute;
+    z-index: 1;
+    color: white;
+}
+/* Адаптивность */
 @media (max-width: 1024px) {
-  .video-wrapper {
-    flex: 1 0 50%; /* Два видео в колонке */
+  .video-grid {
+    grid-template-columns: repeat(2, 1fr); /* Две колонки при ширине меньше 1024px */
+    gap: 15px; /* Поддерживаем тот же gap */
   }
 }
 
 @media (max-width: 768px) {
-  .video-wrapper {
-    flex: 1 0 100%; /* Одно видео в колонке */
-  }
   .video-grid {
-    padding: 0 10px 0 10px;
-  }
-  .video-thumbnail img {
-    width: 100%;
-    object-fit: cover;
+    grid-template-columns: repeat(1, 1fr); /* Одна колонка при ширине меньше 768px */
+    gap: 10px; /* Немного уменьшаем gap для узких экранов */
   }
 }
 
-/* Остальные стили остаются без изменений */
 .video-modal {
   position: fixed;
   top: 0;
@@ -485,4 +462,5 @@ export default {
 .no-scroll {
   overflow: hidden;
 }
+
 </style>

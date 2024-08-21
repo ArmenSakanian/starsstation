@@ -94,9 +94,9 @@ body {
 }
 
 
-main > div:first-child {
+/* main > div:first-child {
   margin-top: 100px;
-}
+} */
 section > div:first-child {
   padding-top: 100px;
 }

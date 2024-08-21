@@ -1,4 +1,5 @@
 {
+  "message_is_too_long": "Ihre Nachricht ist zu lang. Die maximal zulässige Anzahl von Zeichen beträgt 1000",
   "home": "Startseite",
   "about": "Über uns",
   "contact": "Kontakt",

@@ -6,6 +6,7 @@ const PrivacyPage = () => import('./pages/PrivacyPage.vue')
 const PortfolioPage = () => import('./pages/PortfolioPage.vue')
 const YourselfPage = () => import ('./pages/YourselfPage.vue')
 const NotFound = () => import('./pages/NotFound.vue')
+const ImgPage = () => import('./pages/ImgPage.vue')
 
 const routes = [
   { path: '/', component: HomePage, name: 'Home', meta: { title: 'Stars Station Studio' } },
@@ -13,6 +14,7 @@ const routes = [
   { path: '/Privacy', component: PrivacyPage, name: 'Privacy', meta: { title: 'Privacy' } },
   { path: '/Portfolio', component: PortfolioPage, name: 'Portfolio', meta: { title: 'Portfolio' } },
   { path: '/Yourself', component: YourselfPage, name: 'YourselfPage', meta: { title: 'Yourself' } },
+  { path: '/ImgPage', component: ImgPage, name: 'ImgPage', meta: { title: 'Img Page' } },
   { path: '/:catchAll(.*)', component: NotFound, name: 'NotFound', meta: { title: 'Not Found' } }
 ]
 

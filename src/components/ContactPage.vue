@@ -1,9 +1,9 @@
 <template>
-  <div id="feedback"  class="contact">
+  <div id="feedback" class="contact">
     <div data-aos="fade-right" class="title_section">
       <h1>{{ $t('feedback') }}</h1>
     </div>
-    <div   data-aos-anchor-placement="top-center"  class="contact__container">
+    <div data-aos-anchor-placement="top-center" class="contact__container">
       <div class="contact__container-item feedback">
         <form @submit.prevent="submitForm" method="POST" action="sendmail.php" enctype="multipart/form-data" ref="form">
           <div data-aos="fade-right" class="feedback_container">
@@ -11,22 +11,28 @@
               <label
                 :class="{ 'active': activeInputs.name || inputs.name, 'inactive': !activeInputs.name && !inputs.name }"
                 for="name">{{ $t('name') }}</label>
-              <input @focus="handleFocus('name')" @blur="handleBlur('name')" type="text" id="name" name="name"
-                v-model="inputs.name" ref="name">
+                <input @focus="handleFocus('name')" @blur="handleBlur('name')" type="text" id="name" name="name"
+              v-model="inputs.name" ref="name"
+              :class="{ 'input-valid': isInputValid('name'), 'input-invalid': !isInputValid('name') }">
             </div>
+            
             <div class="form-group">
               <label
                 :class="{ 'active': activeInputs.email || inputs.email, 'inactive': !activeInputs.email && !inputs.email }"
                 for="email">{{ $t('email') }}</label>
-              <input @focus="handleFocus('email')" @blur="handleBlur('email')" type="email" id="email" name="email"
-                v-model="inputs.email" ref="email">
+                <input @focus="handleFocus('email')" @blur="handleBlur('email')" type="email" id="email" name="email"
+              v-model="inputs.email" ref="email"
+              :class="{ 'input-valid': isInputValid('email'), 'input-invalid': !isInputValid('email') }">
             </div>
             <div class="form-group">
               <label
                 :class="{ 'active': activeInputs.message || inputs.message, 'inactive': !activeInputs.message && !inputs.message }"
                 for="message">{{ $t('message') }}</label>
               <textarea @focus="handleFocus('message')" @blur="handleBlur('message')" name="message" id="message"
-                rows="4" v-model="inputs.message" ref="message" @input="autoResize"></textarea>
+                rows="4" v-model="inputs.message" ref="message" @input="updateCharacterCount"></textarea>
+              <div :class="['char-counter', { 'char-counter-error': characterCount > 1000 }]">
+                {{ characterCount }}/1000
+              </div>
               <div class="file-drop-area">
                 <input type="file" name="files[]" id="attachment"
                   accept=".png, .jpeg, .jpg, .svg, .pdf, .docx, .txt, .odt, .xlsx, .ods, .gif, .bmp, .tiff, .pptx, .odp"
@@ -96,6 +102,7 @@ export default {
         email: false,
         message: false
       },
+      characterCount: 0, // Добавляем переменную для отслеживания количества символов
       fileList: [],
       showFullFileList: false,
       csrfToken: '',
@@ -130,14 +137,32 @@ export default {
     this.getCsrfToken();
   },
   methods: {
-    handleFocus(input) {
-      this.activeInputs[input] = true;
-    },
-    handleBlur(input) {
-      if (!this.inputs[input]) {
-        this.activeInputs[input] = false;
-      }
-    },
+    isInputValid(inputType) {
+    if (inputType === 'name') {
+      return this.inputs.name.trim().length > 0;
+    }
+    if (inputType === 'email') {
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailPattern.test(this.inputs.email);
+    }
+    return false;
+  },
+  handleFocus(input) {
+    this.activeInputs[input] = true;
+    const inputField = this.$refs[input];
+    inputField.style.borderBottom = '1px solid white'; // Возвращаем стандартную границу при фокусе
+  },
+  handleBlur(input) {
+    const inputField = this.$refs[input];
+    if (this.isInputValid(input)) {
+      inputField.style.borderBottom = '2px solid green'; // Зеленая граница для валидных полей
+    } else {
+      inputField.style.borderBottom = input === 'email' && this.inputs[input].trim() !== '' ? '2px solid red' : '1px solid white'; // Красная граница для невалидных email
+    }
+    if (!this.inputs[input]) {
+      this.activeInputs[input] = false;
+    }
+  },
     updateFileList(event) {
       const newFiles = Array.from(event.target.files);
       this.processFiles(newFiles);
@@ -228,6 +253,11 @@ export default {
         });
     },
     submitForm() {
+      if (this.characterCount > 1000) {
+        this.showError(this.$t('message_is_too_long'));
+        return;
+      }
+
       if (!this.consentGiven) {
         Swal.fire({
           icon: 'warning',
@@ -303,6 +333,7 @@ export default {
         email: '',
         message: ''
       };
+      this.characterCount = 0; // Сброс счетчика символов
       this.fileList = [];
       this.showFullFileList = false;
       this.consentGiven = false;
@@ -321,20 +352,40 @@ export default {
     showError(message) {
       Swal.fire({
         icon: 'warning',
-        title: this.$t('file_upload_error'),
+        title: this.$t('error'),
         text: message,
         timer: 3000,
         showConfirmButton: true,
         timerProgressBar: true,
         confirmButtonText: 'OK'
       });
+    },
+    updateCharacterCount() {
+    this.characterCount = this.inputs.message.length;
+    const textareaField = this.$refs.message;
+
+    if (this.characterCount <= 1000) {
+      textareaField.style.border = '2px solid green'; // Зеленая граница, если символов <= 500
+    } else {
+      textareaField.style.border = '2px solid red'; // Красная граница, если символов > 500
     }
+  }
   }
 };
 </script>
 
-
 <style scoped>
+/* Добавляем стиль для счетчика символов */
+.char-counter {
+  text-align: right;
+  font-size: 12px;
+  margin-top: 5px;
+  color: green;
+}
+
+.char-counter-error {
+  color: red;
+}
 
 .contact {
   min-height: 100vh;
@@ -355,42 +406,29 @@ export default {
   overflow: hidden;
 }
 
-
 .contact__container-item form,
 .slider__container {
   flex: 1;
 }
-
 
 .slider__container img {
   rotate: -40deg;
   position: relative;
   left: 230px;
   max-width: 100%;
-  height: auto; 
+  height: auto;
   display: block;
-  margin: 0 auto; 
+  margin: 0 auto;
 }
 
 .feedback_container {
   padding: 5px 20px;
 }
 
-
-
-
-
-
-
-
-
-
-
 .icon svg {
   width: 25px;
   height: 25px;
 }
-
 
 form {
   position: relative;
@@ -401,7 +439,6 @@ line {
   display: flex;
   justify-content: space-between;
 }
-
 
 .form-group {
   width: 100%;
@@ -426,9 +463,9 @@ line {
 .file-drop-area img {
   width: 30px;
   height: 30px;
-  margin: 0 10px 10px 0;
+  position: relative;
+  bottom: 15px;
 }
-
 
 input[type="file"] {
   position: absolute;
@@ -454,38 +491,46 @@ textarea {
   height: 190px;
 }
 
+
+
 .form-group input {
-  border: none; /* Убираем все границы */
-  border-bottom: 1px solid white; /* Добавляем нижнюю границу белого цвета */
+  border: none;
+  border-bottom: 1px solid white;
+
 }
+
 
 .form-group input,
 .form-group textarea {
-    background-color: transparent; /* Убираем фоновый цвет, если нужно */
+  background-color: transparent;
+  /* Убираем фоновый цвет, если нужно */
   font-size: 16px;
   color: white;
   width: 100%;
   padding-left: 10px;
   outline: none;
 }
+
 /* Сбрасываем стиль автозаполнения для Chrome */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
-    box-shadow: 0 0 0 1000px transparent inset !important;
-    -webkit-text-fill-color: white !important; /* Цвет текста */
-    transition: background-color 5000s ease-in-out 0s;
+  -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+  box-shadow: 0 0 0 1000px transparent inset !important;
+  -webkit-text-fill-color: white !important;
+  /* Цвет текста */
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 /* Для других браузеров можно попытаться сбросить фон */
 input:-internal-autofill-selected {
-    background-color: transparent !important;
-    -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
-    box-shadow: 0 0 0 1000px transparent inset !important;
-    -webkit-text-fill-color: white !important;
+  background-color: transparent !important;
+  -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+  box-shadow: 0 0 0 1000px transparent inset !important;
+  -webkit-text-fill-color: white !important;
 }
+
 input[type="text"],
 input[type="email"],
 input[type="tel"],
@@ -629,7 +674,6 @@ label.inactive {
   transform: translate(-50%, -50%);
 }
 
-
 .consent p {
   color: white;
   margin-left: 30px;
@@ -637,7 +681,7 @@ label.inactive {
 
 .consent a {
   color: white;
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 .form-button button {
@@ -655,24 +699,19 @@ label.inactive {
   margin-left: 8px;
 }
 
-
-
-
-
 @keyframes spin {
   to {
     transform: rotate(360deg);
   }
 }
 
-
 @media screen and (max-width: 1024px) {
   .contact__container {
     width: 90%;
   }
-  .slider__container {
-  display: none;
-}
 
+  .slider__container {
+    display: none;
+  }
 }
 </style>

@@ -3,7 +3,7 @@
     <div class="footer-container">
       <!-- Логотип -->
       <div data-aos="fade-right" class="footer-logo">
-        <img src="@/assets/logo/Logo-Full_white.svg" alt="Logo" class="logo" />
+        <img src="@/assets/logo/Logo-Full_white-reverse.svg" alt="Logo" class="logo" />
       </div>
 
       <!-- Меню -->

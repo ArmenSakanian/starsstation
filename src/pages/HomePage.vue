@@ -1,10 +1,10 @@
 <template>
 <test />
-<section class="section_1">
+<section id="section_1" class="section_1">
   <Video />
     <Service />
 </section>
-    <section class="section_2">
+    <section id="section_2" class="section_2">
       <Partner />
       <ContactPage /> 
     </section>

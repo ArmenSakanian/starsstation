@@ -1,7 +1,9 @@
 <template>
-  <header :class="{ 'hidden-header': isHidden }">
+  <header :class="headerClass">
     <div class="header-container">
-      <router-link to="/"><img src="@/assets/logo/Logo-Full_white.svg" alt="Logo" class="logo" /></router-link>
+      <router-link to="/">
+        <img :src="logoSrc" alt="Logo" class="logo" />
+      </router-link>
       <div class="menu_container">
         <nav class="menu" :style="{ left: menuPosition }">
           <div class="header__bottom"></div>
@@ -10,7 +12,7 @@
             <li><a to="service" @click="scrollToElement($event, 'service'); closeMenu()">{{ $t('service') }}</a></li>
             <li><a @click.prevent="openModal">{{ $t('contact') }}</a></li>
             <li><a to="" @click="scrollToElement($event, 'feedback'); closeMenu()">{{ $t('feedback') }}</a></li>
-            <li><router-link to="/Yourself"><a @click="closeMenu()">{{ $t('our_videos') }}</a></router-link></li>
+            <li><router-link to="/ImgPage"><a @click="closeMenu()">{{ $t('our_videos') }}</a></router-link></li>
           </ul>
         </nav>
       </div>
@@ -64,13 +66,13 @@ export default {
   },
   data() {
     return {
-      availableLanguages: ['en', 'fr', 'de', 'it'],
       menuPosition: '100%',
       isMenuVisible: false,
       languageMenuOpen: false,
-      isHidden: false,
-      lastScrollTop: 0,
       isModalOpen: false,
+      headerClass: 'header-black', // Черный фон по умолчанию
+      logoSrc: require('@/assets/logo/Logo-Full_white.svg'), // Логотип по умолчанию (белый)
+      availableLanguages: ['en', 'fr', 'de', 'it'] // Доступные языки
     };
   },
   computed: {
@@ -82,10 +84,7 @@ export default {
     }
   },
   mounted() {
-    const scrollToId = this.$route.query.scrollToId;
-    if (scrollToId) {
-      this.scrollToElementById(scrollToId);
-    }
+    this.handleScroll(); // Проверить позицию сразу после монтирования
     document.addEventListener('click', this.handleClickOutside);
     window.addEventListener('scroll', this.handleScroll);
   },
@@ -100,28 +99,25 @@ export default {
     closeModal() {
       this.isModalOpen = false;
     },
-    changeLanguage(event, lang) {
-      event.preventDefault();
-      this.$i18n.locale = lang;
-      localStorage.setItem('language', lang);
+    handleClickOutside(event) {
+      if (!this.$el.contains(event.target)) {
+        this.languageMenuOpen = false;
+      }
     },
-    toggleLanguageMenu(event) {
-      event.preventDefault();
-      this.languageMenuOpen = !this.languageMenuOpen;
+    handleScroll() {
+      const section2 = document.getElementById('section_2');
+
+      if (section2 && this.isSectionInView(section2)) {
+        this.headerClass = 'header-white';
+        this.logoSrc = require('@/assets/logo/Logo-Full_white.svg'); // Логотип черный
+      } else {
+        this.headerClass = 'header-black';
+        this.logoSrc = require('@/assets/logo/Logo-Full_white.svg'); // Логотип белый
+      }
     },
-    scrollToElement(event, id) {
-    event.preventDefault();
-    this.$router.push({ name: 'Home', query: { scrollToId: id } });
-  },
-    scrollToElementById(id) {
-      this.$nextTick(() => {
-        const element = document.getElementById(id);
-        if (element) {
-          const yOffset = -50;
-          const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-          window.scrollTo({ top: y, behavior: 'smooth' });
-        }
-      });
+    isSectionInView(section) {
+      const sectionTop = section.getBoundingClientRect().top;
+      return sectionTop <= 80 && sectionTop + section.offsetHeight > 80;
     },
     toggleMenu() {
       this.menuPosition = this.menuPosition === '100%' ? '0' : '100%';
@@ -137,31 +133,14 @@ export default {
         document.body.style.overflow = '';
       }
     },
-    handleMouseOver() {
-      if (window.innerWidth >= 769) {
-        this.isMenuVisible = true;
-      }
+    changeLanguage(event, lang) {
+      event.preventDefault();
+      this.$i18n.locale = lang;
+      localStorage.setItem('language', lang);
     },
-    handleMouseLeave() {
-      if (window.innerWidth >= 769) {
-        this.isMenuVisible = false;
-      }
-    },
-    handleMobileClick() {
-      if (window.innerWidth < 769) {
-        this.isMenuVisible = !this.isMenuVisible;
-      }
-    },
-    closeMenu1() {
-      this.isMenuVisible = false;
-    },
-    handleClickOutside(event) {
-      if (!this.$el.contains(event.target)) {
-        this.languageMenuOpen = false;
-        if (window.innerWidth < 769) {
-          this.closeMenu1();
-        }
-      }
+    toggleLanguageMenu(event) {
+      event.preventDefault();
+      this.languageMenuOpen = !this.languageMenuOpen;
     },
     getLanguageName(lang) {
       switch (lang) {
@@ -177,18 +156,26 @@ export default {
           return '';
       }
     },
-    handleScroll() {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      if (scrollTop > this.lastScrollTop && scrollTop > 50) {
-        this.isHidden = true;
-      } else {
-        this.isHidden = false;
-      }
-      this.lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+    scrollToElement(event, id) {
+      event.preventDefault();
+      this.$router.push({ name: 'Home', query: { scrollToId: id } });
     },
+    scrollToElementById(id) {
+      this.$nextTick(() => {
+        const element = document.getElementById(id);
+        if (element) {
+          const yOffset = -50;
+          const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      });
+    }
   }
 }
 </script>
+
+
+
 
 
 <style scoped>
@@ -204,11 +191,11 @@ export default {
 
 header {
   position: fixed;
-    top: 0;
-    z-index: 9998;
-    width: 100%;
-    height: 80px;
-    transition: top 0.5s ease-in-out, opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  top: 0;
+  z-index: 9998;
+  width: 100%;
+  height: 80px;
+  transition: top 0.5s ease-in-out, opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 
 .header-container {
@@ -216,12 +203,22 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #191A23;
-
+  background-color: black; /* Черный фон по умолчанию */
+  transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
 }
 
+.header-white .header-container {
+  background-color: #171a36;
+}
+
+.header-white .menu ul li a {
+  color: rgb(255, 255, 255);
+}
+
+
+
 .logo {
-  width: 180px;
+  width: 150px;
 }
 
 .menu_container {
@@ -461,13 +458,15 @@ svg.active #bottom {
     position: absolute;
     height: 100vh;
     width: 100%;
-    background-color: var(--bg-secondary-color);
+    background-color: black;
     top: 76px;
     transition: left 0.5s ease-in-out;
     overflow-y: scroll;
     z-index: 9999;
   }
-
+  .header-white .menu {
+  background-color: #171a36;
+}
   .menu-ul {
     display: flex;
     flex-direction: column;
