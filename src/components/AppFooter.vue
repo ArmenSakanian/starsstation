@@ -18,16 +18,22 @@
 
       <!-- Социальные иконки -->
       <div data-aos="fade-left" class="social-icons">
-        <img src="@/assets/icon/instagram.svg" alt="Instagram" class="icon" />
-        <img src="@/assets/icon/facebook.svg" alt="Facebook" class="icon" />
-        <img src="@/assets/icon/youtube.svg" alt="YouTube" class="icon" />
-      </div>
+            <a v-if="contacts.socials.facebook.url" :href="contacts.socials.facebook.url" target="_blank">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a :href="contacts.socials.instagram.url" target="_blank">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a :href="contacts.socials.youtube.url" target="_blank">
+              <i class="fab fa-youtube"></i>
+            </a>
+          </div>
     </div>
 
     <!-- Контактная информация -->
     <div class="footer-lower">
       <div data-aos="fade-right" class="contact-us">
-        <h3 class="contact-title">{{ $t('contact') }}</h3>
+        <h1 class="contact-title title">{{ $t('contact') }}</h1>
         <p class="email">{{ $t('email') }}: suport@starsstation.ch</p>
         <p class="phone">{{ $t('tel') }}: 555-567-9012</p>
       </div>
@@ -58,10 +64,12 @@
 </template>
 
 <script>
+import contacts from "@/contacts.json";
 export default {
   name: 'AppFooter',
   data() {
     return {
+      contacts,
       email: ''
     };
   },
@@ -180,11 +188,7 @@ export default {
 }
 
 .contact-title {
-  background-color: #FF9900;
-  padding: 7px;
-  color: black;
-  font-size: 40px;
-display: inline;
+  display: inline;
 }
 
 .contact-us p {
@@ -334,7 +338,6 @@ display: inline;
     font-size: 16px;
   }
 
-  .contact-title,
   .subscribe-title {
     font-size: 25px;
   }

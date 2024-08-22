@@ -1,7 +1,7 @@
 <template>
   <div id="feedback" class="contact">
     <div data-aos="fade-right" class="title_section">
-      <h1>{{ $t('feedback') }}</h1>
+      <h1 class="title">{{ $t('feedback') }}</h1>
     </div>
     <div data-aos-anchor-placement="top-center" class="contact__container">
       <div class="contact__container-item feedback">

@@ -2,24 +2,24 @@
   <div v-if="isVisible" class="modal-overlay" @click="close">
     <div class="modal-content" @click.stop>
       <div class="modal-header">
-        <h2>{{ $t('contact') }}</h2>
+        <h1 class="title">{{ $t('contact') }}</h1>
         <button class="close-btn" @click="close">&times;</button>
       </div>
       <div class="modal-body">
-        <p><strong>{{ $t('tel') }}:</strong> +1234567890</p>
-        <p><strong>{{ $t('email') }}:</strong> example@example.com</p>
+        <p class="contact-item"><strong>{{ $t('tel') }}:</strong> <a :href="`tel:${contacts.phone}`">{{ contacts.phone }}</a></p>
+        <p class="contact-item"><strong>{{ $t('email') }}:</strong> <a :href="`mailto:${contacts.email}`"> {{ contacts.email }}</a></p>
       </div>
       <div class="modal-footer">
         <div class="social-icons">
-          <a href="#" target="_blank">
-            <img src="@/assets/icon/instagram.svg" alt="Instagram" />
-          </a>
-          <a href="#" target="_blank">
-            <img src="@/assets/icon/facebook.svg" alt="Facebook" />
-          </a>
-          <a href="#" target="_blank">
-            <img src="@/assets/icon/youtube.svg" alt="YouTube" />
-          </a>
+          <a v-if="contacts.socials.facebook.url" :href="contacts.socials.facebook.url" target="_blank">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a :href="contacts.socials.instagram.url" target="_blank">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a :href="contacts.socials.youtube.url" target="_blank">
+        <i class="fab fa-youtube"></i>
+      </a>
         </div>
         <button @click="close" class="modal-action-btn button">Закрыть</button>
       </div>
@@ -28,7 +28,14 @@
 </template>
 
 <script>
+import contacts from "@/contacts.json";
+
 export default {
+  data() {
+    return {
+      contacts,
+    };
+  },
   props: {
     isVisible: {
       type: Boolean,
@@ -73,6 +80,7 @@ export default {
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  padding: 0 20px;
 }
 
 .modal-content {
@@ -94,13 +102,7 @@ export default {
   border-radius: 5px;
 }
 
-.modal-header h2 {
-  margin: 0;
-  font-size: 40px;
-  color: #ffffff;
-  background-color: #FF9900;
-  padding: 7px;
-}
+
 
 .close-btn {
   background: none;
@@ -114,15 +116,7 @@ export default {
   color: #cccccc;
 }
 
-.modal-body {
-  padding: 20px 0;
-  font-size: 20px;
-  color: #ffffff;
-}
 
-.modal-body p {
-  margin: 10px 0;
-}
 
 .modal-footer {
   display: flex;
@@ -132,31 +126,7 @@ export default {
   padding-top: 10px;
 }
 
-.social-icons {
-  display: flex;
-  gap: 10px;
-}
 
-.social-icons a {
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  overflow: hidden;
-  background-color: #ffffff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.social-icons img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
-
-.social-icons a:hover img {
-  transform: scale(1.1);
-}
 
 
 
@@ -166,9 +136,22 @@ export default {
     transform: translateY(-20px);
     opacity: 0;
   }
+
   to {
     transform: translateY(0);
     opacity: 1;
   }
 }
+
+@media (max-width: 769px) {
+  .modal-header {
+    justify-content: center;
+  }
+
+  .close-btn {
+    position: absolute;
+    right: 10px;
+  }
+}
+
 </style>

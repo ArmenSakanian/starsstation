@@ -83,32 +83,64 @@ export default {
 
 body {
   font-family: "Space Grotesk", sans-serif;
-  /* padding: 0 100px 0 100px; */
 
 }
 
 #app {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
 }
 
-
-/* main > div:first-child {
-  margin-top: 100px;
-} */
 section > div:first-child {
   padding-top: 100px;
 }
 
-.title {
-  text-align: center;
-  margin-bottom: 50px;
-  font-size: 48px;
-}
+
 
 .video-container, .services-container, .contact, .partner-container, .footer-container, .footer-lower {
  overflow: hidden;
+}
+
+.modal-body a , .contact-item a {
+  color: white; 
+}
+
+.contact-item {
+  margin: 25px 0;
+  font-size: 20px;
+}
+.social-icons {
+  display: flex;
+  gap: 10px;
+}
+
+
+.social-icons a {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.social-icons a {
+  display: inline-flex;       /* Используем flexbox для центрирования иконки */
+  align-items: center;        /* Выравнивание по вертикали */
+  justify-content: center;    /* Выравнивание по горизонтали */
+  width: 30px;                /* Ширина круга */
+  height: 30px;               /* Высота круга */
+  background-color: white;    /* Белый фон */
+  border-radius: 50%;         /* Скругляем углы, чтобы сделать круг */
+  margin-right: 10px;         /* Отступ между иконками */
+  text-decoration: none;      /* Убираем подчеркивание ссылок */
+  color: inherit;             /* Цвет иконок наследуется */
+}
+.social-icons i {
+  font-size: 20px;            /* Размер иконки внутри круга */
+  color: #000;                /* Цвет иконки */
 }
 .button {
   background: linear-gradient(90deg, #0059bc, #009aba);
@@ -126,66 +158,61 @@ section > div:first-child {
   background-position: left; /* Начальная позиция градиента */
   transition: 1s;
 }
-
 .button:hover {
   background-position: right;
 }
-
 .button:hover::before {
   background-position: left;
 }
 
 
-.title_section {
-  background-color: var(--active-color);
+.title {
+  margin: 0;
+  font-size: 40px;
+  color: black;
+  background-color: #FF9900;
   padding: 7px;
   border-radius: 7px;
   display: inline-block;
+}
+
+.title_section {
   margin-left: 100px;
   margin-top: 50px;
 }
 
-.title_section h1 {
-  font-size: 32px;
-}
 
 .color-bold {
   font-weight: bold;
   color: var(--active-color);
 }
 
-.custom-icon {
-  font-size: 30px;
-}
 
-.instagram-icon:hover {
-  color: var(--instagram-color);
-}
 
-.facebook-icon:hover {
-  color: var(--facebook-color);
-}
-
-.whatsapp-icon:hover {
-  color: var(--whatsapp-color);
-}
-
-.youtube-icon:hover {
-  color: var(--youtube-color);
-}
 
 @media screen and (max-width: 769px) { 
+  .contact-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
+  .title {
+    font-size: 32px;
+  }
+
+  .contact-item {
+    font-size: 18px;
+  }
 }
 
 @media screen and (max-width: 1024px) {
   .title_section {
     text-align: center;
-    max-width: 200px;
+    max-width: 300px;
     margin: 0 auto;
   }
-
-  .service_container, .contact {
+   .contact {
     display: flex;
     flex-direction: column;
     justify-content: center;
