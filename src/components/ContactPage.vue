@@ -80,7 +80,7 @@
           </div>
         </form>
         <div data-aos="fade-left" class="slider__container">
-          <img src="@/assets/logo/Logomark White.svg" alt="">
+          <img src="@/assets/logo/Logomark_White.svg" alt="">
         </div>
       </div>
     </div>

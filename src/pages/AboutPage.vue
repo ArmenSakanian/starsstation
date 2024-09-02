@@ -4,8 +4,8 @@
       <div class="text-container">
         <div class="line text-line"></div>
         <div class="text-content">
-          <h1 class="about-title" v-html="formattedTitle"></h1>
-          <p class="about-text" v-html="formattedText"></p>
+          <h1 class="about-title"><span class="typed-title"></span></h1>
+          <p class="about-text"><span class="typed-text"></span></p>
         </div>
       </div>
       <div class="contact-container">
@@ -34,14 +34,17 @@
 </template>
 
 <script>
+import Typed from 'typed.js';
 import { formatText } from '@/utils/textFormatter';
 import contacts from "@/contacts.json";
-export default {
 
+export default {
   name: 'AboutSection',
   data() {
     return {
       contacts,
+      typedTitleInstance: null,
+      typedTextInstance: null,
     };
   },
   computed: {
@@ -52,6 +55,61 @@ export default {
       return formatText(this.$i18n, 'about_about');
     },
   },
+  watch: {
+    '$i18n.locale': {
+      immediate: true,
+      handler() {
+        this.restartAnimation();
+      }
+    }
+  },
+  methods: {
+    initializeTyped() {
+      const titleElement = document.querySelector('.typed-title');
+      const textElement = document.querySelector('.typed-text');
+
+      if (titleElement && textElement) {
+        const optionsTitle = {
+          strings: [this.formattedTitle],
+          typeSpeed: 30,
+          backSpeed: 25,
+          loop: false,
+          showCursor: false,
+        };
+
+        const optionsText = {
+          strings: [this.formattedText],
+          typeSpeed: 10,
+          backSpeed: 15,
+          loop: false,
+          showCursor: false,
+        };
+
+        this.typedTitleInstance = new Typed(titleElement, optionsTitle);
+        this.typedTextInstance = new Typed(textElement, optionsText);
+      } else {
+        console.error('Typed.js: Target elements not found in the DOM.');
+      }
+    },
+    restartAnimation() {
+      // Уничтожаем текущие экземпляры Typed.js
+      if (this.typedTitleInstance) {
+        this.typedTitleInstance.destroy();
+      }
+      if (this.typedTextInstance) {
+        this.typedTextInstance.destroy();
+      }
+      // Инициализируем анимацию снова с обновленным текстом
+      this.$nextTick(() => {
+        this.initializeTyped();
+      });
+    }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.initializeTyped();
+    });
+  }
 };
 </script>
 

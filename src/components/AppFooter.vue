@@ -34,8 +34,8 @@
     <div class="footer-lower">
       <div data-aos="fade-right" class="contact-us">
         <h1 class="contact-title title">{{ $t('contact') }}</h1>
-        <p class="email">{{ $t('email') }}: suport@starsstation.ch</p>
-        <p class="phone">{{ $t('tel') }}: 555-567-9012</p>
+        <p class="contact-item"><strong>{{ $t('tel') }}:</strong> <a :href="`tel:${contacts.phone}`">{{ contacts.phone }}</a></p>
+        <p class="contact-item"><strong>{{ $t('email') }}:</strong> <a :href="`mailto:${contacts.email}`"> {{ contacts.email }}</a></p>
       </div>
       <form @submit.prevent="subscribe">
         <div data-aos="fade-left" class="subscribe-form">
@@ -191,11 +191,7 @@ export default {
   display: inline;
 }
 
-.contact-us p {
-  font-size: 20px;
-  margin: 30px 0 0 0;
-  /* Добавляем отступ 30px между почтой и телефоном */
-}
+
 
 .subscribe-form {
   display: flex;

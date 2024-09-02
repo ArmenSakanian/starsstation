@@ -1,14 +1,16 @@
 <template>
-  <div class="services-container">
+  <div class="service-content">
     <div data-aos="fade-right" class="title_section"><h1 class="title">{{ $t('service') }}</h1></div>
-    <div class="services-row" v-for="(row, rowIndex) in serviceRows" :key="rowIndex">
-      <div class="service" 
-           v-for="(service, index) in row" 
-           :key="index" 
-           data-aos="fade-up">
-        <img :src="service.icon" alt="Icon" class="service-icon" />
-        <h1 class="service-title" v-html="formatText(service.title)"></h1>
-        <p class="service-description" v-html="formatText(service.description)"></p>
+    <div class="services-container">
+      <div class="services-row" v-for="(row, rowIndex) in serviceRows" :key="rowIndex">
+        <div class="service" 
+             v-for="(service, index) in row" 
+             :key="index" 
+             data-aos="fade-up">
+          <img :src="service.icon" alt="Icon" class="service-icon" />
+          <h1 class="service-title" v-html="formatText(service.title)"></h1>
+          <p class="service-description" v-html="formatText(service.description)"></p>
+        </div>
       </div>
     </div>
   </div>
