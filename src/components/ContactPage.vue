@@ -1,717 +1,271 @@
 <template>
-  <div id="feedback" class="contact">
-    <div data-aos="fade-right" class="title_section">
-      <h1 class="title">{{ $t('feedback') }}</h1>
-    </div>
-    <div data-aos-anchor-placement="top-center" class="contact__container">
-      <div class="contact__container-item feedback">
-        <form @submit.prevent="submitForm" method="POST" action="sendmail.php" enctype="multipart/form-data" ref="form">
-          <div data-aos="fade-right" class="feedback_container">
-            <div class="form-group">
-              <label
-                :class="{ 'active': activeInputs.name || inputs.name, 'inactive': !activeInputs.name && !inputs.name }"
-                for="name">{{ $t('name') }}</label>
-                <input @focus="handleFocus('name')" @blur="handleBlur('name')" type="text" id="name" name="name"
-              v-model="inputs.name" ref="name"
-              :class="{ 'input-valid': isInputValid('name'), 'input-invalid': !isInputValid('name') }">
+  <section class="contact-section section-space">
+    <div class="page-shell">
+      <div class="contact-shell glass" data-aos="fade-up">
+        <aside class="contact-info">
+          <span class="eyebrow">{{ $t('contact_kicker') }}</span>
+          <h2 class="section-title">{{ $t('feedback') }}</h2>
+          <p class="lead">{{ $t('video_description') }}</p>
+
+          <div class="contact-list">
+            <a :href="`mailto:${contacts.email}`">
+              <span class="contact-icon"><i class="fa-regular fa-envelope"></i></span>
+              <div><small>{{ $t('email') }}</small><strong>{{ contacts.email }}</strong></div>
+            </a>
+            <a :href="`tel:${contacts.phone}`">
+              <span class="contact-icon"><i class="fa-solid fa-phone"></i></span>
+              <div><small>{{ $t('tel') }}</small><strong>{{ contacts.phone }}</strong></div>
+            </a>
+          </div>
+
+          <div class="contact-art" aria-hidden="true">
+            <div class="art-orbit"></div>
+            <img src="@/assets/logo/Logomark_White.svg" alt="" />
+          </div>
+        </aside>
+
+        <form ref="form" class="contact-form" @submit.prevent="submitForm" novalidate>
+          <div class="form-grid">
+            <label class="field">
+              <span>{{ $t('name') }} *</span>
+              <input v-model.trim="inputs.name" type="text" name="name" maxlength="120" required autocomplete="given-name" />
+            </label>
+            <label class="field">
+              <span>{{ $t('surname') }}</span>
+              <input v-model.trim="inputs.surname" type="text" name="surname" maxlength="120" autocomplete="family-name" />
+            </label>
+            <label class="field">
+              <span>{{ $t('email') }} *</span>
+              <input v-model.trim="inputs.email" type="email" name="email" maxlength="190" required autocomplete="email" />
+            </label>
+            <label class="field">
+              <span>{{ $t('tel') }}</span>
+              <input v-model.trim="inputs.tel" type="tel" name="tel" maxlength="40" autocomplete="tel" />
+            </label>
+          </div>
+
+          <label class="field message-field">
+            <span>{{ $t('message') }} *</span>
+            <textarea v-model="inputs.message" name="message" rows="6" maxlength="1000" required></textarea>
+            <small :class="{ danger: inputs.message.length >= 950 }">{{ inputs.message.length }}/1000</small>
+          </label>
+
+          <div class="upload-box" :class="{ dragging: isDragging }" @dragover.prevent="isDragging = true" @dragleave.prevent="isDragging = false" @drop.prevent="handleDrop">
+            <input ref="fileInput" id="attachment" type="file" multiple :accept="acceptString" @change="handleFileInput" />
+            <button type="button" class="upload-trigger" @click="$refs.fileInput.click()">
+              <span><i class="fa-solid fa-paperclip"></i></span>
+              <div><strong>{{ $t('attach') }}</strong><small>{{ $t('file_help') }}</small></div>
+            </button>
+          </div>
+
+          <transition-group v-if="files.length" name="file" tag="div" class="file-list">
+            <div v-for="(file, index) in files" :key="file.key" class="file-pill">
+              <i :class="file.icon"></i>
+              <span>{{ file.name }}</span>
+              <small>{{ formatBytes(file.size) }}</small>
+              <button type="button" @click="removeFile(index)" aria-label="Remove"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            
-            <div class="form-group">
-              <label
-                :class="{ 'active': activeInputs.email || inputs.email, 'inactive': !activeInputs.email && !inputs.email }"
-                for="email">{{ $t('email') }}</label>
-                <input @focus="handleFocus('email')" @blur="handleBlur('email')" type="email" id="email" name="email"
-              v-model="inputs.email" ref="email"
-              :class="{ 'input-valid': isInputValid('email'), 'input-invalid': !isInputValid('email') }">
-            </div>
-            <div class="form-group">
-              <label
-                :class="{ 'active': activeInputs.message || inputs.message, 'inactive': !activeInputs.message && !inputs.message }"
-                for="message">{{ $t('message') }}</label>
-              <textarea @focus="handleFocus('message')" @blur="handleBlur('message')" name="message" id="message"
-                rows="4" v-model="inputs.message" ref="message" @input="updateCharacterCount"></textarea>
-              <div :class="['char-counter', { 'char-counter-error': characterCount > 1000 }]">
-                {{ characterCount }}/1000
-              </div>
-              <div class="file-drop-area">
-                <input type="file" name="files[]" id="attachment"
-                  accept=".png, .jpeg, .jpg, .svg, .pdf, .docx, .txt, .odt, .xlsx, .ods, .gif, .bmp, .tiff, .pptx, .odp"
-                  multiple @change="updateFileList">
-                <label for="attachment" class="btn-upload"><img src="@/assets/icon/upload.svg" alt=""></label>
-              </div>
-            </div>
-            <div class="consent">
-              <input type="checkbox" id="consent" v-model="consentGiven">
-              <p>{{ $t('agreement') }}<router-link to="/Privacy">{{ $t('privacy_policy_title') }}</router-link></p>
-            </div>
-            <div class="consent">
-              <input type="checkbox" id="subscribe" v-model="subscribe">
-              <p>{{ $t('newsletter_text') }}</p>
-            </div>
-            <div class="form-controls">
-              <input type="hidden" v-model="csrfToken" name="csrf_token">
-              <input type="hidden" name="language" :value="currentLanguage">
-              <input type="hidden" name="subscribe" :value="subscribe">
-              <div class="form-group form-button inline">
-                <button class="send button" type="submit" :disabled="isSubmitting" aria-label="Send message">
-                  <span>{{ isSubmitting ? $t('sending') : $t('send') }}</span>
-                  <span v-if="isSubmitting" class="loader" aria-label="Loading..."></span>
-                </button>
-              </div>
-            </div>
-            <div class="file-list">
-              <ul v-if="fileList.length > 0">
-                <li v-for="(file, index) in displayedFileList" :key="index" class="file-item">
-                  <img :src="getFileIcon(file)" alt="file icon" class="file-icon" />
-                  <span class="file-name">{{ file.name }}</span>
-                  <button @click.prevent="removeFile(index)" class="remove-file" aria-label="Remove file"><i
-                      class="fa-solid fa-x"></i></button>
-                  <div class="upload-progress">
-                    <div class="upload-progress-bar" :style="{ width: file.progress + '%' }"></div>
-                  </div>
-                </li>
-              </ul>
-              <span v-if="fileList.length > 3">
-                <a href="#" @click.prevent="toggleFileList">
-                  {{ showFullFileList ? $t('hide') : `${$t('and')} ${fileList.length - 3} ${$t('more')}` }}
-                </a>
-              </span>
-            </div>
+          </transition-group>
+
+          <label class="check-row">
+            <input v-model="consentGiven" type="checkbox" />
+            <span class="custom-check"><i class="fa-solid fa-check"></i></span>
+            <span>{{ $t('agreement') }} <router-link to="/privacy">{{ $t('privacy_policy_title') }}</router-link>.</span>
+          </label>
+          <label class="check-row">
+            <input v-model="subscribeToNewsletter" type="checkbox" />
+            <span class="custom-check"><i class="fa-solid fa-check"></i></span>
+            <span>{{ $t('newsletter_text') }}</span>
+          </label>
+
+          <div class="form-bottom">
+            <p class="status-text" :class="status.type" aria-live="polite">{{ status.message }}</p>
+            <button class="primary-btn send-btn" type="submit" :disabled="isSubmitting">
+              <span>{{ isSubmitting ? $t('sending') : $t('send') }}</span>
+              <i :class="isSubmitting ? 'fa-solid fa-spinner fa-spin' : 'fa-solid fa-arrow-right'"></i>
+            </button>
           </div>
         </form>
-        <div data-aos="fade-left" class="slider__container">
-          <img src="@/assets/logo/Logomark_White.svg" alt="">
-        </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
+import contacts from '@/contacts.json';
+
 export default {
   name: 'ContactPage',
   data() {
     return {
-      inputs: {
-        name: '',
-        email: '',
-        message: ''
-      },
-      activeInputs: {
-        name: false,
-        email: false,
-        message: false
-      },
-      characterCount: 0, // Добавляем переменную для отслеживания количества символов
-      fileList: [],
-      showFullFileList: false,
+      contacts,
+      inputs: { name: '', surname: '', email: '', tel: '', message: '' },
+      files: [],
       csrfToken: '',
-      isSubmitting: false,
       consentGiven: false,
-      subscribe: false,
-      errorMessage: '',
-      allowedTypes: [
-        'image/png', 'image/jpeg', 'image/jpg', 'image/svg+xml',
-        'application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-        'text/plain', 'application/vnd.oasis.opendocument.text',
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.oasis.opendocument.spreadsheet',
-        'image/gif', 'image/bmp', 'image/tiff', 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-        'application/vnd.oasis.opendocument.presentation'
-      ],
+      subscribeToNewsletter: false,
+      isSubmitting: false,
+      isDragging: false,
+      status: { type: '', message: '' },
       maxSize: 10 * 1024 * 1024,
-      currentUploadIndex: -1
+      maxFiles: 5,
+      allowedExtensions: ['png','jpg','jpeg','gif','bmp','tiff','svg','pdf','docx','txt','odt','xlsx','ods','pptx','odp']
     };
   },
   computed: {
-    currentLanguage() {
-      return this.$i18n.locale;
-    },
-    displayedFileList() {
-      if (this.showFullFileList) {
-        return this.fileList;
-      }
-      return this.fileList.slice(0, 3);
-    }
-  },
-  created() {
-    this.getCsrfToken();
+    acceptString() { return this.allowedExtensions.map(ext => `.${ext}`).join(','); }
   },
   methods: {
-    isInputValid(inputType) {
-    if (inputType === 'name') {
-      return this.inputs.name.trim().length > 0;
-    }
-    if (inputType === 'email') {
-      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return emailPattern.test(this.inputs.email);
-    }
-    return false;
-  },
-  handleFocus(input) {
-    this.activeInputs[input] = true;
-    const inputField = this.$refs[input];
-    inputField.style.borderBottom = '1px solid white'; // Возвращаем стандартную границу при фокусе
-  },
-  handleBlur(input) {
-    const inputField = this.$refs[input];
-    if (this.isInputValid(input)) {
-      inputField.style.borderBottom = '2px solid green'; // Зеленая граница для валидных полей
-    } else {
-      inputField.style.borderBottom = input === 'email' && this.inputs[input].trim() !== '' ? '2px solid red' : '1px solid white'; // Красная граница для невалидных email
-    }
-    if (!this.inputs[input]) {
-      this.activeInputs[input] = false;
-    }
-  },
-    updateFileList(event) {
-      const newFiles = Array.from(event.target.files);
-      this.processFiles(newFiles);
+    async ensureCsrf() {
+      if (this.csrfToken) return this.csrfToken;
+      const response = await fetch('/get_csrf_token.php', { credentials: 'same-origin' });
+      if (!response.ok) throw new Error('Unable to initialize form security.');
+      const data = await response.json();
+      this.csrfToken = data.token;
+      return this.csrfToken;
     },
-    handleDrop(event) {
-      event.preventDefault();
-      const droppedFiles = Array.from(event.dataTransfer.files);
-      this.processFiles(droppedFiles);
+    handleFileInput(event) { this.addFiles(Array.from(event.target.files || [])); event.target.value = ''; },
+    handleDrop(event) { this.isDragging = false; this.addFiles(Array.from(event.dataTransfer.files || [])); },
+    addFiles(incoming) {
+      for (const file of incoming) {
+        if (this.files.length >= this.maxFiles) { this.notifyError(`Maximum ${this.maxFiles} files.`); break; }
+        const ext = (file.name.split('.').pop() || '').toLowerCase();
+        if (!this.allowedExtensions.includes(ext)) { this.notifyError(`${file.name}: ${this.$t('unsupported_file_type')}`); continue; }
+        if (file.size > this.maxSize) { this.notifyError(`${file.name}: ${this.$t('is_too_large')}. ${this.$t('maximum_size_is')} 10 MB.`); continue; }
+        if (this.files.some(item => item.name === file.name && item.size === file.size)) { this.notifyError(`${file.name}: ${this.$t('duplicate_file')}`); continue; }
+        this.files.push({ original: file, key: `${file.name}-${file.size}-${file.lastModified}`, name: file.name, size: file.size, icon: this.iconFor(ext) });
+      }
     },
-    processFiles(files) {
-      files.forEach(file => {
-        if (this.fileList.some(existingFile => existingFile.name === file.name)) {
-          this.showError(`${file.name} ${this.$t('is_already_selected')}`);
-          return;
-        }
-        if (!this.allowedTypes.includes(file.type)) {
-          this.showError(`${file.name} ${this.$t('is_not_a_supported_file_type')}`);
-          return;
-        }
-        if (file.size > this.maxSize) {
-          this.showError(`${file.name} ${this.$t('is_too_large')}. ${this.$t('maximum_size_is')} 10 MB.`);
-          return;
-        }
-        this.fileList.push({ name: file.name, type: file.type, progress: 0, originalFile: file });
-      });
+    removeFile(index) { this.files.splice(index, 1); },
+    iconFor(ext) {
+      if (['png','jpg','jpeg','gif','bmp','tiff','svg'].includes(ext)) return 'fa-regular fa-image';
+      if (ext === 'pdf') return 'fa-regular fa-file-pdf';
+      if (['docx','odt'].includes(ext)) return 'fa-regular fa-file-word';
+      if (['xlsx','ods'].includes(ext)) return 'fa-regular fa-file-excel';
+      if (['pptx','odp'].includes(ext)) return 'fa-regular fa-file-powerpoint';
+      return 'fa-regular fa-file-lines';
+    },
+    formatBytes(bytes) {
+      if (bytes < 1024) return `${bytes} B`;
+      if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+      return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+    },
+    validate() {
+      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.inputs.email);
+      if (!this.inputs.name || !this.inputs.email || !this.inputs.message || !emailOk) return this.$t('fill_all_fields');
+      if (!this.consentGiven) return this.$t('you_must_agree_to_the_processing_of_personal_data');
+      return '';
+    },
+    notifyError(message) {
+      this.status = { type: 'error', message };
+      window.Swal?.fire({ icon: 'warning', title: this.$t('error_title'), text: message, confirmButtonColor: '#7c5cff' });
+    },
+    async submitForm() {
+      if (this.isSubmitting) return;
+      const validationError = this.validate();
+      if (validationError) { this.notifyError(validationError); return; }
 
-      this.showFullFileList = false;
-      if (this.currentUploadIndex === -1) {
-        this.startUploadProgress(0);
-      }
-    },
-    startUploadProgress(index) {
-      if (index >= this.fileList.length) {
-        this.currentUploadIndex = -1;
-        return;
-      }
-      this.currentUploadIndex = index;
-      const file = this.fileList[index];
-      const interval = setInterval(() => {
-        if (file.progress < 100) {
-          file.progress += 10;
-        } else {
-          clearInterval(interval);
-          this.startUploadProgress(index + 1);
-        }
-      }, 200);
-    },
-    getFileIcon(file) {
-      if (!file || !file.type) {
-        return require('@/assets/icon/default-icon.svg');
-      }
-
-      const fileType = file.type;
-      if (fileType.includes('png')) {
-        return require('@/assets/icon/image-icon.svg');
-      } else if (fileType.includes('pdf')) {
-        return require('@/assets/icon/pdf-icon.svg');
-      } else if (fileType.includes('wordprocessingml.document')) {
-        return require('@/assets/icon/docx-icon.svg');
-      } else if (fileType.includes('text')) {
-        return require('@/assets/icon/text-icon.svg');
-      } else if (fileType.includes('spreadsheetml.sheet')) {
-        return require('@/assets/icon/xlsx-icon.svg');
-      } else if (fileType.includes('presentationml.presentation')) {
-        return require('@/assets/icon/pptx-icon.svg');
-      } else {
-        return require('@/assets/icon/default-icon.svg');
-      }
-    },
-    removeFile(index) {
-      this.fileList.splice(index, 1);
-      if (this.currentUploadIndex === index) {
-        this.startUploadProgress(index);
-      } else if (this.currentUploadIndex > index) {
-        this.currentUploadIndex--;
-      }
-    },
-    toggleFileList() {
-      this.showFullFileList = !this.showFullFileList;
-    },
-    getCsrfToken() {
-      axios.get('get_csrf_token.php')
-        .then(response => {
-          this.csrfToken = response.data.token;
-        })
-        .catch(error => {
-          console.error('Error getting CSRF token:', error);
-        });
-    },
-    submitForm() {
-      if (this.characterCount > 1000) {
-        this.showError(this.$t('message_is_too_long'));
-        return;
-      }
-
-      if (!this.consentGiven) {
-        Swal.fire({
-          icon: 'warning',
-          title: this.$t('required_consent'),
-          text: this.$t('you_must_agree_to_the_processing_of_personal_data'),
-          timer: 3000,
-          showConfirmButton: true,
-          timerProgressBar: true,
-          confirmButtonText: 'OK'
-        });
-        return;
-      }
-
-      if (this.validateInputs()) {
-        this.isSubmitting = true;
+      this.isSubmitting = true;
+      this.status = { type: '', message: '' };
+      try {
+        const csrf = await this.ensureCsrf();
         const formData = new FormData();
-        Object.keys(this.inputs).forEach(key => {
-          formData.append(key, this.inputs[key]);
-        });
-        this.fileList.forEach(file => {
-          formData.append('files[]', file.originalFile, file.name);
-        });
-        formData.append('csrf_token', this.csrfToken);
-        formData.append('language', this.currentLanguage);
-        formData.append('subscribe', this.subscribe);
+        Object.entries(this.inputs).forEach(([key, value]) => formData.append(key, value));
+        this.files.forEach(item => formData.append('files[]', item.original, item.name));
+        formData.append('csrf_token', csrf);
+        formData.append('language', this.$i18n.locale);
+        formData.append('subscribe', this.subscribeToNewsletter ? 'true' : 'false');
 
-        axios.post('sendmail.php', formData)
-          .then(response => {
-            const data = response.data;
-            if (data.status === 'error') {
-              this.errorMessage = data.message;
-            } else {
-              Swal.fire({
-                icon: 'success',
-                title: this.$t('success_message'),
-                timer: 3000,
-                showConfirmButton: true,
-                timerProgressBar: true,
-                confirmButtonText: 'OK'
-              });
-              this.resetForm();
-            }
-          })
-          .catch(error => {
-            this.errorMessage = error.message;
-            Swal.fire({
-              icon: 'error',
-              title: this.$t('error_message'),
-              text: error.message,
-              timer: 3000,
-              showConfirmButton: true,
-              timerProgressBar: true,
-              confirmButtonText: 'OK'
-            });
-          })
-          .finally(() => {
-            this.isSubmitting = false;
-          });
-      } else {
-        Swal.fire({
-          icon: 'warning',
-          title: this.$t('fill_all_fields'),
-          timer: 3000,
-          showConfirmButton: true,
-          timerProgressBar: true,
-          confirmButtonText: 'OK'
-        });
-      }
-    },
-    resetForm() {
-      this.inputs = {
-        name: '',
-        email: '',
-        message: ''
-      };
-      this.characterCount = 0; // Сброс счетчика символов
-      this.fileList = [];
-      this.showFullFileList = false;
-      this.consentGiven = false;
-      this.subscribe = false;
-      this.errorMessage = '';
-      this.$refs.form.reset();
-    },
-    validateInputs() {
-      for (const key in this.inputs) {
-        if (this.inputs[key].trim() === '') {
-          return false;
-        }
-      }
-      return true;
-    },
-    showError(message) {
-      Swal.fire({
-        icon: 'warning',
-        title: this.$t('error'),
-        text: message,
-        timer: 3000,
-        showConfirmButton: true,
-        timerProgressBar: true,
-        confirmButtonText: 'OK'
-      });
-    },
-    updateCharacterCount() {
-    this.characterCount = this.inputs.message.length;
-    const textareaField = this.$refs.message;
+        const response = await fetch('/sendmail.php', { method: 'POST', body: formData, credentials: 'same-origin' });
+        const data = await response.json();
+        if (!response.ok || data.status !== 'success') throw new Error(data.message || this.$t('error_message'));
 
-    if (this.characterCount <= 1000) {
-      textareaField.style.border = '2px solid green'; // Зеленая граница, если символов <= 500
-    } else {
-      textareaField.style.border = '2px solid red'; // Красная граница, если символов > 500
+        this.status = { type: 'success', message: this.$t('success_message') };
+        window.Swal?.fire({ icon: 'success', title: this.$t('success_title'), text: this.$t('success_message'), confirmButtonColor: '#7c5cff' });
+        this.inputs = { name: '', surname: '', email: '', tel: '', message: '' };
+        this.files = [];
+        this.consentGiven = false;
+        this.subscribeToNewsletter = false;
+        this.csrfToken = '';
+      } catch (error) {
+        this.status = { type: 'error', message: error.message };
+        window.Swal?.fire({ icon: 'error', title: this.$t('error_title'), text: error.message, confirmButtonColor: '#7c5cff' });
+      } finally { this.isSubmitting = false; }
     }
-  }
   }
 };
 </script>
 
 <style scoped>
-/* Добавляем стиль для счетчика символов */
-.char-counter {
-  text-align: right;
-  font-size: 12px;
-  margin-top: 5px;
-  color: green;
-}
+.contact-section { position: relative; }
+.contact-shell { display: grid; grid-template-columns: .82fr 1.18fr; min-height: 720px; border-radius: 36px; overflow: hidden; background: linear-gradient(145deg, rgba(17,20,33,.82), rgba(8,10,17,.80)); }
+.contact-info { position: relative; padding: 54px; overflow: hidden; background: linear-gradient(160deg, rgba(124,92,255,.14), rgba(46,230,214,.035) 55%, transparent); }
+.contact-info h2 { margin: 22px 0; }
+.contact-info .lead { max-width: 480px; font-size: 17px; }
+.contact-list { display: grid; gap: 10px; margin-top: 35px; }
+.contact-list a { display: flex; align-items: center; gap: 13px; padding: 14px; border: 1px solid var(--line); border-radius: 17px; background: rgba(255,255,255,.035); text-decoration: none; transition: transform .25s ease, border-color .25s ease; }
+.contact-list a:hover { transform: translateX(4px); border-color: rgba(46,230,214,.36); }
+.contact-icon { width: 42px; height: 42px; flex-shrink: 0; display: grid; place-items: center; border-radius: 13px; background: rgba(124,92,255,.18); color: #c9c1ff; }
+.contact-list div { min-width: 0; display: grid; gap: 3px; }
+.contact-list small { color: var(--text-soft); }
+.contact-list strong { font-size: 14px; overflow: hidden; text-overflow: ellipsis; }
+.contact-art { position: absolute; width: 260px; height: 260px; left: -55px; bottom: -65px; display: grid; place-items: center; }
+.contact-art img { width: 90px; animation: floatMark 6s ease-in-out infinite; }
+.art-orbit { position: absolute; inset: 0; border: 1px solid rgba(255,255,255,.09); border-radius: 50%; box-shadow: inset 0 0 60px rgba(124,92,255,.09); }
+.art-orbit::before, .art-orbit::after { content: ""; position: absolute; inset: 28px; border: 1px dashed rgba(46,230,214,.14); border-radius: 50%; animation: orbit 14s linear infinite; }
+.art-orbit::after { inset: 64px; animation-direction: reverse; animation-duration: 9s; }
+.contact-form { padding: 54px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.field { position: relative; display: grid; gap: 9px; }
+.field > span { color: #b9c0d1; font-size: 12px; font-weight: 700; letter-spacing: .04em; }
+.field input, .field textarea { width: 100%; border: 1px solid var(--line); border-radius: 15px; background: rgba(255,255,255,.035); color: #fff; outline: none; transition: border-color .25s ease, box-shadow .25s ease, background .25s ease; }
+.field input { height: 55px; padding: 0 15px; }
+.field textarea { min-height: 145px; padding: 15px; resize: vertical; line-height: 1.55; }
+.field input:focus, .field textarea:focus { border-color: rgba(124,92,255,.72); box-shadow: 0 0 0 4px rgba(124,92,255,.09); background: rgba(255,255,255,.05); }
+.message-field { margin-top: 16px; }
+.message-field small { position: absolute; right: 12px; bottom: 10px; color: #707990; font-size: 10px; }
+.message-field small.danger { color: var(--warning); }
+.upload-box { margin-top: 16px; border: 1px dashed rgba(255,255,255,.16); border-radius: 17px; transition: background .25s ease, border-color .25s ease; }
+.upload-box.dragging { border-color: var(--accent-2); background: rgba(46,230,214,.06); }
+.upload-box input { display: none; }
+.upload-trigger { width: 100%; padding: 15px; border: 0; background: transparent; color: #fff; cursor: pointer; display: flex; align-items: center; gap: 13px; text-align: left; }
+.upload-trigger > span { width: 42px; height: 42px; flex-shrink: 0; display: grid; place-items: center; border-radius: 13px; background: rgba(46,230,214,.10); color: var(--accent-2); }
+.upload-trigger div { display: grid; gap: 4px; }
+.upload-trigger strong { font-size: 13px; }
+.upload-trigger small { color: #707990; font-size: 10px; }
+.file-list { display: grid; gap: 7px; margin-top: 10px; }
+.file-pill { display: grid; grid-template-columns: 20px minmax(0,1fr) auto 30px; align-items: center; gap: 8px; min-height: 42px; padding: 5px 6px 5px 12px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.03); color: #cbd1df; font-size: 12px; }
+.file-pill > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.file-pill > small { color: #6f7890; }
+.file-pill button { width: 30px; height: 30px; border: 0; border-radius: 9px; background: rgba(255,255,255,.05); color: #fff; cursor: pointer; }
+.check-row { position: relative; display: flex; align-items: flex-start; gap: 10px; margin-top: 15px; color: #aab2c5; font-size: 12px; line-height: 1.5; cursor: pointer; }
+.check-row input { position: absolute; opacity: 0; pointer-events: none; }
+.custom-check { width: 20px; height: 20px; flex-shrink: 0; border: 1px solid var(--line); border-radius: 6px; display: grid; place-items: center; background: rgba(255,255,255,.035); color: transparent; transition: .2s ease; }
+.check-row input:checked + .custom-check { background: var(--accent); border-color: var(--accent); color: #fff; }
+.check-row a { color: #dcd7ff; }
+.form-bottom { min-height: 58px; margin-top: 24px; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+.status-text { color: #7e879e; font-size: 12px; }
+.status-text.success { color: var(--success); }
+.status-text.error { color: var(--danger); }
+.send-btn { min-width: 150px; }
+.send-btn:disabled { opacity: .62; cursor: wait; transform: none; }
+.file-enter-active, .file-leave-active { transition: opacity .2s ease, transform .2s ease; }
+.file-enter-from, .file-leave-to { opacity: 0; transform: translateY(-5px); }
+@keyframes orbit { to { transform: rotate(360deg); } }
+@keyframes floatMark { 50% { transform: translateY(-10px) rotate(-4deg); } }
+@media (max-width: 950px) { .contact-shell { grid-template-columns: 1fr; } .contact-info { min-height: 430px; } .contact-art { right: -50px; left: auto; } }
+@media (max-width: 620px) { .contact-shell { border-radius: 26px; } .contact-info, .contact-form { padding: 30px 20px; } .form-grid { grid-template-columns: 1fr; } .form-bottom { align-items: stretch; flex-direction: column; } .send-btn { width: 100%; } .contact-art { width: 180px; height: 180px; opacity: .6; } }
+</style>
 
-.char-counter-error {
-  color: red;
-}
-
-.contact {
-  min-height: 100vh;
-  margin-top: 100px;
-}
-
-.contact__container {
-  width: 1000px;
-  margin: 50px auto;
-  border-radius: 20px;
-  background-color: transparent;
-}
-
-.contact__container-item {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  overflow: hidden;
-}
-
-.contact__container-item form,
-.slider__container {
-  flex: 1;
-}
-
-.slider__container img {
-  rotate: -40deg;
-  position: relative;
-  left: 230px;
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-}
-
-.feedback_container {
-  padding: 5px 20px;
-}
-
-.icon svg {
-  width: 25px;
-  height: 25px;
-}
-
-form {
-  position: relative;
-  margin: 0 auto;
-}
-
-line {
-  display: flex;
-  justify-content: space-between;
-}
-
-.form-group {
-  width: 100%;
-  position: relative;
-  margin-top: 35px;
-}
-
-.file-drop-area {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: absolute;
-  bottom: 40px;
-  right: 20px;
-}
-
-.file-drop-area label {
-  display: flex;
-  align-items: center;
-}
-
-.file-drop-area img {
-  width: 30px;
-  height: 30px;
-  position: relative;
-  bottom: 15px;
-}
-
-input[type="file"] {
-  position: absolute;
-  left: -9999px;
-}
-
-label {
-  position: absolute;
-  color: white;
-  top: -25px;
-  margin-left: 5px;
-  transition: all 0.3s ease;
-}
-
-input {
-  height: 60px;
-}
-
-textarea {
-  border: 1px solid white;
-  border-radius: 5px;
-  resize: none;
-  height: 190px;
-}
-
-
-
-.form-group input {
-  border: none;
-  border-bottom: 1px solid white;
-
-}
-
-
-.form-group input,
-.form-group textarea {
-  background-color: transparent;
-  /* Убираем фоновый цвет, если нужно */
-  font-size: 16px;
-  color: white;
-  width: 100%;
-  padding-left: 10px;
-  outline: none;
-}
-
-/* Сбрасываем стиль автозаполнения для Chrome */
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
-  box-shadow: 0 0 0 1000px transparent inset !important;
-  -webkit-text-fill-color: white !important;
-  /* Цвет текста */
-  transition: background-color 5000s ease-in-out 0s;
-}
-
-/* Для других браузеров можно попытаться сбросить фон */
-input:-internal-autofill-selected {
-  background-color: transparent !important;
-  -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
-  box-shadow: 0 0 0 1000px transparent inset !important;
-  -webkit-text-fill-color: white !important;
-}
-
-input[type="text"],
-input[type="email"],
-input[type="tel"],
-textarea {
-  padding-top: 20px;
-  padding-right: 30px;
-}
-
-label.active {
-  top: -20px;
-  animation: floatLabel 0.3s ease forwards;
-}
-
-label.inactive {
-  animation: sinkLabel 0.3s ease forwards;
-}
-
-@keyframes floatLabel {
-  from {
-    top: 20px;
-    font-size: 18px;
-  }
-
-  to {
-    top: -25px;
-    font-size: 14px;
-  }
-}
-
-@keyframes sinkLabel {
-  from {
-    top: -25px;
-    font-size: 20px;
-  }
-
-  to {
-    top: 20px;
-    font-size: 16px;
-  }
-}
-
-.btn-upload {
-  display: inline-block;
-  padding: 20px 10px;
-  color: var(--text-color);
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.form-controls {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-}
-
-.file-item {
-  display: flex;
-  align-items: center;
-  position: relative;
-  padding: 10px;
-  margin-top: 15px;
-  background-color: white;
-  border-radius: 14px 15px 0 0;
-}
-
-.file-icon {
-  width: 30px;
-  height: 30px;
-  margin-right: 10px;
-}
-
-.file-name {
-  flex-grow: 1;
-  color: black;
-}
-
-.file-list span a {
-  text-decoration: underline;
-  color: white;
-}
-
-.remove-file {
-  background: none;
-  border: none;
-  color: var(--active-color);
-  cursor: pointer;
-  margin-left: 10px;
-}
-
-.upload-progress {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background-color: #f0f0f0;
-}
-
-.upload-progress-bar {
-  height: 100%;
-  background-color: rgba(0, 216, 47, 0.781);
-  transition: width .5s;
-}
-
-.consent {
-  display: flex;
-  align-items: center;
-  margin: 20px auto;
-}
-
-.consent input[type="checkbox"] {
-  position: absolute;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  border: 1px solid white;
-  width: 25px;
-  height: 25px;
-  border-radius: 4px;
-  outline: none;
-  cursor: pointer;
-}
-
-.consent input[type="checkbox"]:checked {
-  background-color: var(--active-color);
-  border-color: var(--active-color);
-}
-
-.consent input[type="checkbox"]:checked::after {
-  content: url('@/assets/icon/checkmark.svg');
-  display: inline-block;
-  width: 20px;
-  /* Задайте ширину изображения */
-  height: 20px;
-  /* Задайте высоту изображения */
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.consent p {
-  color: white;
-  margin-left: 30px;
-}
-
-.consent a {
-  color: white;
-  margin-left: 10px;
-}
-
-.form-button button {
-  padding: 10px 20px;
-}
-
-.loader {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  border: 3px solid white;
-  border-radius: 50%;
-  border-top-color: var(--active-color);
-  animation: spin 1s ease-in-out infinite;
-  margin-left: 8px;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media screen and (max-width: 1024px) {
-  .contact__container {
-    width: 90%;
-  }
-
-  .slider__container {
-    display: none;
-  }
-}
+<style scoped>
+/* Cinematic design-system alignment */
+.contact-shell { border-radius: 12px; border-color: rgba(255,255,255,.16); background: #0a1420; }
+.contact-info { background: linear-gradient(160deg, rgba(94,183,255,.075), rgba(100,92,255,.035) 52%, transparent); }
+.contact-list a { border-radius: 10px; background: rgba(255,255,255,.025); }
+.contact-icon { border-radius: 50%; background: rgba(255,255,255,.075); color: #fff; }
+.field input, .field textarea { border-radius: 9px; background: rgba(255,255,255,.025); }
+.field input:focus, .field textarea:focus { border-color: rgba(94,183,255,.58); box-shadow: 0 0 0 3px rgba(94,183,255,.07); }
+.upload-box { border-radius: 10px; }
+.upload-trigger > span { border-radius: 50%; background: rgba(255,255,255,.07); color: #fff; }
+.file-pill { border-radius: 8px; }
 </style>

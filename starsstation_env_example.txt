@@ -1,0 +1,22 @@
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=https://starsstation.ch
+
+DB_HOST=localhost
+DB_PORT=3306
+DB_DATABASE=starsstation
+DB_USERNAME=
+DB_PASSWORD=
+DB_CHARSET=utf8mb4
+
+SMTP_HOST=mail.infomaniak.com
+SMTP_PORT=587
+SMTP_ENCRYPTION=tls
+SMTP_USERNAME=support@starsstation.ch
+SMTP_PASSWORD=
+MAIL_FROM_ADDRESS=support@starsstation.ch
+MAIL_FROM_NAME="Stars Station Studio"
+MAIL_TO_ADDRESS=support@starsstation.ch
+
+UPLOAD_DIR=uploads
+MAX_UPLOAD_MB=10

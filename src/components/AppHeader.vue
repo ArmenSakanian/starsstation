@@ -1,502 +1,341 @@
 <template>
-  <header :class="headerClass">
-    <div class="header-container">
-      <router-link to="/">
-        <img :src="logoSrc" alt="Logo" class="logo" />
+  <header class="site-header" :class="{ 'site-header--compact': isScrolled }">
+    <div class="header-inner">
+      <router-link to="/" class="brand" aria-label="Stars Station Studio">
+        <img src="@/assets/logo/Logo-Full_white.svg" alt="Stars Station Studio" />
       </router-link>
-      <div class="menu_container">
-        <nav class="menu" :style="{ left: menuPosition }">
-          <div class="header__bottom"></div>
-          <ul class="menu-ul">
-            <li><router-link to="/about"><a @click="closeMenu()">{{ $t('about') }}</a></router-link></li>
-            <li><a to="service" @click="scrollToElement($event, 'service'); closeMenu()">{{ $t('service') }}</a></li>
-            <li><a @click="closeMenu()" @click.prevent="openModal">{{ $t('contact') }}</a></li>
-            <li><a to="" @click="scrollToElement($event, 'feedback'); closeMenu()">{{ $t('feedback') }}</a></li>
-            <li><router-link to="/Portfolio"><a @click="closeMenu()">{{ $t('our_videos') }}</a></router-link></li>
-          </ul>
-        </nav>
-      </div>
-      <nav class="language-menu">
-        <ul>
-          <li class="language">
-            <a class="language-active" href="#" @click="toggleLanguageMenu">
-              <span class="active-lang">{{ $i18n.locale.toUpperCase() }}</span>
-              <i class="fas fa-angle-down" :class="{ rotated: languageMenuOpen }"></i>
-            </a>
-            <ul class="language-inactive" :class="{ show: languageMenuOpen }">
-              <li v-for="lang in filteredLanguages" :key="lang">
-                <a href="#" @click="changeLanguage($event, lang)">
-                  <span>{{ getLanguageName(lang) }}</span>
-                </a>
-              </li>
-            </ul>
-          </li>
-        </ul>
+
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <router-link to="/">{{ $t('home') }}</router-link>
+        <router-link to="/about">{{ $t('about') }}</router-link>
+        <button type="button" @click="goToSection('service')">{{ $t('service') }}</button>
+        <router-link to="/portfolio">{{ $t('our_videos') }}</router-link>
+        <router-link to="/imagine-yourself">{{ $t('imagine_yourself') }}</router-link>
+        <button type="button" @click="goToSection('feedback')">{{ $t('contact') }}</button>
       </nav>
-      <div class="icon" @click="toggleMenu">
-        <svg :class="{ 'active': isMenuOpen }" width="30" height="30" viewBox="0 0 32 42"
-          xmlns="http://www.w3.org/2000/svg">
-          <g transform="matrix(1,0,0,1,-389.5,-264.004)">
-            <g id="arrow_left2">
-              <g transform="matrix(1,0,0,1,0,5)">
-                <path id="top"
-                  d="M390,270L420,270L420,270C420,270 420.195,250.19 405,265C389.805,279.81 390,279.967 390,279.967" />
-              </g>
-              <g transform="matrix(1,1.22465e-16,1.22465e-16,-1,0.00024296,564.935)">
-                <path id="bottom"
-                  d="M390,270L420,270L420,270C420,270 420.195,250.19 405,265C389.805,279.81 390,279.967 390,279.967" />
-              </g>
-              <path id="middle" d="M390,284.967L420,284.967" />
-            </g>
-          </g>
-        </svg>
+
+      <div class="header-actions">
+        <div class="language-wrap" ref="languageWrap">
+          <button class="language-trigger" type="button" @click="languageOpen = !languageOpen" :aria-expanded="languageOpen">
+            <img :src="flags[$i18n.locale]" alt="" />
+            <span>{{ $i18n.locale.toUpperCase() }}</span>
+            <i class="fa-solid fa-chevron-down" :class="{ rotated: languageOpen }"></i>
+          </button>
+          <transition name="dropdown">
+            <div v-if="languageOpen" class="language-menu">
+              <button v-for="lang in availableLanguages" :key="lang" type="button" :class="{ active: lang === $i18n.locale }" @click="changeLanguage(lang)">
+                <img :src="flags[lang]" alt="" />
+                <span>{{ languageNames[lang] }}</span>
+                <i v-if="lang === $i18n.locale" class="fa-solid fa-check"></i>
+              </button>
+            </div>
+          </transition>
+        </div>
+
+        <button class="contact-cta" type="button" @click="isModalOpen = true">
+          <span>{{ $t('contact_us') }}</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+
+        <button class="menu-toggle" type="button" @click="toggleMenu" :aria-expanded="menuOpen" aria-label="Menu">
+          <span></span><span></span>
+        </button>
       </div>
-      <ContactModal :isVisible="isModalOpen" @close="closeModal" />
     </div>
+
+    <transition name="mobile-menu">
+      <div v-if="menuOpen" class="mobile-panel">
+        <router-link to="/" @click="closeMenu">{{ $t('home') }}</router-link>
+        <router-link to="/about" @click="closeMenu">{{ $t('about') }}</router-link>
+        <button type="button" @click="goToSection('service')">{{ $t('service') }}</button>
+        <router-link to="/portfolio" @click="closeMenu">{{ $t('our_videos') }}</router-link>
+        <router-link to="/imagine-yourself" @click="closeMenu">{{ $t('imagine_yourself') }}</router-link>
+        <button class="mobile-contact" type="button" @click="openContactFromMenu">{{ $t('contact_us') }}</button>
+      </div>
+    </transition>
+
+    <ContactModal :is-visible="isModalOpen" @close="isModalOpen = false" />
   </header>
 </template>
 
 <script>
 import ContactModal from './ContactModal.vue';
+import fr from '@/assets/icon/fr.svg';
+import en from '@/assets/icon/en.svg';
+import de from '@/assets/icon/de.svg';
+import it from '@/assets/icon/it.svg';
 
 export default {
   name: 'AppHeader',
-  components: {
-    ContactModal,
-  },
+  components: { ContactModal },
   data() {
     return {
-      menuPosition: '100%',
-      isMenuVisible: false,
-      languageMenuOpen: false,
+      isScrolled: false,
+      menuOpen: false,
+      languageOpen: false,
       isModalOpen: false,
-      headerClass: 'header-black', // Черный фон по умолчанию
-      logoSrc: require('@/assets/logo/Logo-Full_white.svg'), // Логотип по умолчанию (белый)
-      availableLanguages: ['en', 'fr', 'de', 'it'] // Доступные языки
+      availableLanguages: ['fr', 'en', 'de', 'it'],
+      languageNames: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano' },
+      flags: { fr, en, de, it }
     };
   },
-  computed: {
-    filteredLanguages() {
-      return this.availableLanguages.filter(lang => lang !== this.$i18n.locale);
-    },
-    isMenuOpen() {
-      return this.menuPosition === '0';
-    }
-  },
   mounted() {
-    this.handleScroll(); // Проверить позицию сразу после монтирования
-    document.addEventListener('click', this.handleClickOutside);
-    window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    document.addEventListener('click', this.onOutsideClick);
+    this.onScroll();
   },
   beforeUnmount() {
-    document.removeEventListener('click', this.handleClickOutside);
-    window.removeEventListener('scroll', this.handleScroll);
+    window.removeEventListener('scroll', this.onScroll);
+    document.removeEventListener('click', this.onOutsideClick);
+    document.body.style.overflow = '';
   },
   methods: {
-    openModal() {
-      this.isModalOpen = true;
+    onScroll() { this.isScrolled = window.scrollY > 28; },
+    onOutsideClick(event) {
+      if (this.$refs.languageWrap && !this.$refs.languageWrap.contains(event.target)) this.languageOpen = false;
     },
-    closeModal() {
-      this.isModalOpen = false;
-    },
-    handleClickOutside(event) {
-      if (!this.$el.contains(event.target)) {
-        this.languageMenuOpen = false;
-      }
-    },
-    handleScroll() {
-      const section2 = document.getElementById('section_2');
-
-      if (section2 && this.isSectionInView(section2)) {
-        this.headerClass = 'header-white';
-        this.logoSrc = require('@/assets/logo/Logo-Full_white.svg'); // Логотип черный
-      } else {
-        this.headerClass = 'header-black';
-        this.logoSrc = require('@/assets/logo/Logo-Full_white.svg'); // Логотип белый
-      }
-    },
-    isSectionInView(section) {
-      const sectionTop = section.getBoundingClientRect().top;
-      return sectionTop <= 80 && sectionTop + section.offsetHeight > 80;
-    },
-    toggleMenu() {
-      this.menuPosition = this.menuPosition === '100%' ? '0' : '100%';
-      if (this.isMenuOpen) {
-        document.body.style.overflow = 'hidden';
-      } else {
-        document.body.style.overflow = '';
-      }
-    },
-    closeMenu() {
-      if (this.isMenuOpen) {
-        this.menuPosition = '100%';
-        document.body.style.overflow = '';
-      }
-    },
-    changeLanguage(event, lang) {
-      event.preventDefault();
+    changeLanguage(lang) {
       this.$i18n.locale = lang;
       localStorage.setItem('language', lang);
+      document.documentElement.lang = lang;
+      this.languageOpen = false;
     },
-    toggleLanguageMenu(event) {
-      event.preventDefault();
-      this.languageMenuOpen = !this.languageMenuOpen;
+    toggleMenu() {
+      this.menuOpen = !this.menuOpen;
+      document.body.style.overflow = this.menuOpen ? 'hidden' : '';
     },
-    getLanguageName(lang) {
-      switch (lang) {
-        case 'en':
-          return 'English';
-        case 'fr':
-          return 'French';
-        case 'de':
-          return 'German';
-        case 'it':
-          return 'Italian';
-        default:
-          return '';
+    closeMenu() {
+      this.menuOpen = false;
+      document.body.style.overflow = '';
+    },
+    openContactFromMenu() {
+      this.closeMenu();
+      this.isModalOpen = true;
+    },
+    goToSection(id) {
+      this.closeMenu();
+      if (this.$route.name === 'Home') {
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        this.$router.push({ name: 'Home', query: { scrollToId: id } });
       }
-    },
-    scrollToElement(event, id) {
-      event.preventDefault();
-      this.$router.push({ name: 'Home', query: { scrollToId: id } });
-    },
-    scrollToElementById(id) {
-      this.$nextTick(() => {
-        const element = document.getElementById(id);
-        if (element) {
-          const yOffset = -50;
-          const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-          window.scrollTo({ top: y, behavior: 'smooth' });
-        }
-      });
     }
   }
-}
+};
 </script>
 
-
-
-
-
 <style scoped>
-.header__bottom {
-  position: absolute;
-  width: 100%;
-  height: 1px;
-  background-color: var(--br-color);
-  z-index: 9999;
-  display: none; 
-  top: 3px;
-}
-
-header {
+.site-header {
   position: fixed;
-  top: 0;
-  z-index: 9998;
-  width: 100%;
-  height: 80px;
-  transition: top 0.5s ease-in-out, opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  inset: 0 0 auto;
+  z-index: 1000;
+  padding: 18px 34px 0;
+  transition: padding .35s ease;
 }
-
-.header-container {
-  padding: 10px;
+.header-inner {
+  width: min(1540px, 100%);
+  min-height: 70px;
+  margin: 0 auto;
+  padding: 0 10px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  background-color: black; /* Черный фон по умолчанию */
-  transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+  gap: 34px;
+  border: 1px solid transparent;
+  border-radius: 22px;
+  transition: min-height .35s ease, background .35s ease, border-color .35s ease, box-shadow .35s ease, padding .35s ease;
 }
-
-.header-white .header-container {
-  background-color: #171a36;
+.site-header--compact { padding-top: 10px; }
+.site-header--compact .header-inner {
+  min-height: 62px;
+  padding: 0 12px 0 18px;
+  background: rgba(5, 12, 20, .80);
+  border-color: rgba(255,255,255,.10);
+  box-shadow: 0 14px 50px rgba(0,0,0,.22);
+  backdrop-filter: blur(22px) saturate(140%);
 }
-
-.header-white .menu ul li a {
-  color: rgb(255, 255, 255);
-}
-
-
-
-.logo {
-  width: 150px;
-}
-
-.menu_container {
-  display: flex;
-  align-items: center;
-}
-
-nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-}
-
-.menu-ul > li {
-  margin-right: 20px;
-}
-
-nav ul li a,
-nav li a {
-  color: rgb(255, 255, 255);
-  text-decoration: none;
-  font-size: 20px;
-  transition: 1s;
-  cursor: pointer;
-}
-
-.menu ul li a::after {
-  content: '';
-  display: block;
-  width: 0;
-  height: 2px;
-  background: var(--active-color);
-  transition: width 0.3s ease-in-out;
-}
-
-.dropdown-content a::after {
-  top: 10px;
+.brand { display: flex; align-items: center; flex-shrink: 0; }
+.brand img { width: 176px; display: block; }
+.desktop-nav { display: flex; align-items: center; justify-content: center; gap: 2px; margin-left: auto; }
+.desktop-nav a,
+.desktop-nav button {
   position: relative;
-}
-
-.menu ul li a:hover::after {
-  width: 100%;
-}
-
-.menu ul li a.active::after {
-  width: 100%;
-}
-
-nav ul li .router-link-active a {
-  color: var(--active-color);
-}
-
-.dropdown-content {
-  display: block;
-  position: absolute;
-  min-width: 260px;
-  background-color: var(--bg-secondary-color);
-  z-index: 1;
-  opacity: 0;
-  transform: scaleY(0);
-  transform-origin: top;
-  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
-}
-
-.dropdown > a i {
-  margin-left: 5px;
-}
-
-.dropdown-content.show {
-  opacity: 1;
-  transform: scaleY(1);
-}
-
-.dropdown-content a {
-  color: var(--text-color);
-  padding: 12px 16px;
+  border: 0;
+  background: transparent;
+  color: rgba(255,255,255,.86);
   text-decoration: none;
-  display: block;
-  text-align: center;
-}
-
-.dropdown-content a:hover {
-  background-color: var(--bg-main-color);
-  color: var(--active-color);
-  transition: background-color 0.8s, color 0.8s;
-}
-
-.language {
-  display: flex;
-  padding-right: 35px;
-}
-
-.language a {
   cursor: pointer;
+  padding: 12px 13px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: color .25s ease;
+}
+.desktop-nav a::after,
+.desktop-nav button::after {
+  content: "";
+  position: absolute;
+  left: 13px;
+  right: 13px;
+  bottom: 5px;
+  height: 1px;
+  background: #fff;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform .25s ease;
+}
+.desktop-nav a:hover,
+.desktop-nav button:hover,
+.desktop-nav a.router-link-exact-active { color: #fff; }
+.desktop-nav a:hover::after,
+.desktop-nav button:hover::after,
+.desktop-nav a.router-link-exact-active::after { transform: scaleX(1); }
+.header-actions { display: flex; align-items: center; gap: 10px; }
+.language-wrap { position: relative; }
+.language-trigger {
+  height: 42px;
+  min-width: 86px;
+  padding: 0 13px;
   display: flex;
   align-items: center;
-   z-index: 9999;
-}
-
-.language-active .fa-angle-down {
-  transition: transform 0.3s ease;
-  margin-left: 5px;
-}
-
-.language-active .fa-angle-down.rotated {
-  transform: rotate(180deg);
-}
-
-.language-active {
-  color: var(--active-color);
-  background-color: #ffffff;
-  padding: 10px;
-}
-
-.active-lang {
-  margin-left: 10px;
-  color: black;
-  text-decoration: underline
-}
-
-.language-inactive {
-  display: block;
-  position: absolute;
-  top: 74px;
-  min-width: 110px;
-  background-color: #ffffff;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  opacity: 0;
-  transform: scaleY(0);
-  transform-origin: top;
-  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
-}
-
-.language-inactive.show {
-  opacity: 1;
-  transform: scaleY(1);
-  z-index: 9998;
-}
-
-.language-inactive li {
-  margin: 0;
-}
-
-.language-inactive a {
-  display: flex;
-  padding: 10px;
-  text-decoration: none;
-  color: rgb(0, 0, 0);
-}
-
-.language-inactive a:hover {
-  background-color: #191A23;
-  color: white;
-
-}
-
-.icon {
-  position: absolute;
-  display: none;
-}
-
-svg {
-  fill: white;
-  fill-rule: evenodd;
-  clip-rule: evenodd;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-miterlimit: 1.5;
-  cursor: pointer;
-}
-
-svg path {
-  fill: none;
-  stroke: white; /* Измените на белый цвет */
-  stroke-width: 1px;
-}
-
-svg+svg {
-  margin-left: 1.5rem;
-}
-
-.icons {
-  display: none;
-  flex-wrap: wrap;
   justify-content: center;
+  gap: 8px;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 999px;
+  background: rgba(255,255,255,.075);
+  color: #fff;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  backdrop-filter: blur(14px);
+}
+.language-trigger img { width: 18px; height: 12px; object-fit: cover; border-radius: 2px; }
+.language-trigger i { font-size: 9px; opacity: .72; transition: transform .25s ease; }
+.language-trigger i.rotated { transform: rotate(180deg); }
+.language-menu {
+  position: absolute;
+  top: calc(100% + 11px);
+  right: 0;
+  width: 190px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(6, 14, 23, .96);
+  box-shadow: 0 22px 60px rgba(0,0,0,.34);
+  backdrop-filter: blur(22px);
+}
+.language-menu button {
+  width: 100%;
+  min-height: 42px;
+  display: grid;
+  grid-template-columns: 22px 1fr 14px;
   align-items: center;
+  gap: 9px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 11px;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  text-align: left;
+  font-size: 12px;
 }
-
-#top,
-#bottom {
-  stroke-dasharray: 30, 75.39;
-  transition: all 0.6s cubic-bezier(0.6, 0.33, 0.67, 1.29);
+.language-menu button:hover,
+.language-menu button.active { background: rgba(255,255,255,.07); }
+.language-menu img { width: 18px; height: 12px; object-fit: cover; border-radius: 2px; }
+.language-menu i { color: var(--accent-2); font-size: 10px; }
+.contact-cta {
+  height: 42px;
+  min-width: 154px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  padding: 0 18px;
+  border: 1px solid rgba(255,255,255,.26);
+  border-radius: 999px;
+  background: linear-gradient(110deg, #5f52ff 0%, #6b5eff 50%, #5eb7ff 100%);
+  color: #fff;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow: 0 10px 28px rgba(72, 92, 255, .28), inset 0 1px 0 rgba(255,255,255,.22);
+  transition: transform .25s ease, box-shadow .25s ease;
 }
-
-svg.active #top,
-svg.active #bottom {
-  stroke-dasharray: 75.39;
-  stroke-dashoffset: -60;
+.contact-cta:hover { transform: translateY(-2px); box-shadow: 0 16px 38px rgba(72, 92, 255, .40); }
+.contact-cta i { font-size: 10px; }
+.menu-toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255,255,255,.17);
+  border-radius: 50%;
+  background: rgba(255,255,255,.06);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 6px;
+  backdrop-filter: blur(14px);
 }
-
-.rocket #top {
-  stroke-dasharray: 30, 88;
+.menu-toggle span { width: 18px; height: 1.5px; background: #fff; }
+.mobile-panel {
+  position: absolute;
+  top: 88px;
+  left: 20px;
+  right: 20px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: rgba(5,12,20,.96);
+  box-shadow: 0 24px 70px rgba(0,0,0,.42);
+  backdrop-filter: blur(24px);
+  display: grid;
+  gap: 4px;
 }
-
-.hidden-header {
-  top: -100px;
-  opacity: 0;
-  transform: translateY(-20px);
+.mobile-panel a,
+.mobile-panel button {
+  width: 100%;
+  padding: 15px 14px;
+  border: 0;
+  border-radius: 14px;
+  background: transparent;
+  color: #fff;
+  text-decoration: none;
+  text-align: left;
+  font-size: 17px;
+  cursor: pointer;
 }
-
-@media screen and (max-width: 1024px) {
-  
-  .header__bottom {
-    display: block;
-  }
-
-  .header-container {
-    justify-content: space-between;
-  }
-
-  .language {
-    position: relative;
-    right: 0;
-  }
-  .language-inactive {
-    top: 43px;
-  }
-  .icon {
-    display: block;
-    cursor: pointer;
-    position: relative;
-    z-index: 9999;
-  }
-
-  .menu {
-    position: absolute;
-    height: 100vh;
-    width: 100%;
-    background-color: black;
-    top: 76px;
-    transition: left 0.5s ease-in-out;
-    overflow-y: scroll;
-    z-index: 9999;
-  }
-  .header-white .menu {
-  background-color: #171a36;
+.mobile-panel a:hover,
+.mobile-panel button:hover { background: rgba(255,255,255,.055); }
+.mobile-panel .mobile-contact {
+  margin-top: 7px;
+  text-align: center;
+  background: linear-gradient(110deg, #5f52ff, #5eb7ff);
+  font-weight: 600;
 }
-  .menu-ul {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    padding: 0 40px 0 40px;
-  }
+.dropdown-enter-active, .dropdown-leave-active { transition: opacity .2s ease, transform .2s ease; }
+.dropdown-enter-from, .dropdown-leave-to { opacity: 0; transform: translateY(-6px) scale(.98); }
+.mobile-menu-enter-active, .mobile-menu-leave-active { transition: opacity .25s ease, transform .25s ease; }
+.mobile-menu-enter-from, .mobile-menu-leave-to { opacity: 0; transform: translateY(-10px) scale(.985); }
 
-  .menu ul li {
-    padding: 20px;
-    margin-right: 20px;
-    position: relative;
-    border-bottom: 1px solid var(--br-color);
-  }
-
-  .dropdown-content {
-    background-color: transparent;
-    padding: 20px 0px 200px 0;
-    left: 0;
-    right: 0;
-    min-width: 50%;
-    margin: 0 auto;
-  }
-
-  .menu ul li {
-    width: 100%;
-  }
-
-  nav ul li a,
-  nav li a {
-    font-size: 18px;
-  }
+@media (max-width: 1220px) {
+  .desktop-nav a, .desktop-nav button { padding-left: 9px; padding-right: 9px; }
+  .brand img { width: 156px; }
+  .contact-cta { min-width: 132px; padding: 0 14px; }
+}
+@media (max-width: 1050px) {
+  .desktop-nav, .contact-cta { display: none; }
+  .header-actions { margin-left: auto; }
+  .menu-toggle { display: flex; }
+}
+@media (max-width: 560px) {
+  .site-header { padding: 10px 10px 0; }
+  .header-inner,
+  .site-header--compact .header-inner { min-height: 58px; padding: 0 8px 0 12px; border-radius: 18px; }
+  .brand img { width: 134px; }
+  .language-trigger { min-width: 75px; height: 40px; padding: 0 10px; }
+  .language-trigger img { width: 17px; }
+  .menu-toggle { width: 40px; height: 40px; }
+  .mobile-panel { top: 76px; left: 10px; right: 10px; }
 }
 </style>

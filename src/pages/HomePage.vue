@@ -1,42 +1,22 @@
 <template>
-<test />
-<section id="section_1" class="section_1">
-  <Video />
+  <div class="home-page">
+    <HeroVideo />
     <Service />
-</section>
-    <section id="section_2" class="section_2">
-      <Partner />
-      <ContactPage /> 
-    </section>
+    <section id="section_1"><Video /></section>
+    <Partner />
+    <section id="feedback"><ContactPage /></section>
+  </div>
 </template>
 
 <script>
-import test from '../components/test.vue'
-import Video from '../components/Video.vue'
-import Service from '../components/Service.vue'
-import Partner from '../components/Partner.vue'
-import ContactPage from '../components/ContactPage.vue'
-
-
-
-
+import HeroVideo from '../components/HeroVideo.vue';
+import Service from '../components/Service.vue';
+import Video from '../components/Video.vue';
+import Partner from '../components/Partner.vue';
+import ContactPage from '../components/ContactPage.vue';
 
 export default {
-  name: "HomePage",
-  components: {  
-    test, 
-    Video,
-    Service,
-    Partner,
-    ContactPage,
-  },
+  name: 'HomePage',
+  components: { HeroVideo, Service, Video, Partner, ContactPage }
 };
 </script>
-
-
-<style scoped>
-
-.section_2 {
-  background-color: #171a36;
-}
-</style>

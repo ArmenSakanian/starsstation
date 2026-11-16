@@ -1,466 +1,117 @@
 <template>
-  <div class="video-grid-container">
-    <h1 class="services-header title">{{ $t('our_videos') }}</h1>
-    <div class="video-grid">
-      <div class="video-wrapper" v-for="(video, index) in videos" :key="index">
-        <div class="video-thumbnail" @click="openVideo(video)">
-          <p class="video-title" @click="openVideo(video)">
-            {{ video.title }}
-          </p>
-          <img :src="getThumbnailSrc(video.thumbnail)" :alt="video.title" />
-          <div class="play-button-overlay">
-            <i class="fas fa-play"></i>
-          </div>
-        </div>
+  <div class="portfolio-page page-top">
+    <section class="page-shell portfolio-hero">
+      <div data-aos="fade-up">
+        <span class="eyebrow">{{ $t('portfolio_kicker') }}</span>
+        <h1 class="display-title gradient-text">{{ $t('our_videos') }}</h1>
       </div>
+      <p class="lead" data-aos="fade-up" data-aos-delay="100">{{ $t('video_description') }}</p>
+    </section>
 
-      <div v-if="selectedVideo" class="video-modal">
-        <div class="video-modal-content">
-          <button class="close-button" @click="closeVideo">
-            <i class="fas fa-times"></i>
-          </button>
-          <video
-            ref="videoPlayer"
-            :src="selectedVideo.src"
-            :controls="false"
-            autoplay
-            @timeupdate="updateProgress"
-            @loadedmetadata="initializeProgress"
-            @click="handleVideoClick"
-          ></video>
-          <div class="custom-controls">
-            <button @click="togglePlayPause">
-              <i :class="isPlaying ? 'fas fa-pause' : 'fas fa-play'"></i>
-            </button>
-            <div class="progress-container">
-              <input
-                type="range"
-                ref="progressBar"
-                min="0"
-                :max="videoDuration"
-                step="0.1"
-                v-model="currentTime"
-                @input="onRangeInput"
-                class="progress-bar"
-                @change="updateRangeBackground"
-              />
+    <section class="page-shell portfolio-grid section-space">
+      <article v-for="(video, index) in videos" :key="video.title" class="work-card" data-aos="fade-up" :data-aos-delay="(index % 3) * 80" @click="openVideo(video)">
+        <div class="thumb-wrap">
+          <img :src="video.thumbnail" :alt="video.title" loading="lazy" />
+          <div class="thumb-overlay"></div>
+          <button type="button" class="play-btn" :aria-label="`Play ${video.title}`"><i class="fa-solid fa-play"></i></button>
+          <span class="work-index">0{{ index + 1 }}</span>
+        </div>
+        <div class="work-meta">
+          <h2>{{ video.title }}</h2>
+          <span>{{ $t('video_production_label') }} <i class="fa-solid fa-arrow-up-right"></i></span>
+        </div>
+      </article>
+    </section>
+
+    <teleport to="body">
+      <transition name="video-modal">
+        <div v-if="selectedVideo" class="modal-backdrop" @click.self="closeVideo">
+          <div class="video-dialog glass" role="dialog" aria-modal="true" :aria-label="selectedVideo.title">
+            <div class="dialog-head">
+              <div><small>{{ $t('portfolio_kicker') }}</small><strong>{{ selectedVideo.title }}</strong></div>
+              <button type="button" @click="closeVideo" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <span class="time-display">{{ formattedCurrentTime }} / {{ formattedDuration }}</span>
-            <button @click="toggleMute">
-              <i :class="isMuted || volume === 0 ? 'fas fa-volume-mute' : (volume > 0.5 ? 'fas fa-volume-up' : 'fas fa-volume-down')"></i>
-            </button>
-            <input
-              type="range"
-              min="0"
-              max="1"
-              step="0.01"
-              v-model="volume"
-              @input="setVolume"
-              class="volume-slider"
-            />
-            <button @click="toggleFullscreen">
-              <i class="fas fa-expand"></i>
-            </button>
+            <video ref="videoPlayer" :src="selectedVideo.src" controls autoplay playsinline @play="isPlaying = true" @pause="isPlaying = false"></video>
           </div>
         </div>
-      </div>
-    </div>
+      </transition>
+    </teleport>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'VideoGrid',
+  name: 'PortfolioPage',
   data() {
     return {
-      videos: [
-        {
-          src: require('@/assets/video/Barber Dodo.mp4'),
-          thumbnail: require('@/assets/thumbnails/Barber Dodo.png'),
-          title: 'Barber Dodo',
-        },
-        {
-          src: require('@/assets/video/KFC - Conthey.mp4'),
-          thumbnail: require('@/assets/thumbnails/KFC - Conthey.png'),
-          title: 'KFC - Conthey',
-        },
-        {
-          src: require('@/assets/video/Restaurant Best Food Faryab.mp4'),
-          thumbnail: require('@/assets/thumbnails/Restaurant Best Food Faryab.png'),
-          title: 'Restaurant Best Food Faryab',
-        },
-        {
-          src: require('@/assets/video/Restaurant Il Pulcinella.mp4'),
-          thumbnail: require('@/assets/thumbnails/Restaurant Il Pulcinella.png'),
-          title: 'Restaurant Il Pulcinella',
-        },
-        {
-          src: require('@/assets/video/Restaurant Pizzeria de Valère.mp4'),
-          thumbnail: require('@/assets/thumbnails/Restaurant Pizzeria de Valère.png'),
-          title: 'Restaurant Pizzeria de Valère',
-        },
-        {
-          src: require('@/assets/video/Tennis Club de Valère.mp4'),
-          thumbnail: require('@/assets/thumbnails/Tennis Club de Valère.png'),
-          title: 'Tennis Club de Valère',
-        },
-      ],
       selectedVideo: null,
-      isPlaying: true,
-      isMuted: false,
-      videoDuration: 0,
-      currentTime: 0,
-      volume: 1, // Добавляем громкость, по умолчанию 100%
+      isPlaying: false,
+      videos: [
+        { src: require('@/assets/video/Barber Dodo.mp4'), thumbnail: require('@/assets/thumbnails/Barber Dodo.png'), title: 'Barber Dodo' },
+        { src: require('@/assets/video/KFC - Conthey.mp4'), thumbnail: require('@/assets/thumbnails/KFC - Conthey.png'), title: 'KFC - Conthey' },
+        { src: require('@/assets/video/Restaurant Best Food Faryab.mp4'), thumbnail: require('@/assets/thumbnails/Restaurant Best Food Faryab.png'), title: 'Restaurant Best Food Faryab' },
+        { src: require('@/assets/video/Restaurant Il Pulcinella.mp4'), thumbnail: require('@/assets/thumbnails/Restaurant Il Pulcinella.png'), title: 'Restaurant Il Pulcinella' },
+        { src: require('@/assets/video/Restaurant Pizzeria de Valère.mp4'), thumbnail: require('@/assets/thumbnails/Restaurant Pizzeria de Valère.png'), title: 'Restaurant Pizzeria de Valère' },
+        { src: require('@/assets/video/Tennis Club de Valère.mp4'), thumbnail: require('@/assets/thumbnails/Tennis Club de Valère.png'), title: 'Tennis Club de Valère' }
+      ]
     };
   },
-  watch: {
-    volume(newVolume) {
-      this.setVolume();
-      this.isMuted = newVolume === 0; // Обновляем состояние isMuted
-    },
-  },
-  computed: {
-    formattedCurrentTime() {
-      return this.formatTime(this.currentTime);
-    },
-    formattedDuration() {
-      return this.formatTime(this.videoDuration);
-    },
-  },
+  mounted() { window.addEventListener('keydown', this.onKeydown); },
+  beforeUnmount() { window.removeEventListener('keydown', this.onKeydown); document.body.style.overflow = ''; },
   methods: {
-    formatTime(timeInSeconds) {
-      const minutes = Math.floor(timeInSeconds / 60);
-      const seconds = Math.floor(timeInSeconds % 60);
-      return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-    },
-    getThumbnailSrc(thumbnailPath) {
-      return thumbnailPath;
-    },
-    openVideo(video) {
-      this.selectedVideo = video;
-      this.isPlaying = true;
-
-      // Блокируем прокрутку
-      document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed';
-      document.body.style.width = '100%';
-
-      // Добавляем обработчик для клавиш
-      window.addEventListener('keydown', this.handleKeydown);
-
-      setTimeout(() => {
-        this.$refs.videoPlayer.play();
-        this.updateRangeBackground();
-      }, 100);
-    },
-    closeVideo() {
-      if (this.$refs.videoPlayer) {
-        this.$refs.videoPlayer.pause();
-      }
-      this.selectedVideo = null;
-
-      // Разблокируем прокрутку
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.width = '';
-
-      // Удаляем обработчик для клавиш
-      window.removeEventListener('keydown', this.handleKeydown);
-    },
-    togglePlayPause() {
-      const videoElement = this.$refs.videoPlayer;
-      if (videoElement.paused) {
-        videoElement.play();
-        this.isPlaying = true;
-      } else {
-        videoElement.pause();
-        this.isPlaying = false;
-      }
-    },
-    toggleMute() {
-      this.isMuted = !this.isMuted;
-      this.volume = this.isMuted ? 0 : 0.5; // Устанавливаем громкость на 50% при включении звука
-      this.setVolume();
-    },
-    setVolume() {
-      const videoElement = this.$refs.videoPlayer;
-      videoElement.volume = this.volume;
-    },
-    toggleFullscreen() {
-      const videoElement = this.$refs.videoPlayer;
-      if (videoElement.requestFullscreen) {
-        videoElement.requestFullscreen();
-      } else if (videoElement.webkitRequestFullscreen) {
-        videoElement.webkitRequestFullscreen();
-      } else if (videoElement.msRequestFullscreen) {
-        videoElement.msRequestFullscreen();
-      }
-    },
-    updateProgress() {
-      const videoElement = this.$refs.videoPlayer;
-      if (videoElement) {  // Проверяем, существует ли элемент videoPlayer
-        this.currentTime = videoElement.currentTime;
-        this.updateRangeBackground();
-      }
-    },
-    initializeProgress() {
-      this.videoDuration = this.$refs.videoPlayer.duration;
-      this.updateRangeBackground();
-    },
-    seek(event) {
-      this.$refs.videoPlayer.currentTime = event.target.value;
-      this.updateRangeBackground();
-    },
-    updateRangeBackground() {
-      const percentage = (this.currentTime / this.videoDuration) * 100;
-      const rangeInput = this.$refs.progressBar;
-      if (rangeInput) {
-        rangeInput.style.background = `linear-gradient(to right, #0059bc 0%, #009aba ${percentage}%, white ${percentage}%, white 100%)`;
-      }
-    },
-    onRangeInput(event) {
-      this.seek(event);
-      this.updateRangeBackground();
-    },
-    handleKeydown(event) {
-      if (event.code === 'Space') {
-        event.preventDefault(); // предотвращаем прокрутку страницы при нажатии на пробел
-        this.togglePlayPause();
-      } else if (event.code === 'Escape') {
-        this.closeVideo();
-      }
-    },
-    handleVideoClick() {
-      this.togglePlayPause();
-    },
-  },
+    openVideo(video) { this.selectedVideo = video; document.body.style.overflow = 'hidden'; },
+    closeVideo() { if (this.$refs.videoPlayer) this.$refs.videoPlayer.pause(); this.selectedVideo = null; document.body.style.overflow = ''; },
+    onKeydown(event) { if (event.key === 'Escape' && this.selectedVideo) this.closeVideo(); }
+  }
 };
 </script>
 
 <style scoped>
-.video-grid-container {
-  padding-top: 150px;
-}
+.portfolio-page { overflow: hidden; }
+.portfolio-hero { min-height: 430px; padding-top: 65px; display: grid; grid-template-columns: 1.15fr .85fr; align-items: end; gap: 60px; border-bottom: 1px solid var(--line); padding-bottom: 70px; }
+.portfolio-hero h1 { margin-top: 24px; }
+.portfolio-hero .lead { max-width: 540px; justify-self: end; }
+.portfolio-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 18px; }
+.work-card { grid-column: span 6; cursor: pointer; }
+.work-card:nth-child(3n) { grid-column: span 7; }
+.work-card:nth-child(3n + 1):not(:first-child) { grid-column: span 5; }
+.thumb-wrap { position: relative; aspect-ratio: 16 / 10; overflow: hidden; border: 1px solid var(--line); border-radius: 27px; background: var(--surface-strong); }
+.thumb-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .7s cubic-bezier(.2,.8,.2,1), filter .5s ease; }
+.thumb-overlay { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(5,6,10,.72), transparent 58%); opacity: .65; transition: opacity .3s ease; }
+.work-card:hover .thumb-wrap img { transform: scale(1.045); filter: saturate(1.1); }
+.work-card:hover .thumb-overlay { opacity: .85; }
+.play-btn { position: absolute; inset: 50% auto auto 50%; transform: translate(-50%,-50%); width: 66px; height: 66px; border: 1px solid rgba(255,255,255,.22); border-radius: 50%; background: rgba(8,10,16,.58); color: #fff; cursor: pointer; backdrop-filter: blur(14px); transition: transform .3s ease, background .3s ease; }
+.work-card:hover .play-btn { transform: translate(-50%,-50%) scale(1.09); background: rgba(124,92,255,.72); }
+.work-index { position: absolute; left: 18px; top: 18px; padding: 7px 9px; border-radius: 9px; background: rgba(5,6,10,.62); color: #d9deea; backdrop-filter: blur(10px); font-size: 10px; letter-spacing: .12em; }
+.work-meta { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 16px 5px 28px; }
+.work-meta h2 { font-size: clamp(20px, 2.4vw, 29px); letter-spacing: -.035em; }
+.work-meta span { color: #6f7890; font-size: 11px; white-space: nowrap; }
+.work-meta i { margin-left: 5px; }
+.modal-backdrop { position: fixed; inset: 0; z-index: 5000; padding: 20px; display: grid; place-items: center; background: rgba(2,3,7,.88); backdrop-filter: blur(18px); }
+.video-dialog { width: min(1100px, 100%); padding: 12px; border-radius: 28px; background: rgba(8,10,17,.94); }
+.dialog-head { min-height: 68px; padding: 5px 6px 10px 12px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.dialog-head div { display: grid; gap: 4px; }
+.dialog-head small { color: #707990; font-size: 9px; text-transform: uppercase; letter-spacing: .14em; }
+.dialog-head strong { font-size: 16px; }
+.dialog-head button { width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 13px; background: rgba(255,255,255,.05); color: #fff; cursor: pointer; }
+.video-dialog video { width: 100%; max-height: calc(100vh - 140px); display: block; border-radius: 20px; background: #000; }
+.video-modal-enter-active, .video-modal-leave-active { transition: opacity .25s ease; }
+.video-modal-enter-active .video-dialog, .video-modal-leave-active .video-dialog { transition: transform .3s cubic-bezier(.2,.8,.2,1), opacity .25s ease; }
+.video-modal-enter-from, .video-modal-leave-to { opacity: 0; }
+.video-modal-enter-from .video-dialog, .video-modal-leave-to .video-dialog { transform: scale(.96) translateY(16px); opacity: 0; }
+@media (max-width: 900px) { .portfolio-hero { grid-template-columns: 1fr; align-items: start; gap: 24px; } .portfolio-hero .lead { justify-self: start; } .work-card, .work-card:nth-child(3n), .work-card:nth-child(3n + 1):not(:first-child) { grid-column: span 6; } }
+@media (max-width: 650px) { .portfolio-hero { min-height: 360px; padding-top: 40px; } .portfolio-grid { grid-template-columns: 1fr; } .work-card, .work-card:nth-child(3n), .work-card:nth-child(3n + 1):not(:first-child) { grid-column: auto; } .work-meta { align-items: flex-start; flex-direction: column; gap: 6px; } .play-btn { width: 56px; height: 56px; } }
+</style>
 
-.video-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* По умолчанию 3 колонки */
-  gap: 15px; /* Расстояние между элементами */
-  padding: 0 20px;
-}
-
-.video-wrapper {
-  position: relative;
-  max-width: 400px; /* Ограничиваем максимальную ширину */
-  width: 100%; /* Устанавливаем ширину на 100% внутри колонки */
-  margin: 0 auto 500px auto; /* Центрируем элементы, если они не занимают всю ширину */
-}
-
-.video-thumbnail {
-  position: absolute;
-  width: 100%;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: .8s;
-}
-
-.video-thumbnail:hover {
-  transform: scale(1.05);
-}
-
-.video-thumbnail img {
-  width: 100%;
-  object-fit: cover; /* Изображение адаптируется под размеры контейнера, сохраняя пропорции */
-  border-radius: 10px; /* Немного уменьшаем радиус закругления */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.video-title {
-  cursor: pointer;
-  font-size: 18px; /* Уменьшаем размер текста */
-  bottom: 0;
-  position: absolute;
-  width: 100%;
-  text-align: center;
-  font-weight: bold;
-  border-radius: 0 0 10px 10px;
-  background-color: rgba(0, 0, 0, 0.7); /* Полупрозрачный фон */
-  color: white;
-  padding: 8px 5px; /* Уменьшаем padding */
-  text-transform: uppercase;
-  box-sizing: border-box;
-}
-.play-button-overlay {
-  font-size: 50px;
-    position: absolute;
-    z-index: 1;
-    color: white;
-}
-/* Адаптивность */
-@media (max-width: 1024px) {
-  .video-grid {
-    grid-template-columns: repeat(2, 1fr); /* Две колонки при ширине меньше 1024px */
-    gap: 15px; /* Поддерживаем тот же gap */
-  }
-}
-
-@media (max-width: 768px) {
-  .video-grid {
-    grid-template-columns: repeat(1, 1fr); /* Одна колонка при ширине меньше 768px */
-    gap: 10px; /* Немного уменьшаем gap для узких экранов */
-  }
-}
-
-.video-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.9);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-.video-modal-content {
-  position: relative;
-  width: 100%;
-  max-width: 900px;
-}
-
-.video-modal-content video {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.custom-controls {
-  display: flex;
-  align-items: center;
-  position: absolute;
-  bottom: 20px;
-  left: 0;
-  right: 0;
-  padding: 10px;
-  background-color: rgba(0, 0, 0, 0.6);
-}
-
-.time-display {
-  color: white;
-  font-size: 14px;
-  margin: 0 10px;
-  text-align: center;
-  flex-shrink: 0;
-  width: 80px; /* Достаточно места для отображения времени */
-}
-
-.custom-controls button {
-  background: none;
-  border: none;
-  color: white;
-  margin: 0 10px;
-  cursor: pointer;
-  font-size: 18px;
-}
-
-.custom-controls i {
-  font-size: 20px;
-}
-
-.progress-container {
-  flex: 1;
-  margin: 0 10px;
-  position: relative;
-}
-
-.progress-bar {
-  width: 100%;
-  height: 8px;
-  appearance: none;
-  background: linear-gradient(to right, white 0%, white 0%) no-repeat, 
-              linear-gradient(to right, red 0%, red 100%);
-  border-radius: 5px;
-  outline: none;
-  position: relative;
-}
-
-.progress-bar::-webkit-slider-runnable-track {
-  width: 100%;
-  height: 8px;
-  background: transparent;
-}
-
-.progress-bar::-webkit-slider-thumb {
-  appearance: none;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: transparent;
-  cursor: pointer;
-  border: none;
-  position: relative;
-  z-index: 2;
-}
-
-.progress-bar::-moz-range-thumb {
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: transparent;
-  cursor: pointer;
-  border: none;
-  position: relative;
-  z-index: 2;
-}
-
-.progress-bar::-moz-range-track {
-  width: 100%;
-  height: 8px;
-  background: transparent;
-}
-
-.progress-bar::-ms-fill-lower {
-  background: transparent;
-}
-
-.progress-bar::-ms-fill-upper {
-  background: transparent;
-}
-
-.progress-bar::-ms-track {
-  background: linear-gradient(to right, white 0%, white 0%, red 0%, red 100%);
-  border-color: transparent;
-  color: transparent;
-}
-
-.volume-slider {
-  width: 100px; /* Ширина ползунка громкости */
-  margin: 0 10px;
-}
-
-.close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  color: white;
-  font-size: 24px;
-  cursor: pointer;
-  z-index: 1001; /* Убедитесь, что кнопка отображается поверх всего */
-}
-
-/* Блокировка прокрутки */
-.no-scroll {
-  overflow: hidden;
-}
-
+<style scoped>
+/* Cinematic design-system alignment */
+.portfolio-page { background: #07101a; }
+.work-card { border-radius: 10px; }
+.thumb-wrap { border: 1px solid rgba(255,255,255,.17); border-radius: 10px; overflow: hidden; }
+.work-meta h2 { font-family: var(--font-display); font-weight: 500; letter-spacing: -.02em; }
+.work-index { border-radius: 999px; background: rgba(5,12,20,.58); }
+.play-btn { background: rgba(5,12,20,.44); }
+.work-card:hover .play-btn { background: rgba(100,92,255,.62); }
+.video-dialog { border-radius: 12px; }
+.video-dialog video { border-radius: 8px; }
 </style>
